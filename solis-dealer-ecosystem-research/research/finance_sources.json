@@ -1,0 +1,74 @@
+[
+  {
+    "id": "F01",
+    "title": "International Tractors Limited Ratings reaffirmed",
+    "publisher": "ICRA",
+    "url": "https://www.icra.in/Rating/GetRationalReportFilePdf?id=139360",
+    "publication_date": "2025-11-28",
+    "access_date": "2026-11-03",
+    "classification": "Reported",
+    "claim": "ITL FY2024 and FY2025 financial indicators and Solis BV ownership",
+    "evidence": "Audited indicator table p4; export discussion p2; ownership annexure p6 reproduces company accounts.",
+    "limitations": "Rating agency reproduction, not underlying audited accounts. No Solis brand, Dutch or parts revenue split. Finance consolidation scope requires reconciliation."
+  },
+  {
+    "id": "F02",
+    "title": "AGCO 2025 Annual Report",
+    "publisher": "AGCO Corporation via SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/880266/000088026626000027/agco2025annualreport_ars.htm",
+    "publication_date": "2026; exact issue date not established",
+    "access_date": "2026-11-03",
+    "classification": "Verified",
+    "claim": "AGCO 2023 to 2025 revenue by product, and 2025 Europe Middle East parts sales",
+    "evidence": "Audited financial statements Disaggregated Revenue pp113 to115.",
+    "limitations": "Group and regional OEM sales; not Solis. Parts exclude separately unidentified services. G&P divestiture in November2024 changes denominator."
+  },
+  {
+    "id": "F03",
+    "title": "Titan Machinery FY2026 Form 10 K",
+    "publisher": "Titan Machinery via SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1409171/000162828026022376/titn-20260131.htm",
+    "publication_date": "2026-03-31",
+    "access_date": "2026-11-03",
+    "classification": "Verified",
+    "claim": "Dealer revenue, gross profit and segment mix",
+    "evidence": "Year ended31 January2026; pp31 to33 and Note3 p62; amounts USD thousands.",
+    "limitations": "Multi-brand dealer group including construction, Europe and Australia. Retail vs OEM economics differ. Service gross profit definition differs from parts."
+  },
+  {
+    "id": "F04",
+    "title": "CNH 2025 Form 10 K",
+    "publisher": "CNH via SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/1567094/000156709426000006/cnhi-20251231.htm",
+    "publication_date": "2026; exact filing date not established",
+    "access_date": "2026-11-03",
+    "classification": "Verified",
+    "claim": "CNH segment net sales and aftersales business relevance",
+    "evidence": "Parts and Services pp10 to11; segment net sales pp49 to50.",
+    "limitations": "Reviewed disclosure does not isolate parts revenue; do not infer parts share from Agriculture total."
+  },
+  {
+    "id": "F05",
+    "title": "Deere and Company FY2025 Form 10 K",
+    "publisher": "Deere and Company via SEC",
+    "url": "https://www.sec.gov/Archives/edgar/data/315189/000110465925122321/de-20251102x10k.htm",
+    "publication_date": "2025-12-18",
+    "access_date": "2026-11-03",
+    "classification": "Verified",
+    "claim": "Equipment operations net sales include service parts and technology",
+    "evidence": "Item1 Equipment Operations and Note27 Segment Data.",
+    "limitations": "No isolated comparable parts percentage found in reviewed revenue and segment disclosures. FY ends2 November2025."
+  },
+  {
+    "id": "F06",
+    "title": "Financial Results for the Year Ended December 31 2025 IFRS",
+    "publisher": "Kubota Corporation",
+    "url": "https://www.kubota.com/ir/financial/release/data/136q4e.pdf",
+    "publication_date": "2026-02-12",
+    "access_date": "2026-11-03",
+    "classification": "Verified",
+    "claim": "Kubota group and Machinery 2025 revenue",
+    "evidence": "Earnings release p1 and segment/product tables.",
+    "limitations": "Parts revenue not isolated in reviewed release. Earnings release rather than audited annual statement."
+  }
+]

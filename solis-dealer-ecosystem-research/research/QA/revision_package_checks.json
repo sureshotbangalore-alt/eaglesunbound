@@ -1,0 +1,13 @@
+{
+  "package_files": 28,
+  "workbook_tabs": [
+    "Start here",
+    "Company financials",
+    "Example only",
+    "Source data"
+  ],
+  "financial_records_preserved": 43,
+  "csv_full_currency_amounts": "exact integer units",
+  "spreadsheet_error_cells": 0,
+  "package_integrity": "passed"
+}

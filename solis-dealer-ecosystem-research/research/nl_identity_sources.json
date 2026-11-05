@@ -1,0 +1,110 @@
+[
+  {
+    "id": "I31",
+    "title": "Garantieformulier",
+    "publisher": "Solis Nederland / AgriXpert",
+    "url": "https://www.solistractor.nl/garantieformulier/",
+    "publication_date": "",
+    "access_date": "2026-11-03",
+    "classification": "Verified",
+    "claim": "Public Dutch warranty-registration intake exists",
+    "evidence": "Web original opened; direct HTTP200 HTML fields/actions inspected; owner/dealer/machine/invoice fields and lookup/submit actions",
+    "limitations": "No lookup upload submission activation or deletion tested; HEIC prose differs from input accept attribute; not a full machine ledger"
+  },
+  {
+    "id": "I32",
+    "title": "Garantie op Solis tractoren",
+    "publisher": "Solis Nederland / AgriXpert",
+    "url": "https://www.solistractor.nl/garantie/",
+    "publication_date": "",
+    "access_date": "2026-11-03",
+    "classification": "Verified",
+    "claim": "Warranty information links to Dutch registration; terms vary by model",
+    "evidence": "Page contains registration link; valid Dutch plate condition for extension; dealer confirmation",
+    "limitations": "Policy interpretation and exact eligibility require owner confirmation; form permits blank plate, potentially different registration stage"
+  },
+  {
+    "id": "I33",
+    "title": "Service en ondersteuning",
+    "publisher": "Solis Nederland / AgriXpert",
+    "url": "https://www.solistractor.nl/klantenservice/",
+    "publication_date": "",
+    "access_date": "2026-11-03",
+    "classification": "Verified",
+    "claim": "Dealer-assisted service journey includes digital registration branch",
+    "evidence": "Web reader timed out; direct public HTTP200 text inspected; regional service route plus registration CTA",
+    "limitations": "No service booking transaction; internal dealer processes unknown"
+  },
+  {
+    "id": "I34",
+    "title": "Privacybeleid",
+    "publisher": "Solis Nederland / AgriXpert",
+    "url": "https://www.solistractor.nl/privacybeleid/",
+    "publication_date": "",
+    "access_date": "2026-11-03",
+    "classification": "Verified",
+    "claim": "Public purposes/contact present; detailed legal-controller and extraction data map not established",
+    "evidence": "Original page sections cover contact/warranty purposes general retention/security and rights; AgriXpert footer",
+    "limitations": "Do not infer absence of internal agreements or legal noncompliance; no specific extraction processor/retention verified"
+  },
+  {
+    "id": "I35",
+    "title": "Over Solis",
+    "publisher": "Solis Nederland / AgriXpert",
+    "url": "https://www.solistractor.nl/over-ons/",
+    "publication_date": "",
+    "access_date": "2026-11-03",
+    "classification": "Verified",
+    "claim": "AgriXpert represents Solis NL; ITL manufacturer; published NL parts route Almere",
+    "evidence": "Direct public HTTP200 retrieval after web timeout; about-page role descriptions",
+    "limitations": "Self-description; no certified current registry, warehouse owner, contract or data rights"
+  },
+  {
+    "id": "I36",
+    "title": "Solis Nederland AgriXpert BV dealer",
+    "publisher": "Solis Nederland / AgriXpert",
+    "url": "https://www.solistractor.nl/dealers/agrixpert/",
+    "publication_date": "",
+    "access_date": "2026-11-03",
+    "classification": "Verified",
+    "claim": "AgriXpert import/support and local dealer role reverified",
+    "evidence": "Opened current dealer page names importer/support role and DIGO history",
+    "limitations": "Commercial description not certified shareholding chain; no identity equivalence to ITL BV"
+  },
+  {
+    "id": "I37",
+    "title": "Informatie over Solis tractoren",
+    "publisher": "Solis Nederland / AgriXpert",
+    "url": "https://www.solistractor.nl/informatie/",
+    "publication_date": "",
+    "access_date": "2026-11-03",
+    "classification": "Verified",
+    "claim": "Almere operational parts route and European parts-support descriptions reconfirmed",
+    "evidence": "Opened information page; NL parts route and component descriptions",
+    "limitations": "No warehouse stock ownership, SLA, catalogue licence or API verified; older scale figures remain"
+  },
+  {
+    "id": "I38",
+    "title": "Dealers",
+    "publisher": "Solis Nederland / AgriXpert",
+    "url": "https://www.solistractor.nl/dealers/",
+    "publication_date": "",
+    "access_date": "2026-11-03",
+    "classification": "Verified",
+    "claim": "Directory states19 dealers and1 subdealer with main/subdealer relationship",
+    "evidence": "Direct public HTTP200 text inspected after reader timeout; Romox under van Vijfeijken; stock labels",
+    "limitations": "Public roster not certified contracts or real-time model inventory"
+  },
+  {
+    "id": "I39",
+    "title": "Solis Tractoren homepage",
+    "publisher": "Solis Nederland / AgriXpert",
+    "url": "https://www.solistractor.nl/",
+    "publication_date": "",
+    "access_date": "2026-11-03",
+    "classification": "Verified",
+    "claim": "Homepage20 sales/service points compatible with19dealers+1subdealer",
+    "evidence": "Opened homepage current network section and20named points",
+    "limitations": "Do not count20independent wholesale dealer contracts"
+  }
+]

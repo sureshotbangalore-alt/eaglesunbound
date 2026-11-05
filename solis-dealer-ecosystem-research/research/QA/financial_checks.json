@@ -1,0 +1,59 @@
+{
+  "scenario_checks": [
+    {
+      "case": 1,
+      "values": [
+        300,
+        25,
+        875,
+        0.07,
+        3,
+        120,
+        995,
+        175,
+        120
+      ]
+    },
+    {
+      "case": 2,
+      "values": [
+        600,
+        100,
+        3500,
+        0.06,
+        12,
+        480,
+        3980,
+        350,
+        240
+      ]
+    },
+    {
+      "case": 3,
+      "values": [
+        800,
+        200,
+        7000,
+        0.05,
+        24,
+        960,
+        7960,
+        466.6666666666667,
+        320
+      ]
+    }
+  ],
+  "inspections": [
+    "{\"kind\":\"table\",\"sheet\":\"Financial analysis\",\"address\":\"B6:F29\",\"rows\":24,\"cols\":5,\"values\":[[\"AGCO USD million\",2023,2024,2025,\"Definition\"],[\"Tractors\",8711,7059.3,6693,\"Tractor category\"],[\"Replacement parts\",1816,1827.8,1873.3,\"Parts only\"],[\"Other machinery\",2822.8,1942.3,1514.4,\"Combines and others\"],[\"Grain systems\",1062.6,832.5,1.3,\"G&P business\"],[\"Net sales\",14412.4,11661.9,10082,\"Group denominator\"],[null,null,null,null,null],[\"Parts share of net sales\",0.12600260886458883,0.15673260789408244,0.18580638762150367,null],[\"Products less total\",0,0,-1.8189894035458565e-12,null],[null,null,null,null,null],[\"Titan FY2026 USD m\",\"Revenue\",\"Gross profit\",\"Revenue share\",\"GP share\"],[\"Equipment\",1774.535,129.33,0.7311317548010863,0.33806815211367747],[\"Parts\",428.261,132.515,0.17644916355150392,0.3463937305910768],[\"Service\",177.91,109.459,0.07330125948299766,0.28612543000240487],[\"Rental and other\",46.401,11.252,0.019117822164412202,0.029412687292840786],[\"Total\",2427.107,382.55600000000004,1.0000000000000002,0.9999999999999999],[null,null,null,null,null],[\"Parts and service combined\",null,null,0.24975042303450157,0.6325191605934817],[null,null,null,null,null],[\"Titan is a retail dealer group. Gross profit precedes operating costs. Service cost definitions differ.\",null,null,null,null],[null,null,null,null,null],[\"ITL INR crore\",2024,2025,\"Change\",\"Scope\"],[\"Operating income\",9485.4,10021.8,0.05655006641786331,\"ICRA consolidated\"],[\"Profit after tax\",1740.3,1780.9,0.023329311038326805,\"ICRA consolidated\"]]}",
+    "{\"kind\":\"table\",\"sheet\":\"Solis model\",\"address\":\"B8:G26\",\"rows\":19,\"cols\":6,\"values\":[[\"Assumption\",\"Active Selection\",\"Unit\",\"Low\",\"Base\",\"High\"],[\"Eligible requests\",1000,\"annual requests\",1000,1000,1000],[\"Minutes saved per adopted request\",10,\"minutes\",5,10,15],[\"Adoption\",0.6,\"share\",0.3,0.6,0.8],[\"Loaded hourly cost\",35,\"EUR per hour\",35,35,35],[\"Baseline wrong part return rate\",0.08,\"share\",0.08,0.08,0.08],[\"Reduction in return rate\",0.02,\"percentage points\",0.01,0.02,0.03],[\"Avoidable non labour return cost\",40,\"EUR per return\",40,40,40],[null,null,null,null,null,null],[\"Illustrative annual build\",\"Result\",\"Unit\",null,null,null],[\"Adopted requests\",600,\"requests\",null,null,null],[\"Capacity released\",100,\"hours\",null,null,null],[\"Capacity equivalent\",3500,\"EUR\",null,null,null],[\"Return rate among adopted requests\",0.06,\"share\",null,null,null],[\"Avoided returns\",12,\"returns\",null,null,null],[\"Non labour return cost avoided\",480,\"EUR\",null,null,null],[\"Gross opportunity equivalent\",3980,\"EUR\",null,null,null],[\"Per additional minute saved\",350,\"EUR\",null,null,null],[\"Per additional percentage point\",240,\"EUR\",null,null,null]]}",
+    "{\"kind\":\"table\",\"sheet\":\"Solis model\",\"address\":\"B33:D47\",\"rows\":15,\"cols\":3,\"values\":[[\"Actual Solis inputs needed\",\"Input\",\"Unit\"],[\"Eligible annual requests\",null,\"requests\"],[\"Adoption observed\",null,\"share\"],[\"Minutes saved observed\",null,\"minutes\"],[\"Loaded hourly cost verified\",null,\"EUR per hour\"],[\"Return rate reduction observed\",null,\"percentage points\"],[\"Non labour cost avoided per return\",null,\"EUR per return\"],[\"Annual run and change costs\",null,\"EUR\"],[null,null,null],[\"Actual annual capacity hours\",\"n.a.\",null],[\"Actual capacity equivalent EUR\",\"n.a.\",null],[\"Actual non labour return saving EUR\",\"n.a.\",null],[\"Gross opportunity less run costs EUR\",\"n.a.\",null],[null,null,null],[\"Required inputs still missing\",7,null]]}"
+  ],
+  "error_scan": "{\"kind\":\"notice\",\"message\":\"Cell search matched 0 entries.\"}",
+  "checks": [
+    "Scenario selector changes the same build",
+    "One minute change recalculates output",
+    "Missing actual inputs remain unavailable",
+    "Zero adoption returns valid zero",
+    "Source actuals remain unchanged"
+  ]
+}

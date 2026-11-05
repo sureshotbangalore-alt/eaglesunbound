@@ -1,0 +1,66 @@
+# Dealer and parts benchmark research
+
+Access date for all sources: 3 November 2026. This is desk research. No dealer interviews, authenticated dealer sessions, orders or warranty claims were performed. Verified below means the public source documents the feature; it does not certify backend performance or availability in every market.
+
+## Findings suitable for the executive report
+
+**Use an integration workspace before replacing operational systems.** Kubota Europe publicly documents a permissioned single sign-on portal linking commercial, training, technical, maintenance, warranty and parts tools. Its directory distinguishes the K-PAD machine catalogue from KEP industrial engine parts. The practical Solis benchmark is one identity with authorised links and shared context; it is not evidence that one monolithic application is necessary. [B01](https://landing.kubota-eu.com/intranet-multi-links/)
+
+**Machine identity should come before parts recommendations.** The MyCNHStore guide documents part, PIN/serial, category and model discovery, assembly diagrams, fitment information and availability. Its machine record includes serial/PIN, model code and production date. Dealer participation is not universal. The page also exposes photo-upload controls; identification accuracy and live coverage were not tested. Solis should make uncertain serial/model matches visible rather than imply every photograph identifies an orderable part. [B02](https://www.mycnhstore.com/it/it/caseih/HowToShop)
+
+**Do not claim Solis has no dealer portal.** The official US site says dealers order through the Solis dealer portal via regional warehouse or US headquarters. This is a company description of a US capability, not evidence of European availability or its detailed functions. Reuse must be investigated with ITL. [B13](https://solistractorusa.com/content/sportsman/service.php)
+
+## Capability comparison
+
+| Benchmark and scope | Publicly verified evidence | User problem addressed | Solis relevance and limitation |
+|---|---|---|---|
+| Kubota Europe dealer tools | CDC SSO and prior authorisation; sales support; dealer e-learning; technical documents; maintenance contract configuration and records; warranty system; machine and industrial engine catalogues [B01] | Repeated logins and fragmented specialist resources | Start with authorised launchpad and roles; underlying applications were not entered |
+| CNH Case IH public parts commerce | Serial/model/part discovery; exploded diagrams; fitment; availability; saved equipment; account/order history; shopping lists; checkout described [B02] | Finding correct parts and retaining machine context | Benchmark discovery-to-dealer handoff; payment methods and availability are market dependent |
+| New Holland North America parts | Official page documents MyCNH search, saved equipment, shopping lists, account summary and multi-dealer single cart [B03] | Repeat purchase effort and dealer-specific procurement | Useful mature commerce reference; not an EU commitment |
+| Case IH PRO | Login page describes information, assistance, tools and training for dealer sales network; Dealer Portal login button [B04] | Sales enablement and training access | A sales workspace exists; CRM, lead assignment and quote workflows not established by this page |
+| CNH eTIM and Warranty Information Tool | Separate services require Dealer Portal ID [B05, B06] | Dealer access to technical/warranty support | Confirms permissioned operational tools; a login does not demonstrate every workflow behind it |
+| AGCO Tech Connect | Dealer portal access to PDI, technical incidents and knowledge; partial serial lookup; notifications; mobile photographs/video; PDI online/offline [B07] | Duplicate inspection administration and slow escalation | Solis delivery inspection and technical cases could share machine identity; results need local measurement |
+| Fendt AGCO Parts Books | Electronic catalogues and dealer ordering; Parts Books To Go exploded views, hotspots, basket emailed to chosen address and offline lists [B08] | Diagram interpretation in workshop/field and order handoff | Catalogue-assisted request is useful before full checkout; emailed basket is not an executed order |
+| AGCO customer service portal | Registered machine manuals, warranty coverage, support programmes and diagnostic code descriptions; dealer-mediated diagnostic access and EU tool store [B09] | Finding authoritative ownership information | Separate customer and technician permissions; model support must be confirmed |
+| Deere through IntelliDealer technical documentation | Licensed interfaces for quotes, part availability/orders, warranty and credits, EPC, proactive jobs and JDLink [B10] | Re-entering transactions between OEM and dealer systems | Strong evidence for DMS integration; vendor documentation, not proof every Deere dealer uses these interfaces |
+| Deere EPC to MyDealer | Logged-in and guest catalogue-to-dealer-cart flows; credentials and licensed prerequisites; missing local part records enter exception process [B11] | Losing selected parts when moving from catalogue to commerce | Preserve cart and source references; unmatched records need a queue rather than silent discard |
+| IntelliDealer MyDealer | Customer invoices, equipment, service requests, parts and equipment shopping, quote viewing/acceptance [B12] | Customers contacting dealership for routine records | Buy/reuse DMS modules where applicable; this is a vendor platform, not a Deere-exclusive portal |
+
+No verified finding here establishes Solis current lead management, saved configurations, dealer inventory APIs, performance dashboards, quote approval rules or customer-record permissions. These remain direct-demonstration requests. Deere developer pages were discovered but original opens returned no readable body, so customer-linkage API detail is not used as a verified finding.
+
+## Parts journey and data model
+
+**Proposed journey — inference from benchmarks, subject to Solis validation.** Identify tractor by full serial plus model, market and build date → resolve fitted assemblies and engine serial → navigate licensed diagram or text index → select candidate → check serial applicability, quantity, supersession and return restrictions → retrieve authorised price, available-to-promise and lead time → dealer confirms fit and prepares quote/order → warehouse acknowledgement and tracking → installation/work-order record → return or warranty case where necessary. A model-only match remains provisional if build revisions differ.
+
+Maintain separate entities for machine, build configuration, engine/component, diagram revision, part master, applicability rule, supersession relation, compatible implement, dealer contract, price entitlement, warehouse stock snapshot, order, shipment, work order and claim. Each record needs source owner, source key, last update and market/version. A stock snapshot is not a reservation; an alternative part is not an approved substitute. These are design requirements, not discovered Solis system fields.
+
+**Proposed integration map.** ITL engineering/catalogue owner supplies licensed part and build data; component manufacturer or authorised distributor supplies licensed component identifiers; importer ERP supplies prices, allocation and order status; warehouse supplies stock/fulfilment; dealer DMS supplies customer/work order with agreed permissions; portal presents the resulting evidence. All Solis system names, access rights, refresh frequencies and interface availability remain unknown. Prefer deep links/import feeds before writing replacement catalogue software.
+
+**Third-party component evidence.** The Solis S26 page explicitly describes a three-cylinder Mitsubishi engine. Its name/specification presentation contains S26 and S26+ labels, which makes a website name alone insufficient for parts fitment. [B14](https://solisworld.com/solis-s26-compact-tractor/)
+
+Diesel Equipment Trading describes itself as a Mitsubishi industrial engine distributor and European logistics centre. Its FAQ requires engine model, serial and application, offers manuals for purchase and restricts self-ordering accounts to customers with delivery/payment agreements. This supports collecting engine identifiers and seeking permission; it does not prove DET supplies every Solis engine or grants catalogue reuse. [B15](https://webshop.det-mitsubishi.com/faq.aspx)
+
+The global Solis parts page describes a German Yanmar joint venture parts hub and sub-48-hour delivery. Treat location/network and lead-time statements as company claims requiring operational confirmation, especially where a Dutch operational route may differ. Yanmar partnership does not establish that a particular Solis uses a Yanmar engine, and neither partnership nor public access grants catalogue redistribution or AI training rights. [B16](https://solisworld.com/tractor-parts/)
+
+**Product concept — proposal.** Start with an authorised parts desk: exact identifiers, evidence-backed candidate list, diagram link, fitment status, stale-data warning and a dealer confirmation action. Use text/OCR to help find candidate numbers; image similarity is an input to identification, never authority for fitment. Add ordering only after acknowledgement, stock semantics, customer entitlements, returns and catalogue licences are agreed. Do not fabricate catalogue coverage, part numbers or stock in prototypes.
+
+## Evidence-backed dealer needs and hypotheses
+
+| Need or concern | Who and workflow | Evidence and scope | Consequence and validation |
+|---|---|---|---|
+| Parts availability and technical support matter to channel relationship | Equipment dealers choosing/managing OEM lines | NAEDA primary survey overview explicitly includes parts availability, quality, returns, technical support, warranty and communication [B17]. It is North American, not Solis-specific | Supports prioritising parts/support discovery; does not measure Dutch Solis pain or prevalence |
+| Warranty and returns terms must be clear at onboarding | Dealer principal, finance and service manager | WEDA checklist hosted by NAEDA covers territory, financial/stock requirements, payment, returns, tools, training and warranty reimbursement [B18] | Build readiness checklist and named approvals; local contractual requirements must be supplied |
+| Perceived Solis parts support may influence selling preference | One self-described TYM/Solis dealer in New Hampshire | Reddit user japollner says parts availability/network affects preference for TYM; identity and experience unverified [B19] | Qualitative hypothesis that availability confidence can affect lead conversion; cannot generalise to NL |
+| Parts experience can be positive locally | One Solis/Summit owner | Reddit C-man14 reports local dealer and parts access [B20] | Contradictory anecdote discourages blanket shortage claim; investigate dealer/market/model differences |
+| Duplicate delivery inspection entry is a credible workflow target | Dealer technicians | AGCO's primary product description says offline PDI avoids print/process/re-entry [B07] | Benchmark problem, not observed Solis practice; shadow a Solis delivery |
+| Catalogue-to-local-stock mismatch needs exception handling | Parts counter and online customer | IntelliDealer documents selected EPC parts absent from local DMS and an email exception path [B11] | Design exception queue; count actual Solis mismatches and handling time |
+
+**Interview plan — proposed, not conducted.** Recruit a purposive pilot of 6–8 Dutch dealers spanning volume, tenure, workshop size and geography, plus importer sales, parts, warranty, finance and IT owners; include two recent applicants and two owners if available. These are suggested research counts, not statistically representative targets. Observe a recent tractor enquiry/quote, unidentified-part request, backorder, return, delivery/PDI, warranty case and first-order onboarding. Request redacted artefacts and time-stamp each handoff. Measure active handling time separately from elapsed waiting time; identify the system of record, repeated entry, exception rate and business cost in every case. Ask what works well and which existing portals would make a new platform redundant. Obtain privacy permissions before recording. Replay findings to participants; decide scope only after owner and dealer agreement.
+
+## Specific access limitations
+
+- No authenticated competitor portals were inspected. Public documentation is evidence of described functionality, not independent performance testing.
+- Deere Shop original fetch returned 403; Deere developer originals had no readable body; Deere warranty news original was JavaScript-only. These leads were not treated as verified feature evidence.
+- CNH 2024 sustainability PDF original was too large for browser tool, and a detailed official after-sales course page could not be opened. Search extracts were not promoted into verified claims.
+- NAEDA latest survey results link was password protected. No proprietary scores were acquired; no Dutch or Solis quantitative pain-point survey was found.
+- No integration, data licence, machine serial sample or parts catalogue from ITL was supplied.
