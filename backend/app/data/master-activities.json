@@ -1,0 +1,570 @@
+{
+  "source": "User-supplied Eagles Unbound master brief, pages 10–13",
+  "categories": [
+    {
+      "id": "A",
+      "name": "ADVENTURE AND OBSTACLE ACTIVITIES",
+      "activities": [
+        "ATV Ride on Track",
+        "Zip Line",
+        "Kids Zip Line",
+        "Wall Climbing",
+        "High Rope Course",
+        "Low Rope Course",
+        "Military Group Obstacle Race",
+        "Military-Style Individual Obstacle Course",
+        "Mud Obstacles for Kids",
+        "Rappelling",
+        "Trekking",
+        "Caving"
+      ]
+    },
+    {
+      "id": "B",
+      "name": "MILITARY AND SSB TRAINING",
+      "activities": [
+        "Progressive Group Task (PGT)",
+        "Group Obstacle Race (GOR)",
+        "Individual Obstacles",
+        "Military Group Obstacle Race",
+        "Military-Style Individual Obstacle Course"
+      ]
+    },
+    {
+      "id": "C",
+      "name": "SHOOTING AND ARCHERY",
+      "activities": [
+        "Air Rifle Shooting",
+        ".22 Rifle Shooting",
+        "Pelvic Rest Shooting",
+        "Standing Shooting",
+        "Target Practice",
+        "Recove Bow Shooting",
+        "Target Archery",
+        "Fun Archery Games",
+        "Archery for All Skill Levels"
+      ]
+    },
+    {
+      "id": "D",
+      "name": "TEAM BUILDING AND GROUP ACTIVITIES",
+      "activities": [
+        "Tug of War",
+        "Team-Building Activities",
+        "Group Games",
+        "Icebreaker Activities",
+        "Energizer Activities",
+        "Mind Games",
+        "Leadership Activities",
+        "Team Sports",
+        "Organised Tournaments"
+      ]
+    },
+    {
+      "id": "E",
+      "name": "OUTDOOR SPORTS AND GAMES",
+      "activities": [
+        "Cricket",
+        "Cricket Nets",
+        "Football",
+        "Volleyball",
+        "Mud Volleyball",
+        "Mud Football"
+      ]
+    },
+    {
+      "id": "F",
+      "name": "INDOOR GAMES",
+      "activities": [
+        "Chess",
+        "Carom"
+      ]
+    },
+    {
+      "id": "G",
+      "name": "WATER AND RECREATION",
+      "activities": [
+        "Rain Dance",
+        "Swimming Pool"
+      ]
+    },
+    {
+      "id": "H",
+      "name": "NATURE AND WILDLIFE",
+      "activities": [
+        "Morning Trek",
+        "Bird Watching",
+        "Nature Exploration"
+      ]
+    },
+    {
+      "id": "I",
+      "name": "KIDS SPECIAL EXPERIENCES",
+      "activities": [
+        "Pottery",
+        "Clay Modelling",
+        "Pottery Wheel",
+        "Animal Figurines",
+        "DIY Planters",
+        "Lanterns and Tealight Holders",
+        "Name Plates",
+        "Traditional Designs",
+        "Dairy Farming Experience",
+        "Cow Feeding",
+        "Animal Care",
+        "Milking Experience",
+        "Kitchen Gardening",
+        "Seed Ball Making",
+        "Herb Garden Making",
+        "Composting",
+        "Soil Exploration",
+        "Vermicomposting",
+        "Tractor Ride"
+      ]
+    },
+    {
+      "id": "J",
+      "name": "CAMPING AND OVERNIGHT EXPERIENCES",
+      "activities": [
+        "Tent Pitching",
+        "Night Camping",
+        "Campfire with Music",
+        "Campfire Games",
+        "Hiking for Sunrise Point",
+        "Outdoor Camping",
+        "Bird Watching"
+      ]
+    }
+  ],
+  "activities": [
+    {
+      "name": "ATV Ride on Track",
+      "categories": [
+        "ADVENTURE AND OBSTACLE ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Zip Line",
+      "categories": [
+        "ADVENTURE AND OBSTACLE ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Kids Zip Line",
+      "categories": [
+        "ADVENTURE AND OBSTACLE ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Wall Climbing",
+      "categories": [
+        "ADVENTURE AND OBSTACLE ACTIVITIES"
+      ]
+    },
+    {
+      "name": "High Rope Course",
+      "categories": [
+        "ADVENTURE AND OBSTACLE ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Low Rope Course",
+      "categories": [
+        "ADVENTURE AND OBSTACLE ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Military Group Obstacle Race",
+      "categories": [
+        "ADVENTURE AND OBSTACLE ACTIVITIES",
+        "MILITARY AND SSB TRAINING"
+      ]
+    },
+    {
+      "name": "Military-Style Individual Obstacle Course",
+      "categories": [
+        "ADVENTURE AND OBSTACLE ACTIVITIES",
+        "MILITARY AND SSB TRAINING"
+      ]
+    },
+    {
+      "name": "Mud Obstacles for Kids",
+      "categories": [
+        "ADVENTURE AND OBSTACLE ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Rappelling",
+      "categories": [
+        "ADVENTURE AND OBSTACLE ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Trekking",
+      "categories": [
+        "ADVENTURE AND OBSTACLE ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Caving",
+      "categories": [
+        "ADVENTURE AND OBSTACLE ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Progressive Group Task (PGT)",
+      "categories": [
+        "MILITARY AND SSB TRAINING"
+      ]
+    },
+    {
+      "name": "Group Obstacle Race (GOR)",
+      "categories": [
+        "MILITARY AND SSB TRAINING"
+      ]
+    },
+    {
+      "name": "Individual Obstacles",
+      "categories": [
+        "MILITARY AND SSB TRAINING"
+      ]
+    },
+    {
+      "name": "Air Rifle Shooting",
+      "categories": [
+        "SHOOTING AND ARCHERY"
+      ]
+    },
+    {
+      "name": ".22 Rifle Shooting",
+      "categories": [
+        "SHOOTING AND ARCHERY"
+      ]
+    },
+    {
+      "name": "Pelvic Rest Shooting",
+      "categories": [
+        "SHOOTING AND ARCHERY"
+      ]
+    },
+    {
+      "name": "Standing Shooting",
+      "categories": [
+        "SHOOTING AND ARCHERY"
+      ]
+    },
+    {
+      "name": "Target Practice",
+      "categories": [
+        "SHOOTING AND ARCHERY"
+      ]
+    },
+    {
+      "name": "Recove Bow Shooting",
+      "categories": [
+        "SHOOTING AND ARCHERY"
+      ]
+    },
+    {
+      "name": "Target Archery",
+      "categories": [
+        "SHOOTING AND ARCHERY"
+      ]
+    },
+    {
+      "name": "Fun Archery Games",
+      "categories": [
+        "SHOOTING AND ARCHERY"
+      ]
+    },
+    {
+      "name": "Archery for All Skill Levels",
+      "categories": [
+        "SHOOTING AND ARCHERY"
+      ]
+    },
+    {
+      "name": "Tug of War",
+      "categories": [
+        "TEAM BUILDING AND GROUP ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Team-Building Activities",
+      "categories": [
+        "TEAM BUILDING AND GROUP ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Group Games",
+      "categories": [
+        "TEAM BUILDING AND GROUP ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Icebreaker Activities",
+      "categories": [
+        "TEAM BUILDING AND GROUP ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Energizer Activities",
+      "categories": [
+        "TEAM BUILDING AND GROUP ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Mind Games",
+      "categories": [
+        "TEAM BUILDING AND GROUP ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Leadership Activities",
+      "categories": [
+        "TEAM BUILDING AND GROUP ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Team Sports",
+      "categories": [
+        "TEAM BUILDING AND GROUP ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Organised Tournaments",
+      "categories": [
+        "TEAM BUILDING AND GROUP ACTIVITIES"
+      ]
+    },
+    {
+      "name": "Cricket",
+      "categories": [
+        "OUTDOOR SPORTS AND GAMES"
+      ]
+    },
+    {
+      "name": "Cricket Nets",
+      "categories": [
+        "OUTDOOR SPORTS AND GAMES"
+      ]
+    },
+    {
+      "name": "Football",
+      "categories": [
+        "OUTDOOR SPORTS AND GAMES"
+      ]
+    },
+    {
+      "name": "Volleyball",
+      "categories": [
+        "OUTDOOR SPORTS AND GAMES"
+      ]
+    },
+    {
+      "name": "Mud Volleyball",
+      "categories": [
+        "OUTDOOR SPORTS AND GAMES"
+      ]
+    },
+    {
+      "name": "Mud Football",
+      "categories": [
+        "OUTDOOR SPORTS AND GAMES"
+      ]
+    },
+    {
+      "name": "Chess",
+      "categories": [
+        "INDOOR GAMES"
+      ]
+    },
+    {
+      "name": "Carom",
+      "categories": [
+        "INDOOR GAMES"
+      ]
+    },
+    {
+      "name": "Rain Dance",
+      "categories": [
+        "WATER AND RECREATION"
+      ]
+    },
+    {
+      "name": "Swimming Pool",
+      "categories": [
+        "WATER AND RECREATION"
+      ]
+    },
+    {
+      "name": "Morning Trek",
+      "categories": [
+        "NATURE AND WILDLIFE"
+      ]
+    },
+    {
+      "name": "Bird Watching",
+      "categories": [
+        "NATURE AND WILDLIFE",
+        "CAMPING AND OVERNIGHT EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Nature Exploration",
+      "categories": [
+        "NATURE AND WILDLIFE"
+      ]
+    },
+    {
+      "name": "Pottery",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Clay Modelling",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Pottery Wheel",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Animal Figurines",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "DIY Planters",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Lanterns and Tealight Holders",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Name Plates",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Traditional Designs",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Dairy Farming Experience",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Cow Feeding",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Animal Care",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Milking Experience",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Kitchen Gardening",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Seed Ball Making",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Herb Garden Making",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Composting",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Soil Exploration",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Vermicomposting",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Tractor Ride",
+      "categories": [
+        "KIDS SPECIAL EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Tent Pitching",
+      "categories": [
+        "CAMPING AND OVERNIGHT EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Night Camping",
+      "categories": [
+        "CAMPING AND OVERNIGHT EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Campfire with Music",
+      "categories": [
+        "CAMPING AND OVERNIGHT EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Campfire Games",
+      "categories": [
+        "CAMPING AND OVERNIGHT EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Hiking for Sunrise Point",
+      "categories": [
+        "CAMPING AND OVERNIGHT EXPERIENCES"
+      ]
+    },
+    {
+      "name": "Outdoor Camping",
+      "categories": [
+        "CAMPING AND OVERNIGHT EXPERIENCES"
+      ]
+    }
+  ]
+}

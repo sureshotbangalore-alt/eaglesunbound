@@ -1,0 +1,314 @@
+[
+  {
+    "slug": "school-day-outing",
+    "name": "School Day Outing",
+    "description": "Hands-on outdoor and farm-based learning for school groups, with opportunities for curiosity, active play and teamwork.",
+    "details": {
+      "audience": "School",
+      "activities": [
+        "Tractor Ride",
+        "Pottery",
+        "Soft Archery",
+        "Low Rope Course",
+        "Rain Dance",
+        "Farm Interaction Activities",
+        "Interactive Team Games",
+        "Zip Line",
+        "Mud Obstacles for Kids"
+      ],
+      "source": "User-supplied master brief, pages 14–20",
+      "enquiry_only": true,
+      "confirmation_required": [
+        "Current availability",
+        "Exact schedule",
+        "Activity suitability",
+        "Final menu"
+      ],
+      "reported_check_in": "08:00",
+      "reported_check_out": "17:00",
+      "highlights": "Sensory and social skills, environmental awareness, active play and hands-on learning.",
+      "menus": {
+        "Breakfast": [
+          "Idli",
+          "Sambar",
+          "Chutney",
+          "Chhole Bhature",
+          "Poha / Upma",
+          "Cut Fruits",
+          "Tea / Coffee"
+        ],
+        "Lunch": [
+          "Puri / Chapati",
+          "Paneer Curry",
+          "Noodles",
+          "Gobi Manchurian",
+          "Fried Rice / White Rice",
+          "Rasam",
+          "Sweet",
+          "Pickle",
+          "Papad"
+        ],
+        "Hi-Tea": [
+          "French Fries",
+          "Juice / Tea"
+        ]
+      }
+    }
+  },
+  {
+    "slug": "outbound-student-activities",
+    "name": "Outbound Student Activities",
+    "description": "An outdoor group experience focused on teamwork, courage, confidence and leadership.",
+    "details": {
+      "audience": "School",
+      "activities": [
+        "Wall Climbing",
+        "High Rope Course",
+        "Low Rope Course",
+        "Zip Line",
+        "Rain Dance",
+        "Archery",
+        "Air Rifle Shooting",
+        "Group Games",
+        "Individual Army-Inspired Obstacles",
+        "Team Building Activities"
+      ],
+      "source": "User-supplied master brief, pages 14–20",
+      "enquiry_only": true,
+      "confirmation_required": [
+        "Current availability",
+        "Exact schedule",
+        "Activity suitability",
+        "Final menu"
+      ],
+      "reported_eligibility": "6th Standard and Above",
+      "reported_minimum_group": 100,
+      "menus": {
+        "Breakfast": [
+          "Idli",
+          "Sambar",
+          "Chutney",
+          "Chhole Bhature",
+          "Poha / Upma",
+          "Cut Fruits",
+          "Tea / Coffee"
+        ],
+        "Lunch": [
+          "Roti / Puri",
+          "Paneer Curry / Chhole",
+          "Veg Biryani / Curd Rice",
+          "White Rice",
+          "Rasam",
+          "Sweet",
+          "Pickle",
+          "Papad"
+        ],
+        "Hi-Tea": [
+          "Pakode / Bhaji",
+          "Coffee / Tea"
+        ]
+      }
+    }
+  },
+  {
+    "slug": "college-adventure-program",
+    "name": "College Adventure Program",
+    "description": "Strategy-led outdoor experiences for college groups, centred on communication, collaboration and shared challenges.",
+    "details": {
+      "audience": "College",
+      "activities": [
+        "High Rope Course",
+        "Group Obstacle Race / Snake Race",
+        "Individual Army-Inspired Obstacles",
+        "Team Building Activities",
+        "Mind Games",
+        "Rain Dance",
+        "Energizer Activities",
+        "Icebreaker Activities",
+        "Zip Line",
+        "Wall Climbing",
+        "Team Sports",
+        "Air Rifle Shooting",
+        "Archery"
+      ],
+      "source": "User-supplied master brief, pages 14–20",
+      "enquiry_only": true,
+      "confirmation_required": [
+        "Current availability",
+        "Exact schedule",
+        "Activity suitability",
+        "Final menu"
+      ],
+      "reported_minimum_group": 100,
+      "menus": {
+        "Breakfast": [
+          "Idli",
+          "Sambar",
+          "Chutney",
+          "Chhole Bhature",
+          "Poha / Upma",
+          "Cut Fruits",
+          "Tea / Coffee"
+        ],
+        "Lunch": [
+          "Roti / Puri",
+          "Paneer Curry / Chhole",
+          "Veg Biryani / Curd Rice",
+          "White Rice",
+          "Rasam",
+          "Sweet",
+          "Pickle",
+          "Papad"
+        ],
+        "Hi-Tea": [
+          "Pakode / Bhaji",
+          "Coffee / Tea"
+        ]
+      }
+    }
+  },
+  {
+    "slug": "overnight-stay-program",
+    "name": "Overnight Stay Program",
+    "description": "Explore an overnight outdoor experience combining adventure, time together and nature.",
+    "details": {
+      "audience": "School, College, Corporate, Family",
+      "activities": [
+        "Wall Climbing",
+        "High Rope Course",
+        "Low Rope Course",
+        "Zip Line",
+        "Rain Dance",
+        "Archery",
+        "Air Rifle Shooting",
+        "Group Games",
+        "Individual Army-Inspired Obstacles",
+        "Team Building Activities",
+        "Campfire with Music",
+        "Energizer Activities",
+        "Icebreaker Activities",
+        "Hiking for Sunrise Point",
+        "Tent Pitching"
+      ],
+      "source": "User-supplied master brief, pages 14–20",
+      "enquiry_only": true,
+      "confirmation_required": [
+        "Current availability",
+        "Exact schedule",
+        "Activity suitability",
+        "Final menu"
+      ],
+      "reported_duration": "2 Days / 1 Night",
+      "reported_minimum_group": 100,
+      "menus": {
+        "Breakfast": [
+          "Idli",
+          "Sambar",
+          "Chutney",
+          "Chhole Bhature",
+          "Poha / Upma",
+          "Cut Fruits",
+          "Tea / Coffee"
+        ],
+        "Lunch": [
+          "Roti / Puri",
+          "Paneer Curry / Chhole",
+          "Veg Biryani / Curd Rice",
+          "White Rice",
+          "Rasam",
+          "Sweet",
+          "Pickle",
+          "Papad"
+        ],
+        "Hi-Tea": [
+          "Pakode / Bhaji",
+          "Coffee / Tea"
+        ],
+        "Dinner": [
+          "Veg Fried Rice",
+          "Veg Noodles",
+          "Veg Manchurian Gravy",
+          "Mix Veg Sabji",
+          "Roti",
+          "Kesari Bhat"
+        ]
+      },
+      "suggested_flow": [
+        "Arrival",
+        "Breakfast",
+        "Adventure activities",
+        "Team challenges",
+        "Lunch",
+        "Outdoor activities",
+        "Evening recreation",
+        "Campfire",
+        "Dinner",
+        "Tent pitching",
+        "Night camping",
+        "Sunrise hike",
+        "Nature experience",
+        "Breakfast",
+        "Departure"
+      ]
+    }
+  },
+  {
+    "slug": "corporate-team-building",
+    "name": "Corporate Team Building",
+    "description": "A programme conversation for organisations looking for team bonding, communication, trust and shared problem-solving outdoors.",
+    "details": {
+      "audience": "Corporate",
+      "activities": [
+        "High Rope Course",
+        "Group Obstacle Race / Snake Race",
+        "Individual Army-Inspired Obstacles",
+        "Team Building Activities",
+        "Mind Games",
+        "Rain Dance",
+        "Energizer Activities",
+        "Icebreaker Activities",
+        "Zip Line",
+        "Wall Climbing",
+        "Team Sports",
+        "Air Rifle Shooting",
+        "Archery",
+        "Tug of War",
+        "Group Games"
+      ],
+      "source": "User-supplied master brief, pages 14–20",
+      "enquiry_only": true,
+      "confirmation_required": [
+        "Current availability",
+        "Exact schedule",
+        "Activity suitability",
+        "Final menu"
+      ],
+      "highlights": "Team bonding, leadership, communication, collaboration, trust, problem solving, strategic thinking and employee engagement."
+    }
+  },
+  {
+    "slug": "outdoor-adventure-program",
+    "name": "Outdoor Adventure Program",
+    "description": "A customised outdoor programme enquiry focused on exploration, nature, physical challenges and team bonding.",
+    "details": {
+      "audience": "College, Corporate, Family, Individual",
+      "activities": [
+        "Trekking",
+        "Caving",
+        "Rappelling",
+        "Team Building Activities",
+        "Nature Exploration",
+        "Bird Watching",
+        "Morning Trek"
+      ],
+      "source": "User-supplied master brief, pages 14–20",
+      "enquiry_only": true,
+      "confirmation_required": [
+        "Current availability",
+        "Exact schedule",
+        "Activity suitability",
+        "Final menu"
+      ]
+    }
+  }
+]
