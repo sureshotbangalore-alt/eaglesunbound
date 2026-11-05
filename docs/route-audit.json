@@ -1,0 +1,549 @@
+{
+  "checked_urls": [
+    {
+      "path": "/",
+      "status": 200
+    },
+    {
+      "path": "/the-bootcamp",
+      "status": 200
+    },
+    {
+      "path": "/what-we-offer",
+      "status": 200
+    },
+    {
+      "path": "/activities",
+      "status": 200
+    },
+    {
+      "path": "/packages",
+      "status": 200
+    },
+    {
+      "path": "/clients",
+      "status": 200
+    },
+    {
+      "path": "/about",
+      "status": 200
+    },
+    {
+      "path": "/gallery",
+      "status": 200
+    },
+    {
+      "path": "/book-now",
+      "status": 200
+    },
+    {
+      "path": "/contact",
+      "status": 200
+    },
+    {
+      "path": "/faqs",
+      "status": 200
+    },
+    {
+      "path": "/privacy-policy",
+      "status": 200
+    },
+    {
+      "path": "/terms-and-conditions",
+      "status": 200
+    },
+    {
+      "path": "/booking-policy",
+      "status": 200
+    },
+    {
+      "path": "/admin",
+      "status": 200
+    },
+    {
+      "path": "/admin/login",
+      "status": 200
+    },
+    {
+      "path": "/admin/dashboard",
+      "status": 200
+    },
+    {
+      "path": "/admin/pages",
+      "status": 200
+    },
+    {
+      "path": "/admin/programmes",
+      "status": 200
+    },
+    {
+      "path": "/admin/activities",
+      "status": 200
+    },
+    {
+      "path": "/admin/packages",
+      "status": 200
+    },
+    {
+      "path": "/admin/bookings",
+      "status": 200
+    },
+    {
+      "path": "/admin/enquiries",
+      "status": 200
+    },
+    {
+      "path": "/admin/gallery",
+      "status": 200
+    },
+    {
+      "path": "/admin/clients",
+      "status": 200
+    },
+    {
+      "path": "/admin/media",
+      "status": 200
+    },
+    {
+      "path": "/admin/settings",
+      "status": 200
+    },
+    {
+      "path": "/admin/seo",
+      "status": 200
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200
+    },
+    {
+      "path": "/missing-route-check",
+      "status": 404,
+      "expected": true
+    },
+    {
+      "path": "/bootcamp",
+      "status": 200
+    },
+    {
+      "path": "/programmes",
+      "status": 200
+    },
+    {
+      "path": "/book",
+      "status": 200
+    },
+    {
+      "path": "/contact-us",
+      "status": 200
+    },
+    {
+      "path": "/kids-experiences",
+      "status": 200
+    },
+    {
+      "path": "/schools-and-colleges",
+      "status": 200
+    },
+    {
+      "path": "/founder",
+      "status": 200
+    },
+    {
+      "path": "/corporate",
+      "status": 200
+    },
+    {
+      "path": "/accommodation",
+      "status": 200
+    },
+    {
+      "path": "/food-and-dining",
+      "status": 200
+    },
+    {
+      "path": "/mission-selector",
+      "status": 200
+    },
+    {
+      "path": "/explore",
+      "status": 200
+    },
+    {
+      "path": "/testimonials",
+      "status": 200
+    },
+    {
+      "path": "/programmes/corporate-unbound",
+      "status": 200
+    },
+    {
+      "path": "/programmes/students-unbound",
+      "status": 200
+    },
+    {
+      "path": "/programmes/adventure-unbound",
+      "status": 200
+    },
+    {
+      "path": "/programmes/school-day-outing",
+      "status": 200
+    },
+    {
+      "path": "/programmes/outbound-student-activities",
+      "status": 200
+    },
+    {
+      "path": "/programmes/college-adventure-program",
+      "status": 200
+    },
+    {
+      "path": "/programmes/overnight-stay-program",
+      "status": 200
+    },
+    {
+      "path": "/programmes/corporate-team-building",
+      "status": 200
+    },
+    {
+      "path": "/programmes/outdoor-adventure-program",
+      "status": 200
+    },
+    {
+      "path": "/activities/individual-army-inspired-obstacles",
+      "status": 200
+    },
+    {
+      "path": "/activities/group-obstacle-race-snake-race",
+      "status": 200
+    },
+    {
+      "path": "/activities/wall-climbing",
+      "status": 200
+    },
+    {
+      "path": "/activities/high-rope-course",
+      "status": 200
+    },
+    {
+      "path": "/activities/low-rope-course",
+      "status": 200
+    },
+    {
+      "path": "/activities/zip-line",
+      "status": 200
+    },
+    {
+      "path": "/activities/archery",
+      "status": 200
+    },
+    {
+      "path": "/activities/air-rifle-shooting",
+      "status": 200
+    },
+    {
+      "path": "/activities/team-building-activities",
+      "status": 200
+    },
+    {
+      "path": "/activities/mind-games",
+      "status": 200
+    },
+    {
+      "path": "/activities/trekking",
+      "status": 200
+    },
+    {
+      "path": "/activities/camping",
+      "status": 200
+    },
+    {
+      "path": "/activities/bonfire",
+      "status": 200
+    },
+    {
+      "path": "/activities/rain-dance",
+      "status": 200
+    },
+    {
+      "path": "/activities/atv-ride-on-track",
+      "status": 200
+    },
+    {
+      "path": "/activities/kids-zip-line",
+      "status": 200
+    },
+    {
+      "path": "/activities/mud-obstacles-for-kids",
+      "status": 200
+    },
+    {
+      "path": "/activities/rappelling",
+      "status": 200
+    },
+    {
+      "path": "/activities/caving",
+      "status": 200
+    },
+    {
+      "path": "/activities/progressive-group-task-pgt",
+      "status": 200
+    },
+    {
+      "path": "/activities/target-archery",
+      "status": 200
+    },
+    {
+      "path": "/activities/fun-archery-games",
+      "status": 200
+    },
+    {
+      "path": "/activities/archery-for-all-skill-levels",
+      "status": 200
+    },
+    {
+      "path": "/activities/tug-of-war",
+      "status": 200
+    },
+    {
+      "path": "/activities/group-games",
+      "status": 200
+    },
+    {
+      "path": "/activities/icebreaker-activities",
+      "status": 200
+    },
+    {
+      "path": "/activities/energizer-activities",
+      "status": 200
+    },
+    {
+      "path": "/activities/leadership-activities",
+      "status": 200
+    },
+    {
+      "path": "/activities/team-sports",
+      "status": 200
+    },
+    {
+      "path": "/activities/organised-tournaments",
+      "status": 200
+    },
+    {
+      "path": "/activities/cricket",
+      "status": 200
+    },
+    {
+      "path": "/activities/cricket-nets",
+      "status": 200
+    },
+    {
+      "path": "/activities/football",
+      "status": 200
+    },
+    {
+      "path": "/activities/volleyball",
+      "status": 200
+    },
+    {
+      "path": "/activities/mud-volleyball",
+      "status": 200
+    },
+    {
+      "path": "/activities/mud-football",
+      "status": 200
+    },
+    {
+      "path": "/activities/chess",
+      "status": 200
+    },
+    {
+      "path": "/activities/carom",
+      "status": 200
+    },
+    {
+      "path": "/activities/swimming-pool",
+      "status": 200
+    },
+    {
+      "path": "/activities/morning-trek",
+      "status": 200
+    },
+    {
+      "path": "/activities/bird-watching",
+      "status": 200
+    },
+    {
+      "path": "/activities/nature-exploration",
+      "status": 200
+    },
+    {
+      "path": "/activities/pottery",
+      "status": 200
+    },
+    {
+      "path": "/activities/clay-modelling",
+      "status": 200
+    },
+    {
+      "path": "/activities/pottery-wheel",
+      "status": 200
+    },
+    {
+      "path": "/activities/animal-figurines",
+      "status": 200
+    },
+    {
+      "path": "/activities/diy-planters",
+      "status": 200
+    },
+    {
+      "path": "/activities/lanterns-and-tealight-holders",
+      "status": 200
+    },
+    {
+      "path": "/activities/name-plates",
+      "status": 200
+    },
+    {
+      "path": "/activities/traditional-designs",
+      "status": 200
+    },
+    {
+      "path": "/activities/dairy-farming-experience",
+      "status": 200
+    },
+    {
+      "path": "/activities/cow-feeding",
+      "status": 200
+    },
+    {
+      "path": "/activities/animal-care",
+      "status": 200
+    },
+    {
+      "path": "/activities/milking-experience",
+      "status": 200
+    },
+    {
+      "path": "/activities/kitchen-gardening",
+      "status": 200
+    },
+    {
+      "path": "/activities/seed-ball-making",
+      "status": 200
+    },
+    {
+      "path": "/activities/herb-garden-making",
+      "status": 200
+    },
+    {
+      "path": "/activities/composting",
+      "status": 200
+    },
+    {
+      "path": "/activities/soil-exploration",
+      "status": 200
+    },
+    {
+      "path": "/activities/vermicomposting",
+      "status": 200
+    },
+    {
+      "path": "/activities/tractor-ride",
+      "status": 200
+    },
+    {
+      "path": "/activities/tent-pitching",
+      "status": 200
+    },
+    {
+      "path": "/activities/night-camping",
+      "status": 200
+    },
+    {
+      "path": "/activities/campfire-with-music",
+      "status": 200
+    },
+    {
+      "path": "/activities/campfire-games",
+      "status": 200
+    },
+    {
+      "path": "/activities/hiking-for-sunrise-point",
+      "status": 200
+    },
+    {
+      "path": "/activities/outdoor-camping",
+      "status": 200
+    },
+    {
+      "path": "/activities/soft-archery",
+      "status": 200
+    },
+    {
+      "path": "/activities/farm-interaction-activities",
+      "status": 200
+    },
+    {
+      "path": "/activities/interactive-team-games",
+      "status": 200
+    },
+    {
+      "path": "/_next/image?url=%2Fassets%2Fcamp.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "path": "/_next/image?url=%2Fassets%2Feagles-unbound-logo.png&w=640&q=75",
+      "status": 200
+    },
+    {
+      "path": "/_next/image?url=%2Fassets%2Fforest.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "path": "/_next/image?url=%2Fassets%2Flandscape.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/f523b72c6203cb9e.css",
+      "status": 200
+    }
+  ],
+  "broken_urls": [],
+  "redirected_urls": [
+    {
+      "from": "/bootcamp",
+      "to": "/the-bootcamp"
+    },
+    {
+      "from": "/programmes",
+      "to": "/what-we-offer"
+    },
+    {
+      "from": "/book",
+      "to": "/book-now"
+    },
+    {
+      "from": "/contact-us",
+      "to": "/contact"
+    }
+  ],
+  "warnings": [],
+  "external_urls_not_probed": [
+    "https://www.google.com/maps/search/?api=1&query=KMS%20Farms%2C%20Sy%20No%2023%2C%20Naukalpalya%2C%20Kaggalipura%2C%20off%20Kanakapura%20Road%2C%20South%20Bengaluru%2C%20Karnataka%20560082"
+  ],
+  "unconfigured_external_urls": [
+    "WhatsApp business number",
+    "Public email",
+    "Facebook",
+    "Instagram",
+    "YouTube",
+    "Verified Google Business Profile"
+  ],
+  "browser_checks": "Not run: browser preview permission was denied. Playwright suite provided separately."
+}

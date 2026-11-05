@@ -1,0 +1,8 @@
+import Link from 'next/link';
+import { Coffee, Utensils, Sun, Moon, ArrowUpRight } from 'lucide-react';
+import type { ContentRecord } from '@/lib/api';
+import { SplitLines } from './split-text';
+export function MenuCollection({programmes}:{programmes:ContentRecord[]}){
+ const menus=programmes.filter(p=>p.details.menus&&typeof p.details.menus==='object');
+ return <section className="content-section dining-content"><div className="dining-intro"><SplitLines text={'Refuel.\nReconnect.'} className="display-xl"/><p className="lead">Gather around a meal. Explore the options for your programme and share your dietary preferences with the team.</p></div><p className="notice">Menus and meal inclusions depend on the selected programme and are confirmed with the team. The following menu options are not a promise that every dish or meal is included.</p><div className="menu-collection">{menus.map((p,i)=><details className="meal-programme" key={p.id} open={i===0} data-reveal><summary><span className="meal-index">{String(i+1).padStart(2,'0')}</span><h2>{p.name}</h2><span className="meal-plus" aria-hidden="true">+</span></summary><div className="meal-grid">{Object.entries(p.details.menus as Record<string,string[]>).map(([meal,items])=>{const Icon=/break/i.test(meal)?Coffee:/lunch/i.test(meal)?Sun:/dinner/i.test(meal)?Moon:Utensils;return <div className="meal-course" key={meal}><Icon size={30} strokeWidth={1}/><h3>{meal}</h3><ul>{items.map((item,n)=><li key={n}>{item}</li>)}</ul></div>})}</div><Link className="text-link dark-link" href={`/book-now?programme=${p.slug}`}>Discuss meals for this programme <ArrowUpRight size={16}/></Link></details>)}</div></section>;
+}

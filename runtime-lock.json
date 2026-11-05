@@ -1,0 +1,14 @@
+{
+  "node": "22.20.0",
+  "npm": "11.6.2",
+  "python": "3.12.10",
+  "postgresql": "17.6",
+  "images": {
+    "node": "node:22.20.0-bookworm-slim@sha256:b21fe589dfbe5cc39365d0544b9be3f1f33f55f3c86c87a76ff65a02f8f5848e",
+    "python": "python:3.12.10-slim-bookworm@sha256:fd95fa221297a88e1cf49c55ec1828edd7c5a428187e67b5d1805692d11588db",
+    "postgres": "postgres:17.6-alpine3.22@sha256:ef257d85f76e48da1c64832459b59fcaba1a4dac97bf5d7450c77753542eee94"
+  },
+  "postgresql_execution_verified": false,
+  "sqlite_local": "3.49.1",
+  "git_observed": "2.52.0.windows.1"
+}
