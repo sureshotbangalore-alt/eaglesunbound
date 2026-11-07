@@ -1,6 +1,6 @@
 > Current site: 12 main public pages. Activity and programme details are merged into their catalogues; Gallery is retired. See `docs/page-consolidation.md` and `docs/lightweight-hosting.md` for the current structure and hosting requirements. Historical verification notes below may describe earlier revisions.
 
-# Eagles Unbound — by YOA Labs
+# Eagles Unbound
 
 A local full-stack website implementation with Next.js 16, React 19, TypeScript, Tailwind 4, Motion, FastAPI, SQLAlchemy and Alembic. PostgreSQL is the deployment database; SQLite is an explicit local development alternative. The official supplied logo is preserved unchanged.
 
@@ -59,7 +59,7 @@ Compose runs PostgreSQL 17.6 (immutable image digest), applies Alembic migration
 
 Three roles are enforced by the API, not just hidden in the interface:
 
-- **Super Admin** (`admin`, YOA Labs): full access, including `/admin/users` to create accounts, change roles, enable or disable accounts and reset passwords. A Super Admin cannot disable or demote their own account.
+- **Super Admin** (`admin`,  ): full access, including `/admin/users` to create accounts, change roles, enable or disable accounts and reset passwords. A Super Admin cannot disable or demote their own account.
 - **Content editor** (`editor`): website content only. Cannot read customer requests, export them, edit business settings or manage users.
 - **Staff viewer** (`staff_viewer`, Eagles Unbound team): signs in to `/admin/requests`, a simple read-only list of bookings and enquiries (customer contact details, programme, preferred date, participants, message, status). Staff are denied by default: the API accepts them only on `/admin/me`, `/admin/logout`, `/admin/staff/bookings` and `/admin/staff/enquiries`, and returns 403 everywhere else, including any admin route added later. Internal notes are never included.
 
