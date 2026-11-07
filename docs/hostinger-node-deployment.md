@@ -29,7 +29,7 @@ Set these in the Hostinger panel (Environment variables). **Names and safe value
 | `DB_PASSWORD` | your database password | **secret**: set it only in the Hostinger panel |
 | `ALLOW_DB_WRITES` | `false` | **Read-only mode** (the default). Set to exactly `true` only when the site should save data. |
 | `NEXT_PUBLIC_API_URL` | `/api` | where the browser calls the API |
-| `API_INTERNAL_URL` | `/api` | where server rendering calls the API. `/api` means this same process: `http://127.0.0.1:<PORT>/api`. An absolute `https://…/api` is used as given |
+| `API_INTERNAL_URL` | `/api` | fallback only: server rendering reads data directly in the same process (no HTTP). If that is unavailable, an absolute `https://…/api` here is used, otherwise `https://eagles.ssbsureshot.in/api` |
 | `CORS_ORIGINS` | `https://eagles.ssbsureshot.in` | comma-separated https origins. Add the custom domain later, no code change. Also sets the canonical site address. |
 | `TRUST_PROXY` | `1` | one Hostinger reverse proxy. Never `true`. |
 | `PORT` | provided by Hostinger | do not set it yourself. The server uses it whenever it exists; if none is provided it falls back to 3000. A `PORT` that is set but not a valid port number stops the start with a clear message. |

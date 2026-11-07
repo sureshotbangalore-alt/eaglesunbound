@@ -4,8 +4,28 @@ export type HomeContent = { eyebrow: string; hero_title: string; hero_secondary?
 export type ContentRecord = { id: string; slug: string; name: string; description: string; image: string; published: boolean; display_order: number; details: Record<string, unknown> };
 export type ContactSettings = { phone: string; whatsapp: string; email: string; address: string; whatsapp_message: string; maps_url?: string; business_profile_url?: string; instagram?: string; facebook?: string; youtube?: string };
 
+type ServerDataReader = (path: string) => Promise<unknown>;
+// Set by backend/src/server.ts: reads public data directly in this same process (backend/src/public-data.ts).
+const SERVER_DATA_KEY = Symbol.for('eaglesunbound.serverData');
+const directReader = () => (globalThis as Record<symbol, unknown>)[SERVER_DATA_KEY] as ServerDataReader | undefined;
+// A short, safe error code only: an HTTP status or a driver code such as ER_ACCESS_DENIED_ERROR, never a message.
+const safeCode = (error: unknown) => {
+  const e = error as { status?: unknown; code?: unknown } | null;
+  if (typeof e?.status === 'number') return `HTTP_${e.status}`;
+  return typeof e?.code === 'string' && /^[A-Z0-9_]+$/.test(e.code) ? e.code : 'UNKNOWN';
+};
+
 export async function serverAPI<T>(path: string): Promise<T> {
-  // http://127.0.0.1:<PORT>/api on this same process, or an absolute API_INTERNAL_URL (see internal-api-url.ts).
+  const read = directReader();
+  if (read) {
+    try {
+      return (await read(path)) as T;
+    } catch (error) {
+      console.error(JSON.stringify({ event: 'ssr_data_failed', path, code: safeCode(error) }));
+      throw new Error('The experience is temporarily unavailable. Please try again shortly.');
+    }
+  }
+  // Fallback when the site is not started through backend/dist/server.js: an absolute URL only (see internal-api-url.ts).
   const base = internalAPIURL();
   let response: Response;
   try {

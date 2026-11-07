@@ -61,7 +61,7 @@ export async function setup(options: {env?: Record<string, string>; storage?: St
   const server: Server = await new Promise(resolve => { const s = api.app.listen(0, '127.0.0.1', () => resolve(s)); });
   const base = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
   return {
-    db, base, programmeId: programme.id as string, limiter: api.limiter,
+    db, base, programmeId: programme.id as string, limiter: api.limiter, readPublic: api.readPublic,
     client: () => new Client(base),
     find: (table: string, where: string, values: unknown[] = []) => one(db, table, where, values) as Promise<Row | undefined>,
     async close() { await new Promise(resolve => server.close(resolve)); await db.close(); },

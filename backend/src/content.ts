@@ -1,7 +1,8 @@
-import {type Database,type Row,rows,one,insert,update,remove,audit} from './database';
-import {createRouter,response,admin,modelFor,publicDetails,publicPaths,editablePages,pick} from './core';
+import {type Row,rows,one,insert,update,remove,audit} from './database';
+import {createRouter,response,admin,modelFor,publicPaths,editablePages} from './core';
 import {fail} from './validation';
 import {checkDatabase} from './db-health';
+import {homeContent,contactSettings,pageUpdates,publicModule} from './public-data';
 type API=ReturnType<typeof createRouter>;
 export function registerContent({route,router,db:database}:API){
  // Health: SELECT 1 only, outside the request transaction, so a database problem gives a clear 503 instead of a generic 500.
@@ -11,23 +12,11 @@ export function registerContent({route,router,db:database}:API){
   if(result.ok)return res.json({status:'ok'});
   res.status(503).json({status:'unavailable',detail:'database unavailable',code:result.code,...(result.errorCode?{error_code:result.errorCode}:{})});
  });
- const home=async(db:Database)=>{const row=await one(db,'page_content','slug=?',['home']);if(!row)fail(503,'Content has not been seeded');return row.content};
- const contact=async(db:Database)=>(await one(db,'site_settings','`key`=?',['contact']))?.value||{};
+ const home=homeContent,contact=contactSettings;
  route('get','/public/home',async({db})=>response(await home(db)));
  route('get','/public/settings',async({db})=>response(await contact(db)));
- route('get','/public/page-updates',async({db})=>{
-  const dates:Record<string,string>={};const add=(path:string,date:string)=>{const normalized=date.replace(' ','T').replace(/(?:Z|\+00:00)$/,'')+'+00:00';if(!dates[path]||dates[path]<normalized)dates[path]=normalized};
-  for(const row of await rows(db,'page_content'))if(row.slug==='home'||row.content.published){const path=row.slug==='home'?'/':'/'+row.slug;if(publicPaths.includes(path))add(path,row.updated_at)}
-  for(const [path,table]of [['/what-we-offer','programmes'],['/activities','activities'],['/contact','faqs']])for(const row of await rows(db,table,'published=?',[1]))add(path,row.updated_at);
-  for(const row of await rows(db,'site_settings','`key` LIKE ?',['seo:%']))if(publicPaths.includes(row.value.page))add(row.value.page,row.updated_at);return response(dates);
- });
- route('get','/public/:module',async({db,req})=>{
-  const module=String(req.params.module);
-  if(module==='faqs')return response(await rows(db,'faqs','published=?',[1],'ORDER BY display_order'));
-  if(module==='seo')return response((await rows(db,'site_settings','`key` LIKE ?',['seo:%'])).map(x=>x.value));
-  if(module==='pages')return response((await rows(db,'page_content','slug<>?',['home'])).filter(x=>x.content.published).map(x=>({slug:x.slug,...x.content})));
-  return response((await rows(db,modelFor(module),'published=?',[1],'ORDER BY display_order')).map(row=>({...pick(row,['id','slug','name','description','image','published','display_order','created_at','updated_at']),details:publicDetails(row.details)})));
- });
+ route('get','/public/page-updates',async({db})=>response(await pageUpdates(db)));
+ route('get','/public/:module',async({db,req})=>response(await publicModule(db,String(req.params.module))));
  route('get','/admin/master-review',async({db,user})=>{admin(user);return response((await one(db,'site_settings','`key`=?',['master_review']))?.value||{})});
  route('get','/admin/pages/:slug',async({db,req})=>{const slug=String(req.params.slug);if(!editablePages.has(slug))fail(404);return response((await one(db,'page_content','slug=?',[slug]))?.content||{title:'',intro:'',sections:[],published:false})});
  route('put','/admin/pages/:slug',async({db,user,req,body})=>{

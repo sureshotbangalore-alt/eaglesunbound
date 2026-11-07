@@ -6,6 +6,7 @@ import {configFrom,ConfigError} from './config';
 import {loadEnvFiles,defaultEnvFiles} from './env';
 import {MySQLDatabase} from './database';
 import {createAPI} from './api';
+import {SERVER_DATA_KEY} from './public-data';
 
 const root=resolve(__dirname,'../..');
 // Listen on every interface so Hostinger's reverse proxy can reach the app.
@@ -29,7 +30,8 @@ async function main(){
  let nextApp:ReturnType<typeof next>|undefined;
  if(apiOnly)app.use(api.app);
  else {
-  // Server-side rendering calls the API on this same process at 127.0.0.1 and PORT (frontend/src/lib/internal-api-url.ts).
+  // Server-side rendering reads public data directly in this process (no HTTP call to ourselves; see frontend/src/lib/api.ts).
+  (globalThis as Record<symbol,unknown>)[SERVER_DATA_KEY]=api.readPublic;
   nextApp=next({dev,dir:resolve(root,'frontend'),hostname:'0.0.0.0',port:config.port,webpack:dev});
   await nextApp.prepare();const handler=nextApp.getRequestHandler();app.use((req,res)=>handler(req,res));
  }
