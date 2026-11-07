@@ -27,6 +27,13 @@ Set `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` (and `DB_SSL`, `DB
 | `npm run db:check` | Compares the live schema with what the API expects (tables, columns, types) | No (reads `INFORMATION_SCHEMA` only) |
 | `npm run db:seed -- --admin-only` | Creates the administrator from `ADMIN_EMAIL`/`ADMIN_PASSWORD` if that email does not exist | Inserts one row |
 | `npm run db:seed` | Inserts starter content (pages, programmes, activities, FAQs, master catalogue) on an empty database; refuses if homepage content exists | Inserts rows only |
+| `npm run db:create-user -- --email <address> --role <admin\|staff_viewer> --password-from <ENV_VAR_NAME>` | Creates one account (same validation as Users & roles); never changes an existing account; the password is read from the named variable and never printed | Inserts one row |
+
+## Safeguards
+
+- **Environment precedence:** real environment variables win over `.env` files. If the environment already chooses a database (`DATABASE_URL` or any `DB_*`), `.env` files cannot add or override any database setting, and database settings are never mixed between files. Set `EU_ENV_FILE=backend/.env.staging` to use one specific file instead of `.env` and `backend/.env`.
+- **Tests never reach a remote database:** under `node --test`, `NODE_ENV=test` or `EU_AUTOMATED_TEST=true`, the app refuses any database that is not on this machine. Data-writing browser tests refuse a non-local `E2E_BASE_URL`.
+- **Writes need the target named:** `db:seed` and `db:create-user` do nothing unless `ALLOW_DB_WRITES` equals the exact database name, e.g. `ALLOW_DB_WRITES=<database name>` (PowerShell: `$env:ALLOW_DB_WRITES='<database name>'`).
 
 ## Empty database
 
