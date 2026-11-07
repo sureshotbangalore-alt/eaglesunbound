@@ -21,12 +21,15 @@ export function EagleMark({ className = '' }: { className?: string }) {
 /** Brand intro, once per browser session: the eagle sweeps across, the name appears, the curtain lifts. It never blocks clicks. */
 export function IntroReveal() {
   const paused = useMotionPaused();
+  const path = usePathname();
   const [show, setShow] = useState(false);
   useEffect(() => {
-    if (paused) return;
+    // only when a visit starts on the home page, so visitors arriving at booking or contact pages are never delayed
+    if (paused || path !== '/') return;
     let seen = false; try { seen = sessionStorage.getItem('eu.intro') === '1'; sessionStorage.setItem('eu.intro', '1'); } catch { seen = true; }
     if (seen) return;
     setShow(true); const timer = setTimeout(() => setShow(false), 2300); return () => clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paused]);
   if (!show) return null;
   return (

@@ -168,13 +168,13 @@ export function RangeGame() {
   const toggleMute = () => { const next = !muted; setMuted(next); setMutedState(next); if (!next) { unlockAudio(); play('hit'); } };
 
   /* ---------- shooting ---------- */
-  const shootAt = (x: number, y: number) => {
+  const shootAt = (x: number, y: number, touch = false) => {
     const s0 = g.current; if (s0.phase !== 'playing' || s0.reloading) return;
     const rect = canvas.current!.getBoundingClientRect();
     if (s0.ammo === 0) { s0.pops.push({ x, y, age: 0, text: 'RELOAD!', color: '#d3312e' }); play('empty'); return; }
     s0.ammo--; s0.shots++; play('shot');
     stage.current?.classList.remove('is-recoil'); void stage.current?.offsetWidth; stage.current?.classList.add('is-recoil');
-    const target = [...s0.targets].reverse().find(t => !t.hit && t.age > 0.08 && Math.hypot(t.x - x, t.y - y) <= t.r * 1.1);
+    const target = [...s0.targets].reverse().find(t => !t.hit && t.age > 0.08 && Math.hypot(t.x - x, t.y - y) <= t.r * (touch ? 1.4 : 1.1) + (touch ? 8 : 0));  // fingers are less precise than a mouse
     if (!target) {
       s0.streak = 0; s0.marks.push({ x, y, age: 0 });
       if (fxOn.current) impact(rect.left + x, rect.top + y);
@@ -212,7 +212,7 @@ export function RangeGame() {
     if (e.button !== 0) return;
     const rect = e.currentTarget.getBoundingClientRect(); const x = e.clientX - rect.left, y = e.clientY - rect.top;
     const s0 = g.current; s0.aimX = x; s0.aimY = y; s0.keyAim = e.pointerType !== 'mouse';
-    shootAt(x, y);
+    shootAt(x, y, e.pointerType === 'touch');
   };
   const onPointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
     if (e.pointerType !== 'mouse') return; const s0 = g.current; const rect = e.currentTarget.getBoundingClientRect(); s0.aimX = e.clientX - rect.left; s0.aimY = e.clientY - rect.top; s0.keyAim = false;

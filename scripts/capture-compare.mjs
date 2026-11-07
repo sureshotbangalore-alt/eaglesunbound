@@ -19,6 +19,8 @@ const metrics = {};
 for (const [vpName, vp] of Object.entries(viewports)) {
   const context = await browser.newContext({viewport: {width: vp.width, height: vp.height}, isMobile: !!vp.isMobile, hasTouch: !!vp.hasTouch, deviceScaleFactor: 1});
   // Accept only necessary cookies so the banner does not cover the page (same choice for both captures).
+  // Skip the one-time brand intro so page designs are compared (the intro is captured separately).
+  await context.addInitScript(() => { try { sessionStorage.setItem('eu.intro', '1'); } catch {} });
   await context.addInitScript(() => { try { localStorage.setItem('eu.cookie-preferences', JSON.stringify({version: 1, savedAt: Date.now(), expiresAt: Date.now() + 1e10, preferences: {necessary: true, functional: true, analytics: false, marketing: false}})); } catch {} });
   for (const path of pages) {
     const page = await context.newPage();
@@ -38,6 +40,15 @@ for (const [vpName, vp] of Object.entries(viewports)) {
     // scroll through so scroll-triggered content is revealed, then capture the full page
     await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 500) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 120)); } window.scrollTo(0, 0); await new Promise(r => setTimeout(r, 600)); });
     await page.screenshot({path: join(out, `${vpName}-${name}-full.png`), fullPage: true});
+    // Scroll-animated sections are blank in a single full-page shot, so also capture screen by screen while scrolling.
+    if ((process.env.SCREENS || '').split(',').includes(path)) {
+      const height = await page.evaluate(() => document.documentElement.scrollHeight);
+      for (let i = 0, y = 0; y < height && i < 16; i++, y += vp.height) {
+        await page.evaluate(top => window.scrollTo(0, top), y); await page.waitForTimeout(1100);
+        await page.screenshot({path: join(out, `${vpName}-${name}-screen${String(i + 1).padStart(2, '0')}.png`)});
+      }
+      await page.evaluate(() => window.scrollTo(0, 0));
+    }
     const m = await page.evaluate(() => {
       const nav = performance.getEntriesByType('navigation')[0];
       return {

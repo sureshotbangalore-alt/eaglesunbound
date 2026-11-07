@@ -9,7 +9,6 @@ export const HOME_SECTIONS: { id: string; label: string }[] = [
   { id: 'film', label: 'Film / video band' },
   { id: 'why', label: 'Why the outdoors' },
   { id: 'clients', label: 'Clients' },
-  { id: 'cta', label: 'Final booking call-to-action' },
 ];
 
 export type SectionSetting = { id: string; visible?: boolean };

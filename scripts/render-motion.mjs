@@ -139,7 +139,7 @@ const scenes={
     svg.setAttribute('opacity',prog(t,0,.4)*(1-prog(t,7.6,8)));}
 },
 'eagle-flight'(){
-  // A stylised eagle glides over layered ridgelines, drawing an expedition route behind it.
+  // A stylised eagle glides over layered ridgelines, drawing an expedition route behind it. No text: it sits behind page headings.
   const T=6,GOLD='#c2a46e';const defs=el('defs');
   defs.innerHTML='<linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c1411"/><stop offset=".6" stop-color="#22301f"/><stop offset="1" stop-color="#a5713f"/></linearGradient>';
   el('rect',{width:W,height:H,fill:'url(#dusk)'});
@@ -153,8 +153,8 @@ const scenes={
   el('path',{d:'M-46,0 L-70,-12 L-64,0 L-70,12Z',fill:CREAM},bird);el('path',{d:'M46,-3 L64,1 L46,5Z',fill:GOLD},bird);
   const wingFront=el('path',{fill:CREAM},bird);
   const wing=lift=>{const tip=-(70+34*lift),mid=-(38+18*lift);return 'M-14,0 C-4,'+mid+' 20,'+tip+' 34,'+(tip*1.05)+' L22,'+(tip*.62)+' L28,'+(tip*.72)+' L14,'+(tip*.4)+' L18,'+(tip*.48)+' L4,'+(mid*.4)+' L22,0Z'};
-  const title=el('text',{x:640,y:160,'text-anchor':'middle','font-size':84,'letter-spacing':10,fill:CREAM,opacity:0});title.textContent='BEYOND LIMITS';
-  const sub=el('text',{x:640,y:205,'text-anchor':'middle','font-size':26,'letter-spacing':9,fill:GOLD,opacity:0});sub.textContent='YOUR EXPEDITION STARTS HERE';
+  const title=el('text',{x:640,y:160,'text-anchor':'middle','font-size':84,'letter-spacing':10,fill:CREAM,opacity:0});title.textContent='';
+  const sub=el('text',{x:640,y:205,'text-anchor':'middle','font-size':26,'letter-spacing':9,fill:GOLD,opacity:0});sub.textContent='';
   const pathAt=u=>({x:-120+1230*u,y:380-130*Math.sin(Math.PI*u)+26*Math.sin(u*9)});
   return t=>{const u=easeInOut(prog(t,.2,5.4));const p=pathAt(u),q=pathAt(Math.min(1,u+.01));
     let d='';for(let k=0;k<=60;k++){const pt=pathAt(u*k/60);d+=(k?'L':'M')+pt.x.toFixed(1)+','+(pt.y+34).toFixed(1)}route.setAttribute('d',d);

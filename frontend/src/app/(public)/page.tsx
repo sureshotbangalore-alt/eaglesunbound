@@ -104,11 +104,6 @@ export default async function Home() {
       <div className="chapter-head" data-reveal="rule"><span className="label">Shared experiences / Our clients</span><Link className="label" href="/about">About our experiences ↗</Link></div>
       <div className="client-list">{clients.slice(0, 6).map(c => <div key={c.id}>{c.image && <img src={c.image} alt={`${c.name} logo`} loading="lazy"/>}<h2>{c.name}</h2></div>)}</div>
     </section> : null,
-  cta: (<section className="chapter night final-cta">
-      <div className="chapter-head" data-reveal="rule"><span className="label">Your expedition</span><span className="label">Beyond limits</span></div>
-      <MotionFilm name="eagle-flight" seconds={6} label="A stylised eagle gliding over ridgelines along an expedition route"/>
-      <div className="cta-row"><SplitLines text={'Ready when\nyou are.'} className="display-xl"/><div className="hero-actions"><Link href="/book-now" className="button button-red">Plan your expedition <ArrowUpRight size={17}/></Link><Link href="/contact" className="button button-light">Talk to our team</Link></div></div>
-    </section>),
   };
   const order = homeSections(content.sections);
   return <main id="main" className="home">

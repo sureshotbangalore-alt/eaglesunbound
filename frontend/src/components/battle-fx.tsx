@@ -74,7 +74,7 @@ export function BattleFX() {
         <path d="M32 10v14M32 40v14M10 32h14M40 32h14" className="scope-cross" />
         <circle cx="32" cy="32" r="2.2" className="scope-dot" />
       </svg>
-      <span className="scope-label">LOCK</span>
+      <span className="scope-label" />
     </div>
   );
 }
