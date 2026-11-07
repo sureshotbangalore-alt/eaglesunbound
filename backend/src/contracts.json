@@ -94,10 +94,12 @@
         "briefing",
         "programmes",
         "activities",
+        "academy",
         "founder",
         "film",
         "why",
-        "clients"
+        "clients",
+        "cta"
        ]
       },
       "visible": {

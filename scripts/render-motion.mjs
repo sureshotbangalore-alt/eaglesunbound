@@ -21,6 +21,8 @@ const scenes = {
   'brand-reveal': {seconds: 6, poster: 4.6, bg: '#f5f3ed'},
   'bootcamp-route': {seconds: 8, poster: 7.0, bg: '#111619'},
   'activity-lines': {seconds: 8, poster: 6.0, bg: '#111619'},
+  'academy-intro': {seconds: 8, poster: 6.6, bg: '#0c1411'},
+  'eagle-flight': {seconds: 6, poster: 4.4, bg: '#0c1411'},
 };
 
 const html = (scene, bg) => `<!doctype html><meta charset="utf-8"><style>
@@ -93,6 +95,76 @@ const scenes={
     const sway=x=>(Math.sin(2*Math.PI*(x/330-t/4))*7+Math.sin(2*Math.PI*(x/330+t/8))*3)*Math.sin(Math.PI*(x+158)/316);
     const yAt=x=>-60+16+70*(1-Math.pow((x/158),2))*.55+sway(x);let dd='';for(let k=0;k<=40;k++){const x=-158+316*k/40;dd+=(k?'L':'M')+x+','+yAt(x)}rope.setAttribute('d',dd);
     planks.forEach((p,i)=>{const x=-135+270*i/12,y=yAt(x);p.setAttribute('x1',x);p.setAttribute('x2',x);p.setAttribute('y1',y-6);p.setAttribute('y2',y+6)})}
+},
+'academy-intro'(){
+  // Dusk firing range: a scope sweeps in, locks on three targets in turn, scores, then the title reveals.
+  const T=8,GOLD='#c2a46e';
+  const defs=el('defs');
+  defs.innerHTML='<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c1411"/><stop offset=".55" stop-color="#2c3a2c"/><stop offset="1" stop-color="#b98450"/></linearGradient>'+
+    '<radialGradient id="vig" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".75"/></radialGradient>'+
+    '<mask id="lens"><rect width="1280" height="720" fill="#fff"/><circle id="hole" cx="640" cy="360" r="210" fill="#000"/></mask>';
+  el('rect',{x:0,y:0,width:W,height:H,fill:'url(#sky)'});
+  el('path',{fill:'#18221c',d:'M0,470 C160,420 260,450 380,430 S600,380 760,420 S1020,370 1280,410 L1280,720 L0,720Z'});
+  el('rect',{x:0,y:470,width:W,height:250,fill:'#2e3427'});
+  for(let i=-5;i<=5;i++)el('line',{x1:640+i*60,y1:470,x2:640+i*260,y2:720,stroke:CREAM,'stroke-opacity':.08,'stroke-width':1.5});
+  const targets=[[330,430,46],[700,400,36],[1010,445,52]].map(([x,y,r])=>{const g=el('g',{transform:'translate('+x+' '+y+')'});
+    el('line',{x1:0,y1:r,x2:0,y2:r+60,stroke:'#2a2a22','stroke-width':4},g);
+    [[1,CREAM],[.8,INK],[.62,CREAM],[.45,RED],[.28,CREAM],[.14,RED]].forEach(([k,c])=>el('circle',{r:r*k,fill:c},g));
+    const ring=el('circle',{r:r,fill:'none',stroke:'#ffd36b','stroke-width':4,opacity:0},g);
+    const pts=el('text',{x:0,y:-r-18,'text-anchor':'middle','font-size':34,fill:'#ffd36b',opacity:0},g);pts.textContent='+10';return {g,x,y,r,ring,pts}});
+  const dark=el('rect',{x:0,y:0,width:W,height:H,fill:'#050806',mask:'url(#lens)'});
+  const scope=el('g');el('circle',{r:210,fill:'none',stroke:INK,'stroke-width':10},scope);el('circle',{r:210,fill:'none',stroke:GOLD,'stroke-width':2,'stroke-opacity':.7},scope);
+  el('path',{d:'M-210,0H-24M24,0H210M0,-210V-24M0,24V210',stroke:INK,'stroke-width':3},scope);
+  for(let i=-4;i<=4;i++)if(i)el('line',{x1:i*22,y1:-6,x2:i*22,y2:6,stroke:INK,'stroke-width':2},scope);
+  el('circle',{r:3,fill:RED},scope);const lock=el('circle',{r:30,fill:'none',stroke:RED,'stroke-width':3,opacity:0},scope);
+  const hole=document.getElementById('hole');
+  el('rect',{x:0,y:0,width:W,height:H,fill:'url(#vig)'});
+  const title=el('g',{opacity:0});const t1=el('text',{x:640,y:330,'text-anchor':'middle','font-size':120,'letter-spacing':6,fill:CREAM},title);t1.textContent='SHOOTING ACADEMY';
+  const t2=el('text',{x:640,y:395,'text-anchor':'middle','font-size':30,'letter-spacing':12,fill:GOLD},title);t2.textContent='STEADY HANDS · SHARP EYES';
+  const bar=el('rect',{x:640,y:420,width:0,height:4,fill:RED},title);
+  const way=[[120,250],[targets[0].x,targets[0].y],[targets[1].x,targets[1].y],[targets[2].x,targets[2].y],[640,360]];
+  const times=[0,1.3,2.6,3.9,5.3];
+  return t=>{
+    let k=times.length-2;for(let i=0;i<times.length-1;i++)if(t<times[i+1]){k=i;break}
+    const f=easeInOut(prog(t,times[k]+.25,times[k+1]));const x=way[k][0]+(way[k+1][0]-way[k][0])*f,y=way[k][1]+(way[k+1][1]-way[k][1])*f;
+    const zoom=1-.06*Math.sin(Math.PI*prog(t,0,1));scope.setAttribute('transform','translate('+x+' '+y+') scale('+zoom+')');hole.setAttribute('cx',x);hole.setAttribute('cy',y);
+    const open=1-easeInOut(prog(t,5.4,6.2));dark.setAttribute('opacity',open);scope.setAttribute('opacity',open);hole.setAttribute('r',210+700*(1-open));
+    targets.forEach((tg,i)=>{const hit=times[i+1];const h=prog(t,hit,hit+.6);
+      tg.ring.setAttribute('opacity',h>0&&h<1?1-h:0);tg.ring.setAttribute('r',tg.r*(1+h*.9));
+      tg.pts.setAttribute('opacity',h>0?Math.max(0,1-prog(t,hit+.5,hit+1.1)):0);tg.pts.setAttribute('transform','translate(0 '+(-30*easeOut(h))+')');
+      tg.g.setAttribute('transform','translate('+tg.x+' '+tg.y+') scale(1,'+(h>0?Math.max(.08,1-easeInOut(prog(t,hit+.15,hit+.45))*.92):1)+')')});
+    const near=targets.some((tg,i)=>Math.abs(t-(times[i+1]-.15))<.3);lock.setAttribute('opacity',near?1:0);lock.setAttribute('r',near?30-10*Math.sin(t*20):30);
+    const tp=easeOut(prog(t,6,7));title.setAttribute('opacity',tp*(1-prog(t,7.6,8)));title.setAttribute('transform','translate(0 '+(16*(1-tp))+')');
+    const bp=easeInOut(prog(t,6.3,7.2));bar.setAttribute('width',360*bp);bar.setAttribute('x',640-180*bp);
+    svg.setAttribute('opacity',prog(t,0,.4)*(1-prog(t,7.6,8)));}
+},
+'eagle-flight'(){
+  // A stylised eagle glides over layered ridgelines, drawing an expedition route behind it.
+  const T=6,GOLD='#c2a46e';const defs=el('defs');
+  defs.innerHTML='<linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c1411"/><stop offset=".6" stop-color="#22301f"/><stop offset="1" stop-color="#a5713f"/></linearGradient>';
+  el('rect',{width:W,height:H,fill:'url(#dusk)'});
+  const sun=el('circle',{cx:930,cy:470,r:110,fill:'#e7b46a',opacity:.35});
+  const ridge=(y,amp,color,seed)=>{let d='M-200,'+H;for(let x=-200;x<=W+520;x+=16)d+=' L'+x+','+(y-amp*(Math.sin(x/170+seed)*.6+Math.sin(x/61+seed*2)*.25+Math.sin(x/23+seed)*.08));return el('path',{d:d+' L'+(W+520)+','+H+'Z',fill:color})};
+  const far=ridge(470,60,'#1d2a22',1),mid=ridge(540,70,'#151f19',3),near=ridge(620,50,'#0e1612',5);
+  const route=el('path',{fill:'none',stroke:RED,'stroke-width':3,'stroke-dasharray':'10 8','stroke-linecap':'round'});
+  const bird=el('g');
+  const wingBack=el('path',{fill:'#cfc8b8'},bird);
+  el('path',{d:'M-46,0 C-20,-10 20,-10 46,-2 L60,0 L46,4 C20,10 -20,8 -46,0Z',fill:CREAM},bird);
+  el('path',{d:'M-46,0 L-70,-12 L-64,0 L-70,12Z',fill:CREAM},bird);el('path',{d:'M46,-3 L64,1 L46,5Z',fill:GOLD},bird);
+  const wingFront=el('path',{fill:CREAM},bird);
+  const wing=lift=>{const tip=-(70+34*lift),mid=-(38+18*lift);return 'M-14,0 C-4,'+mid+' 20,'+tip+' 34,'+(tip*1.05)+' L22,'+(tip*.62)+' L28,'+(tip*.72)+' L14,'+(tip*.4)+' L18,'+(tip*.48)+' L4,'+(mid*.4)+' L22,0Z'};
+  const title=el('text',{x:640,y:160,'text-anchor':'middle','font-size':84,'letter-spacing':10,fill:CREAM,opacity:0});title.textContent='BEYOND LIMITS';
+  const sub=el('text',{x:640,y:205,'text-anchor':'middle','font-size':26,'letter-spacing':9,fill:GOLD,opacity:0});sub.textContent='YOUR EXPEDITION STARTS HERE';
+  const pathAt=u=>({x:-120+1230*u,y:380-130*Math.sin(Math.PI*u)+26*Math.sin(u*9)});
+  return t=>{const u=easeInOut(prog(t,.2,5.4));const p=pathAt(u),q=pathAt(Math.min(1,u+.01));
+    let d='';for(let k=0;k<=60;k++){const pt=pathAt(u*k/60);d+=(k?'L':'M')+pt.x.toFixed(1)+','+(pt.y+34).toFixed(1)}route.setAttribute('d',d);
+    const glide=prog(t,2.2,3.0)*(1-prog(t,3.6,4.2));const f=Math.sin(t*2*Math.PI*1.6)*(1-glide*.85);
+    wingFront.setAttribute('d',wing(f));wingBack.setAttribute('d',wing(-f*.6));wingBack.setAttribute('transform','translate(-6 2) scale(.92 .8)');
+    bird.setAttribute('transform','translate('+p.x+' '+p.y+') rotate('+(Math.atan2(q.y-p.y,q.x-p.x)*180/Math.PI)+') scale(1.2)');
+    far.setAttribute('transform','translate('+(-20*t)+' 0)');mid.setAttribute('transform','translate('+(-45*t)+' 0)');near.setAttribute('transform','translate('+(-80*t)+' 0)');
+    sun.setAttribute('opacity',.25+.15*prog(t,0,6));
+    const tp=easeOut(prog(t,3.6,4.6));title.setAttribute('opacity',tp);sub.setAttribute('opacity',easeOut(prog(t,4.1,5)));title.setAttribute('transform','translate(0 '+(14*(1-tp))+')');
+    svg.setAttribute('opacity',prog(t,0,.4)*(1-prog(t,5.6,6)));}
 }};
 const draw=scenes[SCENE]();window.setT=t=>draw(t);
 </script>`;

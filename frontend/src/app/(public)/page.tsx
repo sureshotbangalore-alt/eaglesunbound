@@ -14,6 +14,8 @@ import { SplitLines, FillText } from '@/components/split-text';
 import { pageMetadata } from '@/lib/seo';
 import { img, imageLabel } from '@/lib/imagery';
 import { founderPortrait } from '@/lib/founder';
+import { EagleGlide, ActivityVignettes } from '@/components/cinematic';
+import { MotionFilm } from '@/components/motion-film';
 export async function generateMetadata() { return pageMetadata('/', 'Adventure with Purpose in Bengaluru', 'Explore military-inspired civilian challenges, corporate team experiences and student adventure programmes at Eagles Unbound, Bengaluru.'); }
 
 const values = ['Courage', 'Teamwork', 'Discipline', 'Resilience', 'The outdoors'];
@@ -45,8 +47,20 @@ export default async function Home() {
   activities: (<section className="chapter night activities-section">
       <div className="chapter-head" data-reveal="rule"><span className="label">04 — Out of your comfort zone</span><span className="label">Into the experience</span></div>
       <div className="chapter-title"><SplitLines text={'A little nerve.\nA lot of alive.'} className="display-xl"/><p data-reveal>From the first obstacle to the last shared laugh, find the activities that bring your group together.</p></div>
+      <ActivityVignettes/>
       <ActivityShowcase activities={activities}/>
       <Link href="/activities" className="text-link" data-reveal>Discover the activity library <ArrowUpRight size={18}/></Link>
+    </section>),
+  academy: (<section className="chapter night academy-home">
+      <div className="chapter-head" data-reveal="rule"><span className="label">Shooting Academy</span><span className="label">Arcade range challenge</span></div>
+      <div className="academy-teaser">
+        <MotionFilm name="academy-intro" seconds={8} label="Animated scope sweeping a firing range and scoring three bullseyes"/>
+        <div>
+          <SplitLines text={'Steady hands.\nSharp eyes.'} className="display-xl"/>
+          <p className="lead" data-reveal>Thirty seconds, three difficulty levels and a scope that never lies. Take on Eagle Eye Range and see if you earn the top rank.</p>
+          <Link href="/shooting-academy" className="button button-red" data-reveal>Enter the range <ArrowUpRight size={17}/></Link>
+        </div>
+      </div>
     </section>),
   founder: (<section className="chapter bone founder">
       <div className="founder-grid">
@@ -90,12 +104,17 @@ export default async function Home() {
       <div className="chapter-head" data-reveal="rule"><span className="label">Shared experiences / Our clients</span><Link className="label" href="/about">About our experiences ↗</Link></div>
       <div className="client-list">{clients.slice(0, 6).map(c => <div key={c.id}>{c.image && <img src={c.image} alt={`${c.name} logo`} loading="lazy"/>}<h2>{c.name}</h2></div>)}</div>
     </section> : null,
+  cta: (<section className="chapter night final-cta">
+      <div className="chapter-head" data-reveal="rule"><span className="label">Your expedition</span><span className="label">Beyond limits</span></div>
+      <MotionFilm name="eagle-flight" seconds={6} label="A stylised eagle gliding over ridgelines along an expedition route"/>
+      <div className="cta-row"><SplitLines text={'Ready when\nyou are.'} className="display-xl"/><div className="hero-actions"><Link href="/book-now" className="button button-red">Plan your expedition <ArrowUpRight size={17}/></Link><Link href="/contact" className="button button-light">Talk to our team</Link></div></div>
+    </section>),
   };
   const order = homeSections(content.sections);
   return <main id="main" className="home">
     <section className="home-hero" data-hero>
       <div className="hh-media" data-parallax="9"><HeroMedia video={content.hero_video}/></div>
-      <FieldAtmosphere/><div className="hh-shade"/><MotionSwitch/>
+      <FieldAtmosphere/><div className="hh-shade"/><EagleGlide/><MotionSwitch/>
       <div className="hh-frame" aria-hidden="true"><i/><i/><i/><i/></div>
       <div className="hh-top"><p className="label"><span className="live-dot"/>{content.eyebrow}</p><p className="label hh-est">FIELD EDITION / KARNATAKA, INDIA</p></div>
       <div className="hh-copy" data-hero-copy>

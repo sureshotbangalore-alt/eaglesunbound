@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { serverAPI } from '@/lib/api';
 import { siteURL, type SEORecord } from '@/lib/seo';
 export const dynamic = 'force-dynamic';
-const paths = ['/', '/the-bootcamp', '/what-we-offer', '/activities', '/about', '/founder', '/food-and-dining', '/contact', '/book-now', '/privacy-policy', '/cookie-policy', '/terms-and-conditions', '/booking-policy'];
+const paths = ['/', '/the-bootcamp', '/what-we-offer', '/activities', '/about', '/founder', '/food-and-dining', '/contact', '/book-now', '/privacy-policy', '/cookie-policy', '/terms-and-conditions', '/booking-policy', '/shooting-academy'];
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [seo, updates] = await Promise.all([serverAPI<SEORecord[]>('/public/seo'), serverAPI<Record<string,string>>('/public/page-updates')]);
   return paths.filter(path => path !== '/book-now' && !seo.find(s => s.page === path)?.noindex).map(path => {

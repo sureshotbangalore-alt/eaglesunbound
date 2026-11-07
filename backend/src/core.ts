@@ -8,7 +8,7 @@ export type Reply={body:any;status?:number;headers?:Record<string,string>;plain?
 export type Context={req:Request;db:Database;user?:Row;config:Config;body:(name:string)=>Row};
 export const response=(body:any,status=200,headers?:Record<string,string>):Reply=>({body,status,headers});
 export const modules:Record<string,string>={programmes:'programmes',activities:'activities',clients:'clients',gallery:'gallery_albums',packages:'packages'};
-export const publicPaths=['/','/the-bootcamp','/what-we-offer','/activities','/about','/founder','/food-and-dining','/contact','/book-now','/privacy-policy','/cookie-policy','/terms-and-conditions','/booking-policy'];
+export const publicPaths=['/','/the-bootcamp','/what-we-offer','/activities','/about','/founder','/food-and-dining','/contact','/book-now','/privacy-policy','/cookie-policy','/terms-and-conditions','/booking-policy','/shooting-academy'];
 export const editablePages=new Set(['cookie-policy','about','the-bootcamp','privacy-policy','terms-and-conditions','booking-policy','founder','kids-experiences','schools-and-colleges','corporate','accommodation','food-and-dining']);
 export function modelFor(module:string){return modules[module]||fail(404,'Module not found')}
 export function admin(user?:Row){if(user?.role!=='admin')fail(403,'Administrator role required')}

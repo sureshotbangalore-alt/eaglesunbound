@@ -4,10 +4,12 @@ export const HOME_SECTIONS: { id: string; label: string }[] = [
   { id: 'briefing', label: 'Field briefing' },
   { id: 'programmes', label: 'Programmes' },
   { id: 'activities', label: 'Activities' },
+  { id: 'academy', label: 'Shooting Academy teaser' },
   { id: 'founder', label: 'Founder' },
   { id: 'film', label: 'Film / video band' },
   { id: 'why', label: 'Why the outdoors' },
   { id: 'clients', label: 'Clients' },
+  { id: 'cta', label: 'Final booking call-to-action' },
 ];
 
 export type SectionSetting = { id: string; visible?: boolean };

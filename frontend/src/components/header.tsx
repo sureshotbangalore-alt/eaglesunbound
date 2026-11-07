@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { Menu, X } from 'lucide-react';
 import { Brand } from './brand';
-const links = [['The Bootcamp', '/the-bootcamp'], ['What We Offer', '/what-we-offer'], ['Activities', '/activities'], ['About', '/about'], ['Contact', '/contact']];
+const links = [['The Bootcamp', '/the-bootcamp'], ['What We Offer', '/what-we-offer'], ['Activities', '/activities'], ['About', '/about'], ['Shooting Academy', '/shooting-academy'], ['Contact', '/contact']];
 const more: [string, string[][]][] = [['Plan your visit', [['Stay & Dining','/food-and-dining'],['Our Founder','/founder'],['FAQs','/contact#faqs']]]];
 export function Header() {
   const [open, setOpen] = useState(false);
