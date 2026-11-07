@@ -8,6 +8,8 @@ import {MySQLDatabase} from './database';
 import {createAPI} from './api';
 
 const root=resolve(__dirname,'../..');
+// Listen on every interface so Hostinger's reverse proxy can reach the app.
+const HOST='0.0.0.0';
 const safeCode=(error:any)=>typeof error?.code==='string'&&/^[A-Z0-9_]+$/.test(error.code)?error.code:undefined;
 
 async function main(){
@@ -33,7 +35,10 @@ async function main(){
   await nextApp.prepare();const handler=nextApp.getRequestHandler();app.use((req,res)=>handler(req,res));
  }
  const server=createServer(app);server.requestTimeout=120000;server.headersTimeout=65000;
- server.listen(config.port,'0.0.0.0',()=>console.info(JSON.stringify({event:'server_ready',mode:apiOnly?'api':'combined',database_writes:config.writesAllowed?'enabled':'disabled (read-only)'})));
+ server.listen(config.port,HOST,()=>{
+  console.info(`Server listening on ${HOST}:${config.port}`);
+  console.info(JSON.stringify({event:'server_ready',host:HOST,port:config.port,mode:apiOnly?'api':'combined',database_writes:config.writesAllowed?'enabled':'disabled (read-only)'}));
+ });
  let closing=false;
  const shutdown=()=>{if(closing)return;closing=true;console.info(JSON.stringify({event:'shutdown_started'}));const timer=setTimeout(()=>{server.closeAllConnections();process.exit(1)},15000).unref();server.close(async()=>{try{await nextApp?.close();await db.close();clearTimeout(timer);process.exit(0)}catch{process.exit(1)}});server.closeIdleConnections()};
  process.on('SIGTERM',shutdown);process.on('SIGINT',shutdown);

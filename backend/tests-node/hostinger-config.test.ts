@@ -63,3 +63,13 @@ test('API_INTERNAL_URL=/api is resolved against this same process',()=>{
  assert.equal(resolveInternalApiURL('api/',3001),'http://127.0.0.1:3001/api');
  assert.equal(resolveInternalApiURL('http://127.0.0.1:9000/api/',3001),'http://127.0.0.1:9000/api');
 });
+
+test('PORT: Hostinger value when provided, 3000 only when none is provided, clear error when broken',()=>{
+ const {PORT:_unused,...noPort}=hostinger;
+ assert.equal(configFrom(hostinger).port,3001,'the value Hostinger provides is used');
+ assert.equal(configFrom({...hostinger,PORT:' 8080 '}).port,8080);
+ assert.equal(configFrom(noPort).port,3000,'production with no PORT falls back to 3000');
+ assert.equal(configFrom({...noPort,NODE_ENV:'development'}).port,3000,'local development falls back to 3000');
+ assert.equal(configFrom({...hostinger,PORT:''}).port,3000,'a blank PORT is treated as not provided');
+ for(const bad of ['abc','0','-1','65536','80.5','3000x'])assert.throws(()=>configFrom({...hostinger,PORT:bad}),(e:any)=>e instanceof ConfigError&&/PORT must be a whole number/.test(e.message)&&!e.message.includes(bad),bad);
+});

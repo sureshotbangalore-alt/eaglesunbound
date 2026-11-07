@@ -32,7 +32,7 @@ Set these in the Hostinger panel (Environment variables). **Names and safe value
 | `API_INTERNAL_URL` | `/api` | where server rendering calls the API; resolved to this same process |
 | `CORS_ORIGINS` | `https://eagles.ssbsureshot.in` | comma-separated https origins. Add the custom domain later, no code change. Also sets the canonical site address. |
 | `TRUST_PROXY` | `1` | one Hostinger reverse proxy. Never `true`. |
-| `PORT` | provided by Hostinger | do not set it yourself |
+| `PORT` | provided by Hostinger | do not set it yourself. The server uses it whenever it exists; if none is provided it falls back to 3000. A `PORT` that is set but not a valid port number stops the start with a clear message. |
 
 Optional: `NEXT_PUBLIC_SITE_URL` (only if it must differ from the first `CORS_ORIGINS` entry; needed at build time), `SEARCH_INDEXING_ENABLED` (`false` until launch), `MFA_ENCRYPTION_KEY`, `S3_*` and `MEDIA_PUBLIC_URL` (uploads), `SESSION_HOURS`, `DB_SSL`, `DB_SSL_CA`. Secure cookies are on by default in production; `COOKIE_SECURE=false` is refused. The full list with placeholders is in `.env.example`.
 

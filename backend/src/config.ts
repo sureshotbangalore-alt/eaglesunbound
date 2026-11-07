@@ -43,8 +43,11 @@ function parseTrustProxy(raw:string|undefined):false|number|string[]{
 
 export function configFrom(env:NodeJS.ProcessEnv):Config {
  const production=env.NODE_ENV==='production'||env.ENVIRONMENT==='production';
- const port=Number(env.PORT||(production?'':'3000'));
- if(!Number.isInteger(port)||port<1||port>65535)throw new ConfigError('PORT must be set to a valid listening port (Hostinger provides it)');
+ // Hostinger provides PORT: it is used whenever it is set. 3000 is only the fallback when no PORT is provided at all, so a
+ // missing PORT never stops the server. A PORT that is set but is not a valid port number is still reported.
+ const portSetting=(env.PORT||'').trim();
+ const port=portSetting===''?3000:Number(portSetting);
+ if(!Number.isInteger(port)||port<1||port>65535)throw new ConfigError('PORT must be a whole number between 1 and 65535 when it is set');
  const origins=parseOrigins(env,production);
  // Secure cookies are the default in production; turning them off there is refused.
  const cookieSecure=env.COOKIE_SECURE===undefined||env.COOKIE_SECURE===''?production:truthy(env.COOKIE_SECURE);

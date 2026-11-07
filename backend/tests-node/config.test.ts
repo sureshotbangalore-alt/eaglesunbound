@@ -29,7 +29,7 @@ test('missing database settings fail without echoing values', () => {
 test('production requires PORT, HTTPS origin and secure cookies', () => {
   const production = {...base, NODE_ENV: 'production', FRONTEND_URL: 'https://eagles.example.com', COOKIE_SECURE: 'true'};
   assert.equal(configFrom(production).production, true);
-  assert.throws(() => configFrom({...production, PORT: ''}), /PORT/);
+  assert.equal(configFrom({...production, PORT: ''}).port, 3000, 'a missing PORT falls back to 3000 instead of stopping the server');
   assert.throws(() => configFrom({...production, COOKIE_SECURE: 'false'}));
   assert.throws(() => configFrom({...production, FRONTEND_URL: 'http://eagles.example.com'}));
   assert.throws(() => configFrom({...production, FRONTEND_URL: 'https://user:pw@eagles.example.com'}));
