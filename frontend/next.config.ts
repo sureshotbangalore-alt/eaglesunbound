@@ -1,4 +1,18 @@
 import type { NextConfig } from 'next';
+import fs from 'node:fs';
+import path from 'node:path';
+// Hostinger may provide settings in a .env file at the repository root rather than as real environment variables.
+// Read only the public, non-secret settings the frontend needs from it. Real environment variables always win.
+const repoRoot = fs.existsSync(path.join(process.cwd(), 'backend')) ? process.cwd() : path.resolve(process.cwd(), '..');
+const frontendKeys = /^(NEXT_PUBLIC_[A-Z0-9_]+|CORS_ORIGINS|SEARCH_INDEXING_ENABLED|GOOGLE_SITE_VERIFICATION|BING_SITE_VERIFICATION)$/;
+try {
+  for (const raw of fs.readFileSync(path.join(repoRoot, '.env'), 'utf8').split(/\r?\n/)) {
+    if (raw.trim().startsWith('#')) continue;
+    const m = raw.match(/^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*?)\s*$/);
+    if (!m || !frontendKeys.test(m[1]) || process.env[m[1]]) continue;
+    process.env[m[1]] = /^".*"$|^'.*'$/.test(m[2]) ? m[2].slice(1, -1) : m[2].replace(/\s+#.*$/, '');
+  }
+} catch { /* no root .env file: use the real environment only */ }
 // Public site URL baked in at build time: NEXT_PUBLIC_SITE_URL, or else the first CORS_ORIGINS entry (the public https origin).
 const firstOrigin = (list?: string) => (list || '').split(',').map(x => x.trim().replace(/\/$/, '')).find(Boolean) || '';
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || firstOrigin(process.env.CORS_ORIGINS)).replace(/\/$/, '');

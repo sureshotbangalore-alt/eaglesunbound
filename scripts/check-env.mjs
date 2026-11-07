@@ -1,11 +1,32 @@
 // Runs at the start of `npm run build`. Fails early, with the NAME of whatever is wrong (never a value), instead of
 // producing a site that breaks at runtime. It never touches the database and never prints environment values.
-import {existsSync} from 'node:fs';
+import {existsSync,readFileSync} from 'node:fs';
 import {resolve,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const problems=[],notes=[];
+
+// Hostinger may hand its settings over in a .env file at the repository root instead of as real environment
+// variables, so read the same files the server reads. Real environment variables always win.
+function parseEnv(text){
+ const out={};
+ for(const raw of text.split(/\r?\n/)){
+  if(raw.trim().startsWith('#'))continue;
+  const m=raw.match(/^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*?)\s*$/);
+  if(!m)continue;
+  let v=m[2];
+  if(/^".*"$/.test(v)||/^'.*'$/.test(v))v=v.slice(1,-1);else v=v.replace(/\s+#.*$/,'');
+  out[m[1]]=v;
+ }
+ return out;
+}
+for(const file of [resolve(root,'.env'),resolve(root,'backend/.env')]){
+ if(!existsSync(file))continue;
+ let loaded=0;
+ for(const [key,value] of Object.entries(parseEnv(readFileSync(file,'utf8'))))if(!(key in process.env)&&value!==''){process.env[key]=value;loaded++}
+ if(loaded)notes.push(`read ${loaded} setting(s) from ${file.slice(root.length+1).replace(/\\/g,'/')}`);
+}
 
 // 1. Node version (Hostinger: 22.x).
 const major=Number(process.versions.node.split('.')[0]);
