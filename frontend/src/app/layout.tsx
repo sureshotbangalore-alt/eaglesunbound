@@ -14,6 +14,7 @@ import './inner-pages.css';
 import './polish.css';
 import './consent.css';
 import './cinematic.css';
+import './gallery.css';
 export const metadata: Metadata = {
   icons: { icon: '/assets/eagles-unbound-logo.png' },
   metadataBase: new URL(siteURL()),

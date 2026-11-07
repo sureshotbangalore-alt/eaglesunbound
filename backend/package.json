@@ -13,7 +13,8 @@
     "db:migrate": "tsx src/check-schema.ts",
     "db:seed": "tsx src/seed.ts",
     "db:create-user": "tsx src/create-user.ts",
-    "db:ping": "tsx src/db-ping.ts"
+    "db:ping": "tsx src/db-ping.ts",
+    "db:apply-media": "tsx src/apply-media.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.1164.0",

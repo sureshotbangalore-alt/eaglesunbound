@@ -46,7 +46,7 @@
 .field-tabs{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #b8c39a38}.field-tabs button{display:flex;align-items:center;justify-content:space-between;gap:15px;text-align:left;background:transparent;color:#a6b195;border:0;border-right:1px solid #b8c39a38;padding:25px;cursor:pointer;transition:background .25s,color .25s}.field-tabs button:last-child{border-right:0}.field-tabs button[aria-pressed=true]{background:#d8bd7d;color:#182317}.field-tabs button>span{flex:1;font:600 22px var(--display);text-transform:uppercase}.field-tabs small{display:block;font:9px monospace;margin-bottom:5px}
 .home .programmes-section .display-xl,.home .activities-section .display-xl{font-size:clamp(48px,6vw,88px)}
 .home .programme-canvas{border:1px solid #59654440}.home .programme-selector button{border-radius:0}.home .programme-selector button[aria-selected=true]{color:#273321}
-.home .activities-section{background:linear-gradient(90deg,#111b12ed,#111b12e8),url('/assets/team-challenge.jpg') center/cover fixed}
+.home .activities-section{background:linear-gradient(90deg,#111b12ed,#111b12e8),url('/media/photos/obstacle-net.webp') center/cover fixed}
 .home .activity-index article{background:#111b1244}.home .ai-go{border-color:#a8b38e55}.home .ai-go:hover{background:#d8bd7d;color:#172212}
 .home .founder-card{border-left:2px solid #77805e;padding-left:35px}.home .founder-card .label{color:#526043}
 .home .film-frame{height:480px}.home .film-note{background:linear-gradient(transparent,#111b12ed)}

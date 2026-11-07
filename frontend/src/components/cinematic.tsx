@@ -3,8 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useMotionPaused } from '@/lib/motion-preference';
 
-/* Cinematic motion pieces: the eagle mark, a one-time brand intro, a route-change wipe, a gliding eagle for hero skies
-   and animated activity vignettes. All are decorative (aria-hidden) and stop when motion is paused or reduced. */
+/* Cinematic motion pieces: the eagle mark, a one-time brand intro, a route-change wipe, a gliding eagle for hero skies. All are decorative (aria-hidden) and stop when motion is paused or reduced. */
 
 /** Stylised eagle with flapping wings (pure SVG + CSS). */
 export function EagleMark({ className = '' }: { className?: string }) {
@@ -28,15 +27,25 @@ export function IntroReveal() {
     if (paused || path !== '/') return;
     let seen = false; try { seen = sessionStorage.getItem('eu.intro') === '1'; sessionStorage.setItem('eu.intro', '1'); } catch { seen = true; }
     if (seen) return;
-    setShow(true); const timer = setTimeout(() => setShow(false), 2300); return () => clearTimeout(timer);
+    setShow(true); const timer = setTimeout(() => setShow(false), 3700); return () => clearTimeout(timer);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paused]);
   if (!show) return null;
+  const letters = (word: string, offset: number) => word.split('').map((ch, i) => <i key={i} style={{ animationDelay: `${1.45 + (offset + i) * 0.045}s` }}>{ch}</i>);
   return (
     <div className="intro-reveal" aria-hidden="true">
-      <div className="intro-grid" />
+      <div className="intro-contours" />
+      <span className="intro-corner c1" /><span className="intro-corner c2" /><span className="intro-corner c3" /><span className="intro-corner c4" />
+      <div className="intro-scan" />
+      <p className="intro-coords">12.79°N · 77.42°E &nbsp;/&nbsp; KANAKAPURA ROAD, BENGALURU</p>
       <div className="intro-eagle"><EagleMark /></div>
-      <div className="intro-name"><span>EAGLES</span><span>UNBOUND</span></div>
+      <div className="intro-streak" />
+      <div className="intro-logo">
+        <svg className="intro-ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="92" /><circle cx="100" cy="100" r="80" className="inner" /></svg>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <span className="intro-logo-img"><img src="/assets/eagles-unbound-logo.png" alt="" width={266} height={102} /><span className="intro-sheen" /></span>
+      </div>
+      <div className="intro-name"><span>{letters('EAGLES', 0)}</span><span>{letters('UNBOUND', 7)}</span></div>
       <div className="intro-rule" />
       <p className="intro-tag">Military spirit · South Indian soul</p>
     </div>
@@ -57,46 +66,4 @@ export function RouteWipe() {
 /** An eagle that glides across a hero sky every few seconds. */
 export function EagleGlide() {
   return <div className="eagle-glide" aria-hidden="true"><EagleMark /></div>;
-}
-
-const scenes = {
-  zip: { label: 'Zip line', body: (
-    <>
-      <line x1="10" y1="22" x2="150" y2="88" className="v-cable" />
-      <rect x="6" y="18" width="5" height="80" className="v-post" /><rect x="148" y="84" width="5" height="40" className="v-post" />
-      <g className="v-rider"><rect x="-6" y="-4" width="12" height="7" rx="2" className="v-red" /><line x1="0" y1="3" x2="0" y2="22" className="v-line" /><circle cx="0" cy="27" r="5" className="v-fill" /></g>
-    </>) },
-  wall: { label: 'Wall climb', body: (
-    <>
-      <rect x="40" y="10" width="80" height="110" rx="3" className="v-frame" />
-      {[[60, 104], [78, 88], [64, 70], [88, 56], [70, 40], [92, 24]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r="4" className="v-hold" style={{ animationDelay: `${i * 0.45}s` }} />)}
-      <circle r="5.5" className="v-fill v-climber" />
-    </>) },
-  archery: { label: 'Archery', body: (
-    <>
-      <g className="v-target">{[22, 16, 10, 4].map((r, i) => <circle key={r} cx="122" cy="62" r={r} className={i % 2 ? 'v-red' : 'v-paper'} />)}</g>
-      <g className="v-arrow"><line x1="-34" y1="0" x2="0" y2="0" className="v-shaft" /><path d="M2,0 L-6,-4 L-6,4Z" className="v-fill" /><path d="M-30,0 L-37,-5 L-34,0 L-37,5Z" className="v-red" /></g>
-      <circle cx="122" cy="62" r="24" className="v-ring" />
-    </>) },
-  rope: { label: 'Rope course', body: (
-    <>
-      <rect x="10" y="40" width="5" height="80" className="v-post" /><rect x="146" y="40" width="5" height="80" className="v-post" />
-      <path d="M12,48 Q80,84 148,48" className="v-rope" /><path d="M12,70 Q80,106 148,70" className="v-rope v-rope-2" />
-      <circle r="5" className="v-fill v-walker" />
-    </>) },
-} as const;
-
-/** Four small looping line-art scenes of the activities (zip line, wall climb, archery, rope course). */
-export function ActivityVignettes({ only }: { only?: (keyof typeof scenes)[] }) {
-  const list = (only || (Object.keys(scenes) as (keyof typeof scenes)[]));
-  return (
-    <ul className="vignettes" data-stagger aria-label="Activities in motion">
-      {list.map(id => (
-        <li key={id} className={`vignette v-${id}`}>
-          <svg viewBox="0 0 160 130" aria-hidden="true">{scenes[id].body}</svg>
-          <span className="label">{scenes[id].label}</span>
-        </li>
-      ))}
-    </ul>
-  );
 }

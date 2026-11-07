@@ -12,14 +12,13 @@ import { FieldAtmosphere, FieldBriefing, MotionSwitch } from '@/components/field
 import { HeroMedia } from '@/components/hero-media';
 import { SplitLines, FillText } from '@/components/split-text';
 import { pageMetadata } from '@/lib/seo';
-import { img, imageLabel } from '@/lib/imagery';
+import { img, imageLabel, photos } from '@/lib/imagery';
 import { founderPortrait } from '@/lib/founder';
-import { EagleGlide, ActivityVignettes } from '@/components/cinematic';
+import { EagleGlide } from '@/components/cinematic';
+import { ValuesTicker } from '@/components/values-ticker';
 import { MotionFilm } from '@/components/motion-film';
 export async function generateMetadata() { return pageMetadata('/', 'Adventure with Purpose in Bengaluru', 'Explore military-inspired civilian challenges, corporate team experiences and student adventure programmes at Eagles Unbound, Bengaluru.'); }
 
-const values = ['Courage', 'Teamwork', 'Discipline', 'Resilience', 'The outdoors'];
-const Chevron = () => <svg className="chev" viewBox="0 0 24 14" aria-hidden="true"><path d="M2 2l10 9 10-9" fill="none" stroke="currentColor" strokeWidth="2.4"/></svg>;
 
 export default async function Home() {
   const [content, programmes, activities, clients] = await Promise.all([serverAPI<HomeContent>('/public/home'), serverAPI<ContentRecord[]>('/public/programmes'), serverAPI<ContentRecord[]>('/public/activities'), serverAPI<ContentRecord[]>('/public/clients')]);
@@ -32,9 +31,9 @@ export default async function Home() {
         <div className="exp-copy"><FillText text={content.experience_description}/><Link href="/about" className="text-link dark-link" data-reveal>Discover our story <ArrowUpRight size={18}/></Link></div>
       </div>
       <figure className="exp-image" data-expand>
-        <div className="media-fill" data-parallax="8"><Image src="/assets/team-challenge.jpg" alt="AI-generated concept of a South Indian group collaborating on an outdoor obstacle" fill sizes="100vw"/></div>
+        <div className="media-fill" data-parallax="8"><Image src={photos.obstacleNet.src} alt={photos.obstacleNet.alt} fill sizes="100vw"/></div>
         <figcaption><span className="display-l" data-reveal>Less routine.<br/><em>More real.</em></span><span data-reveal>Step outside.<br/>See what you’re made of.</span></figcaption>
-        <span className="stock-label">AI-generated concept imagery</span>
+        <span className="stock-label">At Eagles Unbound</span>
       </figure>
       <div className="planner" data-reveal><p>Find the right day for your group.</p><Link className="text-link dark-link" href="/what-we-offer">Explore programmes <ArrowUpRight size={17}/></Link></div>
     </section>),
@@ -47,7 +46,7 @@ export default async function Home() {
   activities: (<section className="chapter night activities-section">
       <div className="chapter-head" data-reveal="rule"><span className="label">04 — Out of your comfort zone</span><span className="label">Into the experience</span></div>
       <div className="chapter-title"><SplitLines text={'A little nerve.\nA lot of alive.'} className="display-xl"/><p data-reveal>From the first obstacle to the last shared laugh, find the activities that bring your group together.</p></div>
-      <ActivityVignettes/>
+      <div className="reel-frame" data-reveal><MotionFilm name="activity-reel" seconds={12} label="Motion graphic: a zip line ride, a wall climb, an archery bullseye and a rope course crossing"/></div>
       <ActivityShowcase activities={activities}/>
       <Link href="/activities" className="text-link" data-reveal>Discover the activity library <ArrowUpRight size={18}/></Link>
     </section>),
@@ -82,9 +81,9 @@ export default async function Home() {
       <SplitLines text={'Don’t just watch.\nExperience it.'} className="display-xl"/>
       <div className="film-frame" data-scale-in>
         {content.hero_video ? <ConsentVideo src={content.hero_video} label="Eagles Unbound experience film"/> : <>
-          <div className="media-fill" data-parallax="10"><Image src="/assets/karnataka-dawn.jpg" alt="AI-generated concept of Karnataka granite hills at dawn" fill sizes="(max-width:700px) 100vw, 88vw"/></div>
+          <div className="media-fill" data-parallax="10"><Image src={photos.rappel.src} alt={photos.rappel.alt} fill sizes="(max-width:700px) 100vw, 88vw"/></div>
           <div className="film-note"><p>The terrain. The challenge. The people beside you. Discover the world of Eagles Unbound.</p><Link href="/activities" className="button button-light">Explore the activities <ArrowUpRight size={17}/></Link></div>
-          <span className="stock-label">AI-generated concept imagery</span></>}
+          <span className="stock-label">At Eagles Unbound</span></>}
         <span className="corner tl" aria-hidden="true"/><span className="corner tr" aria-hidden="true"/><span className="corner bl" aria-hidden="true"/><span className="corner br" aria-hidden="true"/>
       </div>
     </section>),
@@ -96,7 +95,7 @@ export default async function Home() {
       </div>
       <div className="why-collage">
         {([[img.cheer, 6], [img.students, 14], [img.trek, 9]] as const).map(([pic, depth], i) => <figure key={pic.src} className={`wc-${i + 1}`} data-reveal="mask"><div className="media-fill" data-parallax={String(depth)}><Image src={pic.src} alt={pic.alt} fill sizes="(max-width:900px) 90vw, 40vw"/></div></figure>)}
-        <span className="stock-label">Illustrative photographs</span>
+        <span className="stock-label">At Eagles Unbound</span>
       </div>
       <ol className="principles-row" data-stagger>{['Purposeful challenges', 'Shared experiences', 'Learning by doing'].map((p, i) => <li key={p}><span>0{i + 1}</span>{p}</li>)}</ol>
     </section>),
@@ -122,10 +121,10 @@ export default async function Home() {
         </div>
       </div>
       <div className="hh-bottom"><a href="#experience" className="hh-cue"><span className="hh-cue-line" aria-hidden="true"/>Scroll to go beyond</a><span className="label"><MapPin size={14}/> Kanakapura Road, Bengaluru</span></div>
-      <span className="stock-label">AI-generated Karnataka concept landscape</span>
+      <span className="stock-label">Filmed at Eagles Unbound</span>
     </section>
 
-    <div className="ticker"><p className="sr-only">Our values: {values.join(', ')}.</p><div className="ticker-track" aria-hidden="true">{[0, 1].map(n => <span key={n}>{values.map(v => <span key={v}>{v}<Chevron/></span>)}</span>)}</div></div>
+    <ValuesTicker/>
 
     {order.map(id => <Fragment key={id}>{blocks[id]}</Fragment>)}
   </main>;

@@ -12,8 +12,9 @@ export function HeroMedia({ video: custom }: { video: string }) {
   const [small,setSmall] = useState(false);
   const motionPaused = useMotionPaused();
   useEffect(()=>{setOrigin(location.origin);setSmall(window.innerWidth<=768);},[]);
-  // Default: the bundled 8-second loop (slow camera push over the dawn landscape). A CMS video URL still takes priority.
-  const video = custom || `/assets/video/hero-dawn-loop-${small?'720':'1280'}.mp4`;
+  // Default: the bundled Eagles Unbound hero film (real footage, ~15 s loop; lighter 540p file on phones).
+  // A video URL set in the CMS (Homepage → hero video) still takes priority.
+  const video = custom || `/assets/video/hero-film-${small?'540':'1080'}.mp4`;
   const allowed = ready && origin && (!needsMediaConsent(video,origin) || preferences.functional);
   const ref = useRef<HTMLVideoElement>(null);
   const anchor = useRef<HTMLSpanElement>(null);
@@ -30,5 +31,5 @@ export function HeroMedia({ video: custom }: { video: string }) {
     return ()=>{observer.disconnect();document.removeEventListener('visibilitychange',onVisibility);};
   },[video,allowed,motionPaused]);
   const controls = video && host ? createPortal(allowed ? <button type="button" className="video-toggle" aria-label={playing ? 'Pause background video' : 'Play background video'} onClick={async () => { if(playing){ref.current?.pause();setPlaying(false);}else{try{await ref.current?.play();setPlaying(!ref.current?.paused);}catch{setPlaying(false);}} }}>{playing ? <Pause size={16}/> : <Play size={16}/>}</button> : <button className="video-toggle" type="button" onClick={openPreferences} aria-label="Manage video privacy settings"><Play size={16}/></button>,host) : null;
-  return <><span ref={anchor} hidden/><Image src="/assets/karnataka-dawn.jpg" alt="AI-generated Karnataka granite hills at dawn; concept landscape" fill priority sizes="100vw" className="hero-image"/>{video && allowed && <video className="hero-video" ref={ref} src={video} poster="/assets/karnataka-dawn.jpg" muted loop playsInline preload="metadata" aria-label="Eagles Unbound experience film"/>}{controls}</>;
+  return <><span ref={anchor} hidden/><Image src="/assets/video/hero-film-poster.webp" alt="A participant rappelling down a granite rock face at Eagles Unbound" fill priority sizes="100vw" className="hero-image"/>{video && allowed && <video className="hero-video" ref={ref} src={video} poster="/assets/video/hero-film-poster.jpg" muted loop playsInline preload="metadata" aria-label="Eagles Unbound film: rappelling, zip line, obstacle nets, rope bridge, archery, climbing, the range, a summit trek and a campfire"/>}{controls}</>;
 }

@@ -23,6 +23,7 @@ const scenes = {
   'activity-lines': {seconds: 8, poster: 6.0, bg: '#111619'},
   'academy-intro': {seconds: 8, poster: 6.6, bg: '#0c1411'},
   'eagle-flight': {seconds: 6, poster: 4.4, bg: '#0c1411'},
+  'activity-reel': {seconds: 12, poster: 6.9, bg: '#0c1411'},
 };
 
 const html = (scene, bg) => `<!doctype html><meta charset="utf-8"><style>
@@ -165,6 +166,128 @@ const scenes={
     sun.setAttribute('opacity',.25+.15*prog(t,0,6));
     const tp=easeOut(prog(t,3.6,4.6));title.setAttribute('opacity',tp);sub.setAttribute('opacity',easeOut(prog(t,4.1,5)));title.setAttribute('transform','translate(0 '+(14*(1-tp))+')');
     svg.setAttribute('opacity',prog(t,0,.4)*(1-prog(t,5.6,6)));}
+},
+'activity-reel'(){
+  // 12 s reel in four chapters: zip line, wall climb, archery, rope course, then an end card. Stylised figures, no footage.
+  const T=12,GOLD='#c2a46e',NAVY='#1d3f8c',SKY1='#0c1411',SKY2='#25351f',DUSK='#b98450';
+  const defs=el('defs');
+  defs.innerHTML='<linearGradient id="rsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+SKY1+'"/><stop offset=".62" stop-color="'+SKY2+'"/><stop offset="1" stop-color="'+DUSK+'"/></linearGradient>'+
+   '<radialGradient id="rsun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd9a0" stop-opacity=".9"/><stop offset="1" stop-color="#ffb46a" stop-opacity="0"/></radialGradient>'+
+   '<linearGradient id="rwall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3f33"/><stop offset="1" stop-color="#262b22"/></linearGradient>';
+  const CH=[{name:'ZIP LINE',sub:'FLY THE VALLEY',a:0,b:2.8},{name:'WALL CLIMB',sub:'REACH HIGHER',a:2.8,b:5.6},{name:'ARCHERY',sub:'FIND YOUR FOCUS',a:5.6,b:8.4},{name:'ROPE COURSE',sub:'TRUST THE TEAM',a:8.4,b:11}];
+  const ridge=(g,y,amp,color,seed,w=W*2)=>{let d='M0,'+H;for(let x=0;x<=w;x+=14)d+=' L'+x+','+(y-amp*(Math.sin(x/170+seed)*.6+Math.sin(x/61+seed*2)*.25+Math.sin(x/23+seed)*.08));return el('path',{d:d+' L'+w+','+H+'Z',fill:color},g)};
+  const tree=(g,x,y,s,c='#0e1612')=>el('path',{d:\`M\${x},\${y} l\${-14*s},\${30*s} h\${8*s} l\${-12*s},\${26*s} h\${12*s} v\${12*s} h\${12*s} v\${-12*s} h\${12*s} l\${-12*s},\${-26*s} h\${8*s}Z\`,fill:c},g);
+  // person: returns setter pose({x,y,rot,arms:[[a1,a2],[a1,a2]],legs:[[a1,a2],[a1,a2]]}) angles in degrees from straight down
+  function person(g,color=CREAM,scale=1){
+    const root=el('g',{},g);const parts={};
+    parts.legs=[0,1].map(()=>[el('line',{stroke:color,'stroke-width':7*scale,'stroke-linecap':'round'},root),el('line',{stroke:color,'stroke-width':6*scale,'stroke-linecap':'round'},root)]);
+    parts.torso=el('line',{stroke:color,'stroke-width':9*scale,'stroke-linecap':'round'},root);
+    parts.arms=[0,1].map(()=>[el('line',{stroke:color,'stroke-width':6*scale,'stroke-linecap':'round'},root),el('line',{stroke:color,'stroke-width':5*scale,'stroke-linecap':'round'},root)]);
+    parts.head=el('circle',{r:11*scale,fill:color},root);parts.helmet=el('path',{fill:RED},root);
+    const seg=(line,x,y,deg,len)=>{const r=deg*Math.PI/180,x2=x+Math.sin(r)*len,y2=y+Math.cos(r)*len;line.setAttribute('x1',x);line.setAttribute('y1',y);line.setAttribute('x2',x2);line.setAttribute('y2',y2);return [x2,y2]};
+    return p=>{const s=scale;root.setAttribute('transform',\`translate(\${p.x} \${p.y}) rotate(\${p.rot||0})\`);
+      const hip=[0,0],neck=[0,-44*s];seg(parts.torso,0,0,180,44*s);
+      parts.head.setAttribute('cx',0);parts.head.setAttribute('cy',-58*s);parts.helmet.setAttribute('d',\`M\${-12*s},\${-60*s} a\${12*s},\${12*s} 0 0 1 \${24*s},0 Z\`);
+      p.legs.forEach((l,i)=>{const [kx,ky]=seg(parts.legs[i][0],hip[0],hip[1],l[0],26*s);seg(parts.legs[i][1],kx,ky,l[1],26*s)});
+      p.arms.forEach((a,i)=>{const [ex,ey]=seg(parts.arms[i][0],neck[0],neck[1]+4*s,a[0],22*s);seg(parts.arms[i][1],ex,ey,a[1],22*s)});}
+  }
+  const bg=el('rect',{width:W,height:H,fill:'url(#rsky)'});
+  const sun=el('circle',{cx:960,cy:420,r:200,fill:'url(#rsun)'});
+  const scenes=CH.map(()=>el('g',{opacity:0}));
+
+  // ---- 1. ZIP LINE
+  const z=scenes[0];const zfar=ridge(z,430,70,'#1d2a22',1),zmid=ridge(z,520,80,'#151f19',3);
+  const ztrees=el('g',{},z);for(let i=0;i<26;i++)tree(ztrees,i*110+rand(i)*40,560+rand(i+3)*40,1.2+rand(i+7)*.6);
+  el('line',{x1:60,y1:110,x2:1240,y2:600,stroke:CREAM,'stroke-width':3},z);
+  el('rect',{x:40,y:90,width:14,height:420,fill:'#5a5a46'},z);
+  const zspeed=el('g',{},z);const zl=[0,1,2,3,4].map(i=>el('line',{stroke:CREAM,'stroke-opacity':.5,'stroke-width':2,'stroke-linecap':'round'},zspeed));
+  const zrider=el('g',{},z);el('rect',{x:-16,y:-8,width:32,height:14,rx:4,fill:RED},zrider);el('line',{x1:0,y1:6,x2:0,y2:30,stroke:'#888',"stroke-width":2},zrider);
+  const zpose=person(el('g',{transform:'translate(0 120)'},zrider),CREAM,1.45);
+  // ---- 2. WALL CLIMB
+  const w=scenes[1];const wcam=el('g',{},w);
+  ridge(wcam,620,60,'#151f19',6);
+  el('rect',{x:470,y:-640,width:340,height:1300,fill:'url(#rwall)',stroke:'#5b6150','stroke-width':3},wcam);
+  for(let y=-620;y<640;y+=80)el('line',{x1:470,y1:y,x2:810,y2:y,stroke:'#fff','stroke-opacity':.05},wcam);
+  const holdsXY=[];for(let i=0;i<16;i++){const x=520+((i*137)%240),y=600-i*78;holdsXY.push([x,y]);el('circle',{cx:x,cy:y,r:9+(i%3)*3,fill:[RED,GOLD,'#5ab0d6','#7fd18b'][i%4]},wcam)}
+  el('line',{x1:640,y1:-640,x2:640,y2:640,stroke:GOLD,'stroke-width':2,'stroke-dasharray':'2 6'},wcam);
+  const flag=el('g',{transform:'translate(800 -620)'},wcam);el('rect',{x:0,y:0,width:5,height:70,fill:CREAM},flag);const flagCloth=el('path',{fill:RED},flag);
+  const climber=el('g',{},wcam);const cpose=person(climber,CREAM,1.5);
+  // ---- 3. ARCHERY
+  const a=scenes[2];ridge(a,520,50,'#1b271f',2);el('rect',{x:0,y:520,width:W,height:200,fill:'#2e3427'},a);
+  for(let i=-6;i<=6;i++)el('line',{x1:640+i*50,y1:520,x2:640+i*240,y2:720,stroke:CREAM,'stroke-opacity':.06},a);
+  const target=el('g',{transform:'translate(1040 430)'},a);el('rect',{x:-6,y:60,width:12,height:120,fill:'#3a2c1c'},target);
+  const rings=[[90,CREAM],[74,INK],[58,CREAM],[42,RED],[26,CREAM],[12,RED]].map(([r,c])=>el('circle',{r,fill:c},target));
+  const burst=el('circle',{r:90,fill:'none',stroke:'#ffd36b','stroke-width':5,opacity:0},target);
+  const archer=el('g',{transform:'translate(250 448)'},a);const apose=person(archer,CREAM,1.7);
+  const bow=el('path',{fill:'none',stroke:GOLD,'stroke-width':5,'stroke-linecap':'round'},archer);const string=el('polyline',{fill:'none',stroke:CREAM,'stroke-width':1.5},archer);
+  const arrow=el('g',{},a);el('line',{x1:-60,y1:0,x2:0,y2:0,stroke:'#c9a77a','stroke-width':4},arrow);el('path',{d:'M8,0 L-6,-7 L-6,7Z',fill:CREAM},arrow);el('path',{d:'M-52,0 L-66,-10 L-60,0 L-66,10Z',fill:RED},arrow);
+  const trail=el('line',{stroke:'#ffd36b','stroke-width':3,'stroke-opacity':.6,'stroke-linecap':'round'},a);
+  const bull=el('text',{x:1040,y:300,'text-anchor':'middle','font-size':72,'letter-spacing':6,fill:'#ffd36b',stroke:'#0c1411','stroke-width':2,opacity:0},a);bull.textContent='BULLSEYE';
+  // ---- 4. ROPE COURSE
+  const r=scenes[3];ridge(r,470,60,'#1d2a22',4);ridge(r,560,70,'#151f19',8);
+  const rtrees=el('g',{},r);for(let i=0;i<14;i++)tree(rtrees,i*100,600+rand(i+11)*30,1.3);
+  [[150,'L'],[1130,'R']].forEach(([x])=>{el('rect',{x:x-12,y:300,width:24,height:420,fill:'#5a4a33'},r);el('rect',{x:x-60,y:290,width:120,height:14,fill:'#7a6446'},r)});
+  const ropeTop=el('path',{fill:'none',stroke:CREAM,'stroke-width':3},r),ropeLow=el('path',{fill:'none',stroke:CREAM,'stroke-width':3,'stroke-opacity':.6},r);
+  const planks=[];for(let i=0;i<22;i++)planks.push(el('line',{stroke:'#c9a77a','stroke-width':7,'stroke-linecap':'round'},r));
+  const walker=el('g',{},r);const wpose=person(walker,CREAM,1.4);const pole=el('line',{stroke:GOLD,'stroke-width':4,'stroke-linecap':'round'},walker);
+  const meter=el('text',{x:640,y:250,'text-anchor':'middle','font-size':26,'letter-spacing':8,fill:GOLD},r);
+  // ---- titles, progress, wipe, end card
+  const num=el('text',{x:70,y:150,'font-size':150,fill:CREAM,'fill-opacity':.12});
+  const title=el('text',{x:70,y:640,'font-size':92,'letter-spacing':4,fill:CREAM});const sub=el('text',{x:74,y:678,'font-size':24,'letter-spacing':10,fill:GOLD});
+  const bars=CH.map((c,i)=>{el('rect',{x:70+i*150,y:40,width:136,height:4,fill:CREAM,'fill-opacity':.2});return el('rect',{x:70+i*150,y:40,width:0,height:4,fill:RED})});
+  const wipe=el('rect',{x:0,y:0,width:W,height:H,fill:RED}),wipe2=el('rect',{x:0,y:0,width:W,height:H,fill:INK});
+  const end=el('g',{opacity:0});el('rect',{width:W,height:H,fill:CREAM},end);contours(el('g',{},end),640,360,10,INK,.12,1.2)(0,1);
+  el('image',{href:LOGO,x:640-266,y:200,width:532,height:204},end);
+  const et=el('text',{x:640,y:500,'text-anchor':'middle','font-size':54,'letter-spacing':8,fill:INK},end);et.textContent='PICK YOUR CHALLENGE';
+  el('rect',{x:540,y:525,width:200,height:4,fill:RED},end);
+  function rand(i){return (Math.sin(i*12.9898)*43758.5453)%1+(Math.sin(i*12.9898)*43758.5453<0?1:0)}
+  const hillY=x=>0;
+  return t=>{
+    const idx=CH.findIndex(c=>t>=c.a&&t<c.b);
+    scenes.forEach((g,i)=>g.setAttribute('opacity',i===idx?1:0));
+    // chapter wipe: red then ink bar crossing at each boundary
+    let wx=W+120;for(const c of CH){const k=prog(t,c.a-.28,c.a+.28);if(k>0&&k<1&&c.a>0)wx=-W+2*W*easeInOut(k)}
+    wipe.setAttribute('x',wx);wipe2.setAttribute('x',wx-60);
+    bars.forEach((b,i)=>b.setAttribute('width',136*prog(t,CH[i].a,CH[i].b)));
+    if(idx>=0){const c=CH[idx],u=prog(t,c.a,c.b),tin=easeOut(prog(t,c.a+.2,c.a+.7)),tout=1-prog(t,c.b-.25,c.b);
+      num.textContent='0'+(idx+1);num.setAttribute('opacity',tin*tout);title.textContent=c.name;sub.textContent=c.sub;
+      title.setAttribute('opacity',tin*tout);title.setAttribute('transform',\`translate(\${-40*(1-tin)} 0)\`);sub.setAttribute('opacity',easeOut(prog(t,c.a+.4,c.a+.9))*tout);
+      if(idx===0){ // zip line: accelerating ride, parallax, speed lines, swinging legs
+        const k=Math.pow(u,1.6),x=80+1120*k,y=110+(490*(x-60)/1180);zrider.setAttribute('transform',\`translate(\${x} \${y}) rotate(22)\`);
+        const swing=Math.sin(t*9)*12*k;zpose({x:0,y:0,rot:-22+swing*.3,arms:[[175,180],[185,180]],legs:[[-25+swing,10],[-5+swing,20]]});
+        zfar.setAttribute('transform',\`translate(\${-80*u} 0)\`);zmid.setAttribute('transform',\`translate(\${-220*u} 0)\`);ztrees.setAttribute('transform',\`translate(\${-700*u} 0)\`);
+        zl.forEach((l,i)=>{const len=40+100*k;l.setAttribute('x1',x-60-i*18);l.setAttribute('y1',y+30+i*14-20);l.setAttribute('x2',x-60-i*18-len);l.setAttribute('y2',y+30+i*14-20-len*.41);l.setAttribute('stroke-opacity',.6*k)});
+      }
+      if(idx===1){ // wall climb: camera rises, alternating reach
+        const k=easeInOut(u),step=k*12,i0=Math.floor(step),f=step-i0;wcam.setAttribute('transform',\`translate(0 \${k*720})\`);
+        const h0=holdsXY[Math.min(15,i0)],h1=holdsXY[Math.min(15,i0+1)];const cx=h0[0]+(h1[0]-h0[0])*f-20,cy=h0[1]+(h1[1]-h0[1])*f+60;
+        const reach=Math.sin(f*Math.PI);cpose({x:cx,y:cy,rot:0,arms:[[150-40*reach,170],[210,190+30*(1-reach)]],legs:[[20+30*reach,-20],[-30,10+20*(1-reach)]]});
+        const wave=Math.sin(t*8)*6;flagCloth.setAttribute('d',\`M5,0 Q30,\${-6+wave} 60,0 L60,34 Q30,\${28-wave} 5,34Z\`);
+      }
+      if(idx===2){ // archery: draw, release, flight, impact
+        const draw=easeOut(prog(u,.08,.38)),rel=prog(u,.42,.7),hit=prog(u,.7,1);
+        apose({x:0,y:0,rot:0,arms:[[100,90],[100-30*draw,90+120*draw]],legs:[[20,0],[-20,0]]});
+        bow.setAttribute('d','M66,-165 Q108,-96 66,-27');const sx=66-38*draw*(rel>0?0:1);string.setAttribute('points',\`66,-165 \${sx},-96 66,-27\`);
+        const ax=316+(1040-316)*easeInOut(rel),ay=374-70*Math.sin(Math.PI*rel)+56*rel;
+        arrow.setAttribute('transform',\`translate(\${rel>0?ax:250+66-38*draw} \${rel>0?ay:374}) rotate(\${rel>0?(-12+30*rel):0})\`);
+        trail.setAttribute('x1',rel>0?Math.max(300,ax-260):0);trail.setAttribute('y1',rel>0?ay+20:0);trail.setAttribute('x2',rel>0?ax-60:0);trail.setAttribute('y2',rel>0?ay:0);trail.setAttribute('opacity',rel>0&&hit===0?1:0);
+        if(hit>0)arrow.setAttribute('transform',\`translate(\${1040-4+Math.sin(hit*60)*4*(1-hit)} 430) rotate(18)\`);
+        burst.setAttribute('opacity',hit>0?1-hit:0);burst.setAttribute('r',90+120*hit);
+        target.setAttribute('transform',\`translate(1040 430) rotate(\${hit>0?Math.sin(hit*40)*4*(1-hit):0})\`);
+        bull.setAttribute('opacity',hit>0?Math.min(1,hit*4):0);bull.setAttribute('transform',\`translate(0 \${-20*easeOut(hit)})\`);
+      }
+      if(idx===3){ // rope course: swaying bridge, walker crossing with a balance pole
+        const yAt=(x,sw)=>300+60*(1-Math.pow((x-640)/490,2))+sw*Math.sin(Math.PI*(x-150)/980);
+        const sw=Math.sin(t*3.2)*12;let d1='',d2='';for(let k=0;k<=40;k++){const x=150+980*k/40;d1+=(k?'L':'M')+x+','+(yAt(x,sw)-70);d2+=(k?'L':'M')+x+','+yAt(x,sw)}
+        ropeTop.setAttribute('d',d1);ropeLow.setAttribute('d',d2);planks.forEach((p,i)=>{const x=175+930*i/21,y=yAt(x,sw);p.setAttribute('x1',x-12);p.setAttribute('x2',x+12);p.setAttribute('y1',y);p.setAttribute('y2',y)});
+        const wx=170+940*easeInOut(prog(u,.05,.95)),wy=yAt(wx,sw)-74,tilt=Math.sin(t*4)*6;const stepA=Math.sin(t*10)*22;
+        wpose({x:wx,y:wy,rot:tilt,arms:[[95,90],[265,270]],legs:[[stepA,0],[-stepA,0]]});pole.setAttribute('x1',wx-80);pole.setAttribute('x2',wx+80);pole.setAttribute('y1',wy-48+tilt);pole.setAttribute('y2',wy-48-tilt);
+        meter.textContent=\`HEIGHT 12 M  ·  \${Math.round(prog(u,.05,.95)*100)}% ACROSS\`;
+      }
+    } else {num.setAttribute('opacity',0);title.setAttribute('opacity',0);sub.setAttribute('opacity',0)}
+    const e=easeOut(prog(t,11,11.5));end.setAttribute('opacity',e);
+    svg.setAttribute('opacity',prog(t,0,.35)*(1-prog(t,11.7,12)));
+  }
 }};
 const draw=scenes[SCENE]();window.setT=t=>draw(t);
 </script>`;
