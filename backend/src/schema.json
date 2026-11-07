@@ -1,0 +1,886 @@
+{
+  "activities": {
+    "columns": [
+      {
+        "name": "slug",
+        "type": "VARCHAR(150)",
+        "nullable": false
+      },
+      {
+        "name": "name",
+        "type": "VARCHAR(180)",
+        "nullable": false
+      },
+      {
+        "name": "description",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "image",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "published",
+        "type": "BOOLEAN",
+        "nullable": false
+      },
+      {
+        "name": "display_order",
+        "type": "INTEGER",
+        "nullable": false
+      },
+      {
+        "name": "details",
+        "type": "JSON",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "admin_users": {
+    "columns": [
+      {
+        "name": "email",
+        "type": "VARCHAR(254)",
+        "nullable": false
+      },
+      {
+        "name": "password_hash",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "role",
+        "type": "VARCHAR(20)",
+        "nullable": false
+      },
+      {
+        "name": "active",
+        "type": "BOOLEAN",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "blocked_dates": {
+    "columns": [
+      {
+        "name": "day",
+        "type": "DATE",
+        "nullable": false
+      },
+      {
+        "name": "reason",
+        "type": "VARCHAR(200)",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "clients": {
+    "columns": [
+      {
+        "name": "slug",
+        "type": "VARCHAR(150)",
+        "nullable": false
+      },
+      {
+        "name": "name",
+        "type": "VARCHAR(180)",
+        "nullable": false
+      },
+      {
+        "name": "description",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "image",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "published",
+        "type": "BOOLEAN",
+        "nullable": false
+      },
+      {
+        "name": "display_order",
+        "type": "INTEGER",
+        "nullable": false
+      },
+      {
+        "name": "details",
+        "type": "JSON",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "enquiries": {
+    "columns": [
+      {
+        "name": "name",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "email",
+        "type": "VARCHAR(254)",
+        "nullable": false
+      },
+      {
+        "name": "phone",
+        "type": "VARCHAR(25)",
+        "nullable": false
+      },
+      {
+        "name": "category",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "message",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "consent",
+        "type": "BOOLEAN",
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(20)",
+        "nullable": false
+      },
+      {
+        "name": "internal_notes",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "details",
+        "type": "JSON",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "faqs": {
+    "columns": [
+      {
+        "name": "question",
+        "type": "VARCHAR(300)",
+        "nullable": false
+      },
+      {
+        "name": "answer",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "published",
+        "type": "BOOLEAN",
+        "nullable": false
+      },
+      {
+        "name": "page",
+        "type": "VARCHAR(150)",
+        "nullable": false
+      },
+      {
+        "name": "display_order",
+        "type": "INTEGER",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "gallery_albums": {
+    "columns": [
+      {
+        "name": "slug",
+        "type": "VARCHAR(150)",
+        "nullable": false
+      },
+      {
+        "name": "name",
+        "type": "VARCHAR(180)",
+        "nullable": false
+      },
+      {
+        "name": "description",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "image",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "published",
+        "type": "BOOLEAN",
+        "nullable": false
+      },
+      {
+        "name": "display_order",
+        "type": "INTEGER",
+        "nullable": false
+      },
+      {
+        "name": "details",
+        "type": "JSON",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "page_content": {
+    "columns": [
+      {
+        "name": "slug",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "content",
+        "type": "JSON",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "programmes": {
+    "columns": [
+      {
+        "name": "slug",
+        "type": "VARCHAR(150)",
+        "nullable": false
+      },
+      {
+        "name": "name",
+        "type": "VARCHAR(180)",
+        "nullable": false
+      },
+      {
+        "name": "description",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "image",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "published",
+        "type": "BOOLEAN",
+        "nullable": false
+      },
+      {
+        "name": "display_order",
+        "type": "INTEGER",
+        "nullable": false
+      },
+      {
+        "name": "details",
+        "type": "JSON",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "site_settings": {
+    "columns": [
+      {
+        "name": "key",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "value",
+        "type": "JSON",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "admin_sessions": {
+    "columns": [
+      {
+        "name": "token_hash",
+        "type": "VARCHAR(64)",
+        "nullable": false
+      },
+      {
+        "name": "user_id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "expires_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "audit_logs": {
+    "columns": [
+      {
+        "name": "actor_id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "action",
+        "type": "VARCHAR(200)",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "availability": {
+    "columns": [
+      {
+        "name": "programme_id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "weekday",
+        "type": "INTEGER",
+        "nullable": false
+      },
+      {
+        "name": "enabled",
+        "type": "BOOLEAN",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "bookings": {
+    "columns": [
+      {
+        "name": "reference",
+        "type": "VARCHAR(30)",
+        "nullable": false
+      },
+      {
+        "name": "name",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "email",
+        "type": "VARCHAR(254)",
+        "nullable": false
+      },
+      {
+        "name": "mobile",
+        "type": "VARCHAR(25)",
+        "nullable": false
+      },
+      {
+        "name": "programme_id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "preferred_date",
+        "type": "DATE",
+        "nullable": false
+      },
+      {
+        "name": "preferred_time",
+        "type": "VARCHAR(40)",
+        "nullable": false
+      },
+      {
+        "name": "participants",
+        "type": "INTEGER",
+        "nullable": false
+      },
+      {
+        "name": "group_type",
+        "type": "VARCHAR(80)",
+        "nullable": false
+      },
+      {
+        "name": "organisation",
+        "type": "VARCHAR(180)",
+        "nullable": false
+      },
+      {
+        "name": "message",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "consent",
+        "type": "BOOLEAN",
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(20)",
+        "nullable": false
+      },
+      {
+        "name": "internal_notes",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "details",
+        "type": "JSON",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "media_assets": {
+    "columns": [
+      {
+        "name": "name",
+        "type": "VARCHAR(180)",
+        "nullable": false
+      },
+      {
+        "name": "url",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "mime_type",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "category",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "album_id",
+        "type": "VARCHAR(36)",
+        "nullable": true
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "packages": {
+    "columns": [
+      {
+        "name": "programme_id",
+        "type": "VARCHAR(36)",
+        "nullable": true
+      },
+      {
+        "name": "slug",
+        "type": "VARCHAR(150)",
+        "nullable": false
+      },
+      {
+        "name": "name",
+        "type": "VARCHAR(180)",
+        "nullable": false
+      },
+      {
+        "name": "description",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "image",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "published",
+        "type": "BOOLEAN",
+        "nullable": false
+      },
+      {
+        "name": "display_order",
+        "type": "INTEGER",
+        "nullable": false
+      },
+      {
+        "name": "details",
+        "type": "JSON",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "programme_activities": {
+    "columns": [
+      {
+        "name": "programme_id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "activity_id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "programme_id",
+      "activity_id"
+    ]
+  },
+  "testimonials": {
+    "columns": [
+      {
+        "name": "client_id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "quote",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "approved",
+        "type": "BOOLEAN",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  },
+  "booking_status_history": {
+    "columns": [
+      {
+        "name": "booking_id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(20)",
+        "nullable": false
+      },
+      {
+        "name": "actor_id",
+        "type": "VARCHAR(36)",
+        "nullable": true
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
+  }
+}

@@ -1,14 +1,10 @@
 node_modules/
 .next/
-.venv/
 .env
 .env.*
 !.env.example
 *.db
 *.db-*
-*.pyc
-__pycache__/
-.pytest_cache/
 *.tsbuildinfo
 playwright-report/
 test-results/
@@ -18,3 +14,6 @@ site-audit-source.html
 tmp/
 .next-field-*/
 .next-*/
+
+# Node build output
+backend/dist/

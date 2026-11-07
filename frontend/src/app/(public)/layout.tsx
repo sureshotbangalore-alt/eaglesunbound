@@ -5,7 +5,7 @@ import { Footer } from '@/components/footer';
 import { serverAPI, type ContactSettings } from '@/lib/api';
 import { StructuredData } from '@/components/structured-data';
 import { siteURL } from '@/lib/seo';
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 export default async function PublicLayout({ children }: { children: React.ReactNode }) {
   const settings = await serverAPI<ContactSettings>('/public/settings');
   const social=[settings.instagram,settings.facebook,settings.youtube].filter(Boolean);

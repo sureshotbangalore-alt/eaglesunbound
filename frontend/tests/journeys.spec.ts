@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { assertLocalWriteTarget } from './safety';
+assertLocalWriteTarget();
 
 test('navigation, mobile menu, no horizontal overflow and accessibility',async({page},testInfo)=>{
   await page.goto('/');

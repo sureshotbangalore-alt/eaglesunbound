@@ -1,0 +1,29 @@
+{
+  "name": "eagles-unbound",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "engines": {
+    "node": ">=22.20.0 <23",
+    "npm": ">=10 <12"
+  },
+  "packageManager": "npm@11.6.2",
+  "scripts": {
+    "dev": "tsx watch backend/src/server.ts --dev",
+    "build": "npm run build --workspace backend && npm run build --workspace frontend",
+    "start": "node backend/dist/server.js",
+    "test": "npm run test --workspace backend",
+    "typecheck": "npm run typecheck --workspace backend && npm run typecheck --workspace frontend",
+    "db:check": "npm run db:check --workspace backend",
+    "db:migrate": "npm run db:migrate --workspace backend",
+    "db:seed": "npm run db:seed --workspace backend --",
+    "db:create-user": "npm run db:create-user --workspace backend --"
+  },
+  "devDependencies": {
+    "tsx": "4.23.15",
+    "typescript": "5.9.3"
+  }
+}

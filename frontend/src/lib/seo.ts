@@ -8,7 +8,7 @@ export async function pageMetadata(page: string, title: string, description: str
   const seo = all.find(s => s.page === page);
   const image = seo?.image || '/assets/eagles-unbound-logo.png';
   return {
-    title: seo?.title || title,
+    title: seo?.title ? (/eagles unbound/i.test(seo.title) ? { absolute: seo.title } : seo.title) : title, // a CMS title that already names the brand skips the automatic suffix
     description: seo?.description || description,
     alternates: { canonical: seo?.canonical || page },
     robots: page === '/book-now' || seo?.noindex || process.env.SEARCH_INDEXING_ENABLED !== 'true' ? { index: false, follow: true } : { index: true, follow: true },

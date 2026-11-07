@@ -1,2 +1,0 @@
-# Install the complete pinned environment. Update only after regression testing.
--r requirements.lock

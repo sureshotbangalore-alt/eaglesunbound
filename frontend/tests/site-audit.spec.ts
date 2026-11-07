@@ -1,5 +1,7 @@
 import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { assertLocalWriteTarget } from './safety';
+assertLocalWriteTarget();
 const paths=(process.env.E2E_AUDIT_PATHS || '/,/the-bootcamp,/what-we-offer,/activities,/about,/founder,/food-and-dining,/contact,/book-now,/privacy-policy,/cookie-policy,/terms-and-conditions,/booking-policy').split(',');
 test('every public route has readable content, metadata and responsive layout',async({page},info)=>{
  test.setTimeout(240000);const titles=new Set<string>();const issues:unknown[]=[];

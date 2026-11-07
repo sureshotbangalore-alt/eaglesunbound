@@ -1,0 +1,860 @@
+{
+ "Login": {
+  "properties": {
+   "email": {
+    "format": "email",
+    "title": "Email",
+    "type": "string"
+   },
+   "password": {
+    "maxLength": 200,
+    "minLength": 1,
+    "title": "Password",
+    "type": "string"
+   },
+   "code": {
+    "default": "",
+    "maxLength": 80,
+    "title": "Code",
+    "type": "string"
+   }
+  },
+  "required": [
+   "email",
+   "password"
+  ],
+  "title": "Login",
+  "type": "object"
+ },
+ "Homepage": {
+  "properties": {
+   "eyebrow": {
+    "maxLength": 100,
+    "title": "Eyebrow",
+    "type": "string"
+   },
+   "hero_title": {
+    "maxLength": 120,
+    "minLength": 5,
+    "title": "Hero Title",
+    "type": "string"
+   },
+   "hero_secondary": {
+    "default": "AN EXPERIENCE THAT CHALLENGES YOU.",
+    "maxLength": 150,
+    "minLength": 5,
+    "title": "Hero Secondary",
+    "type": "string"
+   },
+   "hero_subtitle": {
+    "maxLength": 300,
+    "minLength": 5,
+    "title": "Hero Subtitle",
+    "type": "string"
+   },
+   "experience_title": {
+    "maxLength": 120,
+    "minLength": 5,
+    "title": "Experience Title",
+    "type": "string"
+   },
+   "experience_description": {
+    "maxLength": 1500,
+    "minLength": 10,
+    "title": "Experience Description",
+    "type": "string"
+   },
+   "hero_video": {
+    "default": "",
+    "maxLength": 1000,
+    "title": "Hero Video",
+    "type": "string"
+   },
+   "brand_tagline": {
+    "default": "ONE DESTINATION. ENDLESS ADVENTURES.",
+    "maxLength": 150,
+    "title": "Brand Tagline",
+    "type": "string"
+   },
+   "sections": {
+    "default": [],
+    "maxItems": 12,
+    "title": "Sections",
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "id"
+     ],
+     "properties": {
+      "id": {
+       "type": "string",
+       "enum": [
+        "experience",
+        "briefing",
+        "programmes",
+        "activities",
+        "founder",
+        "film",
+        "why",
+        "clients"
+       ]
+      },
+      "visible": {
+       "type": "boolean",
+       "default": true
+      }
+     }
+    }
+   }
+  },
+  "required": [
+   "eyebrow",
+   "hero_title",
+   "hero_subtitle",
+   "experience_title",
+   "experience_description"
+  ],
+  "title": "Homepage",
+  "type": "object"
+ },
+ "ContentInput": {
+  "properties": {
+   "slug": {
+    "pattern": "^[a-z0-9-]{2,150}$",
+    "title": "Slug",
+    "type": "string"
+   },
+   "name": {
+    "maxLength": 180,
+    "minLength": 2,
+    "title": "Name",
+    "type": "string"
+   },
+   "description": {
+    "default": "",
+    "maxLength": 10000,
+    "title": "Description",
+    "type": "string"
+   },
+   "image": {
+    "default": "",
+    "maxLength": 1000,
+    "title": "Image",
+    "type": "string"
+   },
+   "published": {
+    "default": false,
+    "title": "Published",
+    "type": "boolean"
+   },
+   "display_order": {
+    "default": 0,
+    "maximum": 9999,
+    "minimum": 0,
+    "title": "Display Order",
+    "type": "integer"
+   },
+   "details": {
+    "additionalProperties": true,
+    "title": "Details",
+    "type": "object"
+   }
+  },
+  "required": [
+   "slug",
+   "name"
+  ],
+  "title": "ContentInput",
+  "type": "object"
+ },
+ "BookingInput": {
+  "properties": {
+   "name": {
+    "maxLength": 100,
+    "minLength": 2,
+    "title": "Name",
+    "type": "string"
+   },
+   "email": {
+    "format": "email",
+    "title": "Email",
+    "type": "string"
+   },
+   "mobile": {
+    "pattern": "^\\+?[\\d\\s()-]{7,25}$",
+    "title": "Mobile",
+    "type": "string"
+   },
+   "programme_id": {
+    "maxLength": 36,
+    "title": "Programme Id",
+    "type": "string"
+   },
+   "preferred_date": {
+    "format": "date",
+    "title": "Preferred Date",
+    "type": "string"
+   },
+   "preferred_time": {
+    "default": "",
+    "maxLength": 40,
+    "title": "Preferred Time",
+    "type": "string"
+   },
+   "participants": {
+    "maximum": 1000,
+    "minimum": 1,
+    "title": "Participants",
+    "type": "integer"
+   },
+   "group_type": {
+    "maxLength": 80,
+    "minLength": 2,
+    "title": "Group Type",
+    "type": "string"
+   },
+   "organisation": {
+    "default": "",
+    "maxLength": 180,
+    "title": "Organisation",
+    "type": "string"
+   },
+   "message": {
+    "default": "",
+    "maxLength": 3000,
+    "title": "Message",
+    "type": "string"
+   },
+   "consent": {
+    "const": true,
+    "title": "Consent",
+    "type": "boolean"
+   },
+   "website": {
+    "default": "",
+    "maxLength": 200,
+    "title": "Website",
+    "type": "string"
+   },
+   "vegetarian_meals": {
+    "default": 0,
+    "maximum": 1000,
+    "minimum": 0,
+    "title": "Vegetarian Meals",
+    "type": "integer"
+   },
+   "non_vegetarian_meals": {
+    "default": 0,
+    "maximum": 1000,
+    "minimum": 0,
+    "title": "Non Vegetarian Meals",
+    "type": "integer"
+   },
+   "special_requirements": {
+    "default": "",
+    "maxLength": 3000,
+    "title": "Special Requirements",
+    "type": "string"
+   }
+  },
+  "required": [
+   "name",
+   "email",
+   "mobile",
+   "programme_id",
+   "preferred_date",
+   "participants",
+   "group_type",
+   "consent"
+  ],
+  "title": "BookingInput",
+  "type": "object"
+ },
+ "EnquiryInput": {
+  "properties": {
+   "name": {
+    "maxLength": 100,
+    "minLength": 2,
+    "title": "Name",
+    "type": "string"
+   },
+   "email": {
+    "format": "email",
+    "title": "Email",
+    "type": "string"
+   },
+   "phone": {
+    "pattern": "^\\+?[\\d\\s()-]{7,25}$",
+    "title": "Phone",
+    "type": "string"
+   },
+   "category": {
+    "maxLength": 100,
+    "minLength": 2,
+    "title": "Category",
+    "type": "string"
+   },
+   "message": {
+    "maxLength": 3000,
+    "minLength": 10,
+    "title": "Message",
+    "type": "string"
+   },
+   "consent": {
+    "const": true,
+    "title": "Consent",
+    "type": "boolean"
+   },
+   "website": {
+    "default": "",
+    "maxLength": 200,
+    "title": "Website",
+    "type": "string"
+   },
+   "organisation": {
+    "default": "",
+    "maxLength": 180,
+    "title": "Organisation",
+    "type": "string"
+   },
+   "visitor_category": {
+    "default": "Other",
+    "enum": [
+     "School",
+     "College",
+     "Corporate",
+     "Family",
+     "Individual",
+     "Other"
+    ],
+    "title": "Visitor Category",
+    "type": "string"
+   },
+   "programme": {
+    "default": "",
+    "maxLength": 180,
+    "title": "Programme",
+    "type": "string"
+   },
+   "participants": {
+    "anyOf": [
+     {
+      "maximum": 1000,
+      "minimum": 1,
+      "type": "integer"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "default": null,
+    "title": "Participants"
+   },
+   "preferred_date": {
+    "anyOf": [
+     {
+      "format": "date",
+      "type": "string"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "default": null,
+    "title": "Preferred Date"
+   },
+   "vegetarian_meals": {
+    "default": 0,
+    "maximum": 1000,
+    "minimum": 0,
+    "title": "Vegetarian Meals",
+    "type": "integer"
+   },
+   "non_vegetarian_meals": {
+    "default": 0,
+    "maximum": 1000,
+    "minimum": 0,
+    "title": "Non Vegetarian Meals",
+    "type": "integer"
+   },
+   "special_requirements": {
+    "default": "",
+    "maxLength": 3000,
+    "title": "Special Requirements",
+    "type": "string"
+   }
+  },
+  "required": [
+   "name",
+   "email",
+   "phone",
+   "category",
+   "message",
+   "consent"
+  ],
+  "title": "EnquiryInput",
+  "type": "object"
+ },
+ "BookingUpdate": {
+  "properties": {
+   "status": {
+    "enum": [
+     "Pending",
+     "Contacted",
+     "Confirmed",
+     "Cancelled",
+     "Completed"
+    ],
+    "title": "Status",
+    "type": "string"
+   },
+   "internal_notes": {
+    "default": "",
+    "maxLength": 5000,
+    "title": "Internal Notes",
+    "type": "string"
+   }
+  },
+  "required": [
+   "status"
+  ],
+  "title": "BookingUpdate",
+  "type": "object"
+ },
+ "EnquiryUpdate": {
+  "properties": {
+   "status": {
+    "enum": [
+     "New",
+     "Contacted",
+     "Resolved"
+    ],
+    "title": "Status",
+    "type": "string"
+   },
+   "internal_notes": {
+    "default": "",
+    "maxLength": 5000,
+    "title": "Internal Notes",
+    "type": "string"
+   }
+  },
+  "required": [
+   "status"
+  ],
+  "title": "EnquiryUpdate",
+  "type": "object"
+ },
+ "ContactSettings": {
+  "properties": {
+   "phone": {
+    "pattern": "^\\+?[\\d\\s()-]{7,25}$",
+    "title": "Phone",
+    "type": "string"
+   },
+   "whatsapp": {
+    "default": "",
+    "pattern": "^\\d{7,15}$|^$",
+    "title": "Whatsapp",
+    "type": "string"
+   },
+   "email": {
+    "default": "",
+    "maxLength": 254,
+    "title": "Email",
+    "type": "string"
+   },
+   "address": {
+    "maxLength": 500,
+    "title": "Address",
+    "type": "string"
+   },
+   "whatsapp_message": {
+    "default": "Hello, I would like to plan an Eagles Unbound experience.",
+    "maxLength": 500,
+    "title": "Whatsapp Message",
+    "type": "string"
+   },
+   "maps_url": {
+    "default": "",
+    "maxLength": 1000,
+    "title": "Maps Url",
+    "type": "string"
+   },
+   "business_profile_url": {
+    "default": "",
+    "maxLength": 1000,
+    "title": "Business Profile Url",
+    "type": "string"
+   },
+   "instagram": {
+    "default": "",
+    "maxLength": 1000,
+    "title": "Instagram",
+    "type": "string"
+   },
+   "facebook": {
+    "default": "",
+    "maxLength": 1000,
+    "title": "Facebook",
+    "type": "string"
+   },
+   "youtube": {
+    "default": "",
+    "maxLength": 1000,
+    "title": "Youtube",
+    "type": "string"
+   }
+  },
+  "required": [
+   "phone",
+   "address"
+  ],
+  "title": "ContactSettings",
+  "type": "object"
+ },
+ "BlockedDateInput": {
+  "properties": {
+   "day": {
+    "format": "date",
+    "title": "Day",
+    "type": "string"
+   },
+   "reason": {
+    "default": "",
+    "maxLength": 200,
+    "title": "Reason",
+    "type": "string"
+   }
+  },
+  "required": [
+   "day"
+  ],
+  "title": "BlockedDateInput",
+  "type": "object"
+ },
+ "FAQInput": {
+  "properties": {
+   "question": {
+    "maxLength": 300,
+    "minLength": 5,
+    "title": "Question",
+    "type": "string"
+   },
+   "answer": {
+    "maxLength": 4000,
+    "minLength": 10,
+    "title": "Answer",
+    "type": "string"
+   },
+   "page": {
+    "default": "/faqs",
+    "pattern": "^/[a-z0-9/-]*$",
+    "title": "Page",
+    "type": "string"
+   },
+   "display_order": {
+    "default": 0,
+    "maximum": 9999,
+    "minimum": 0,
+    "title": "Display Order",
+    "type": "integer"
+   },
+   "published": {
+    "default": false,
+    "title": "Published",
+    "type": "boolean"
+   }
+  },
+  "required": [
+   "question",
+   "answer"
+  ],
+  "title": "FAQInput",
+  "type": "object"
+ },
+ "SEOInput": {
+  "properties": {
+   "page": {
+    "pattern": "^/[a-z0-9/-]*$",
+    "title": "Page",
+    "type": "string"
+   },
+   "title": {
+    "maxLength": 150,
+    "minLength": 5,
+    "title": "Title",
+    "type": "string"
+   },
+   "description": {
+    "maxLength": 400,
+    "minLength": 20,
+    "title": "Description",
+    "type": "string"
+   },
+   "canonical": {
+    "default": "",
+    "maxLength": 1000,
+    "title": "Canonical",
+    "type": "string"
+   },
+   "og_title": {
+    "default": "",
+    "maxLength": 150,
+    "title": "Og Title",
+    "type": "string"
+   },
+   "og_description": {
+    "default": "",
+    "maxLength": 400,
+    "title": "Og Description",
+    "type": "string"
+   },
+   "image": {
+    "default": "",
+    "maxLength": 1000,
+    "title": "Image",
+    "type": "string"
+   },
+   "image_alt": {
+    "default": "",
+    "maxLength": 300,
+    "title": "Image Alt",
+    "type": "string"
+   },
+   "noindex": {
+    "default": false,
+    "title": "Noindex",
+    "type": "boolean"
+   }
+  },
+  "required": [
+   "page",
+   "title",
+   "description"
+  ],
+  "title": "SEOInput",
+  "type": "object"
+ },
+ "MediaInput": {
+  "properties": {
+   "name": {
+    "maxLength": 180,
+    "minLength": 2,
+    "title": "Name",
+    "type": "string"
+   },
+   "url": {
+    "maxLength": 1000,
+    "title": "Url",
+    "type": "string"
+   },
+   "mime_type": {
+    "enum": [
+     "image/jpeg",
+     "image/png",
+     "image/webp",
+     "video/mp4",
+     "video/webm",
+     "video/youtube"
+    ],
+    "title": "Mime Type",
+    "type": "string"
+   },
+   "category": {
+    "default": "general",
+    "maxLength": 100,
+    "title": "Category",
+    "type": "string"
+   }
+  },
+  "required": [
+   "name",
+   "url",
+   "mime_type"
+  ],
+  "title": "MediaInput",
+  "type": "object"
+ },
+ "PageSection": {
+  "properties": {
+   "heading": {
+    "maxLength": 180,
+    "minLength": 2,
+    "title": "Heading",
+    "type": "string"
+   },
+   "body": {
+    "maxLength": 10000,
+    "minLength": 10,
+    "title": "Body",
+    "type": "string"
+   }
+  },
+  "required": [
+   "heading",
+   "body"
+  ],
+  "title": "PageSection",
+  "type": "object"
+ },
+ "PageInput": {
+  "$defs": {
+   "PageSection": {
+    "properties": {
+     "heading": {
+      "maxLength": 180,
+      "minLength": 2,
+      "title": "Heading",
+      "type": "string"
+     },
+     "body": {
+      "maxLength": 10000,
+      "minLength": 10,
+      "title": "Body",
+      "type": "string"
+     }
+    },
+    "required": [
+     "heading",
+     "body"
+    ],
+    "title": "PageSection",
+    "type": "object"
+   }
+  },
+  "properties": {
+   "title": {
+    "maxLength": 150,
+    "minLength": 5,
+    "title": "Title",
+    "type": "string"
+   },
+   "intro": {
+    "maxLength": 1000,
+    "minLength": 10,
+    "title": "Intro",
+    "type": "string"
+   },
+   "sections": {
+    "items": {
+     "$ref": "#/$defs/PageSection"
+    },
+    "maxItems": 30,
+    "title": "Sections",
+    "type": "array"
+   },
+   "published": {
+    "default": false,
+    "title": "Published",
+    "type": "boolean"
+   }
+  },
+  "required": [
+   "title",
+   "intro"
+  ],
+  "title": "PageInput",
+  "type": "object"
+ },
+ "UserCreate": {
+  "properties": {
+   "email": {
+    "format": "email",
+    "title": "Email",
+    "type": "string"
+   },
+   "password": {
+    "maxLength": 200,
+    "minLength": 12,
+    "title": "Password",
+    "type": "string"
+   },
+   "role": {
+    "enum": [
+     "admin",
+     "staff_viewer"
+    ],
+    "title": "Role",
+    "type": "string"
+   }
+  },
+  "required": [
+   "email",
+   "password",
+   "role"
+  ],
+  "title": "UserCreate",
+  "type": "object"
+ },
+ "UserUpdate": {
+  "properties": {
+   "role": {
+    "anyOf": [
+     {
+      "enum": [
+       "admin",
+       "staff_viewer"
+      ],
+      "type": "string"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "default": null,
+    "title": "Role"
+   },
+   "active": {
+    "anyOf": [
+     {
+      "type": "boolean"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "default": null,
+    "title": "Active"
+   },
+   "password": {
+    "anyOf": [
+     {
+      "maxLength": 200,
+      "minLength": 12,
+      "type": "string"
+     },
+     {
+      "type": "null"
+     }
+    ],
+    "default": null,
+    "title": "Password"
+   }
+  },
+  "title": "UserUpdate",
+  "type": "object"
+ },
+ "FactorInput": {
+  "properties": {
+   "password": {
+    "maxLength": 200,
+    "minLength": 1,
+    "title": "Password",
+    "type": "string"
+   },
+   "code": {
+    "default": "",
+    "maxLength": 80,
+    "title": "Code",
+    "type": "string"
+   }
+  },
+  "required": [
+   "password"
+  ],
+  "title": "FactorInput",
+  "type": "object"
+ }
+}

@@ -12,7 +12,6 @@ const csp = [
   ...(process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_SITE_URL?.startsWith('https://') ? ['upgrade-insecure-requests'] : []),
 ].join('; ');
 const nextConfig: NextConfig = {
-  output: 'standalone',
   distDir: process.env.NEXT_BUILD_DIR || '.next',
   poweredByHeader: false,
   async redirects() {
@@ -45,9 +44,6 @@ const nextConfig: NextConfig = {
       {source:'/about-us',destination:'/about',statusCode:301},
       {source:'/day-package',destination:'/what-we-offer',statusCode:301},
     ];
-  },
-  async rewrites() {
-    return [{ source: '/api/:path*', destination: `${process.env.API_INTERNAL_URL || 'http://127.0.0.1:8000'}/:path*` }];
   },
   async headers() {
     return [{ source: '/:path*', headers: [

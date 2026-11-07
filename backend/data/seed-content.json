@@ -1,0 +1,288 @@
+{
+ "home": {
+  "eyebrow": "BENGALURU · OUTDOORS · BEYOND LIMITS",
+  "hero_title": "NOT JUST AN ADVENTURE.",
+  "brand_tagline": "ONE DESTINATION. ENDLESS ADVENTURES.",
+  "hero_secondary": "AN EXPERIENCE THAT CHALLENGES YOU.",
+  "hero_subtitle": "Experience military-inspired challenges, adventure and teamwork at Eagles Unbound.",
+  "experience_title": "BEYOND ADVENTURE. INTO YOUR ELEMENT.",
+  "experience_description": "Step out of the everyday and into the outdoors. Take on physical challenges, find your rhythm as a team and discover what happens when you go a little further. This is a civilian adventure experience inspired by military values: discipline, courage and working together.",
+  "hero_video": ""
+ },
+ "contact": {
+  "phone": "+917259307111",
+  "whatsapp": "",
+  "email": "",
+  "address": "KMS Farms, Sy No 23, Naukalpalya, Kaggalipura, off Kanakapura Road, South Bengaluru, Karnataka 560082",
+  "whatsapp_message": "Hello, I would like to plan an Eagles Unbound experience."
+ },
+ "programmes": [
+  {
+   "slug": "corporate-unbound",
+   "name": "Corporate Unbound",
+   "description": "Bring your team together through outdoor challenges and shared problem-solving.",
+   "image": "/assets/landscape.jpg"
+  },
+  {
+   "slug": "students-unbound",
+   "name": "Students Unbound",
+   "description": "Take learning outside, with adventure and opportunities to work together.",
+   "image": "/assets/forest.jpg"
+  },
+  {
+   "slug": "adventure-unbound",
+   "name": "Adventure Unbound",
+   "description": "Make room for outdoor recreation, adventure and time together.",
+   "image": "/assets/camp.jpg"
+  }
+ ],
+ "activities": [
+  "Individual Army-Inspired Obstacles",
+  "Group Obstacle Race / Snake Race",
+  "Wall Climbing",
+  "High Rope Course",
+  "Low Rope Course",
+  "Zip Line",
+  "Archery",
+  "Air Rifle Shooting",
+  "Team Building Activities",
+  "Mind Games",
+  "Trekking",
+  "Camping",
+  "Bonfire",
+  "Rain Dance"
+ ],
+ "faqs": [
+  {
+   "question": "What is Eagles Unbound?",
+   "answer": "Eagles Unbound is an outdoor adventure and experiential learning destination off Kanakapura Road in South Bengaluru. Published programmes include corporate, student and adventure experiences."
+  },
+  {
+   "question": "Is this an official military training programme?",
+   "answer": "No. The military-inspired concept is a civilian recreational adventure experience. It does not provide military service training, official armed-forces affiliation or military certification."
+  },
+  {
+   "question": "Can corporate and student groups enquire?",
+   "answer": "Yes. Corporate Unbound and Students Unbound are existing programmes. Tell the team about your group, interests and preferred date to discuss suitable arrangements."
+  },
+  {
+   "question": "How do I request a booking?",
+   "answer": "Use the booking request form to choose a published programme and preferred date, then share your group and contact details. A saved request receives a reference and remains Pending until the team confirms it."
+  },
+  {
+   "question": "Can I request a preferred date?",
+   "answer": "Yes. Your preferred date is part of the request. It is subject to availability and team confirmation. Dates blocked by the team cannot be requested."
+  },
+  {
+   "question": "What should participants bring?",
+   "answer": "Ask the team for the current clothing, footwear and equipment guidance for your selected experience. Confirm participation requirements and any access needs before visiting."
+  },
+  {
+   "question": "Which activities are available?",
+   "answer": "The published library includes obstacle activities, rope courses, wall climbing, zip line, archery, air rifle shooting, team tasks, trekking and camping. Confirm current availability and programme inclusions with the team."
+  }
+ ],
+ "pages": {
+  "about": {
+   "title": "THE SPIRIT OF ADVENTURE.",
+   "intro": "Outdoor experiences, shared challenges and opportunities to learn at Eagles Unbound.",
+   "sections": [
+    {
+     "heading": "OUR STORY",
+     "body": "Eagles Unbound is an outdoor adventure and experiential learning destination in the Kanakapura Road region of South Bengaluru. It brings together corporate groups, students, families and other visitors through adventure and time outdoors."
+    },
+    {
+     "heading": "OUR VISION",
+     "body": "To create opportunities to discover strength, confidence and leadership through outdoor experiences."
+    },
+    {
+     "heading": "OUR MISSION",
+     "body": "Adventure, learning, personal growth, leadership, teamwork and a connection with nature."
+    },
+    {
+     "heading": "OUR VALUES",
+     "body": "Courage. Discipline. Teamwork. Resilience. Leadership. Confidence. Respect. Responsibility."
+    },
+    {
+     "heading": "OUR APPROACH",
+     "body": "Programmes combine outdoor challenges, experiential learning, recreation and teamwork. The activity mix, participant suitability and final arrangements are confirmed for each group."
+    },
+    {
+     "heading": "OUR LEADERSHIP",
+     "body": "Maj Gen V. P. S. Bhakuni, VSM (Retd.) is identified as Founder and CEO in the supplied business information. Visit the leadership page for the profile as it is prepared for publication."
+    }
+   ]
+  },
+  "founder": {
+   "title": "LEADERSHIP. WITH PURPOSE.",
+   "intro": "Meet the leadership behind Eagles Unbound.",
+   "sections": [
+    {
+     "heading": "MAJ GEN V. P. S. BHAKUNI, VSM (RETD.)",
+     "body": "Founder and CEO, as identified in the supplied business information. The extended biography, service highlights and official portrait will be published after client approval."
+    },
+    {
+     "heading": "A SHARED PHILOSOPHY",
+     "body": "The business brings together adventure, experiential learning, discipline, courage and teamwork. Speak to the team about how these values inform your group experience."
+    }
+   ]
+  },
+  "kids-experiences": {
+   "title": "LITTLE EXPLORERS. BIG ADVENTURES.",
+   "intro": "Outdoor, creative and farm-based experiences to discuss for children and school groups.",
+   "sections": [
+    {
+     "heading": "PLAY. CREATE. DISCOVER.",
+     "body": "The supplied activity information includes kids zip line, low ropes, mud obstacles, soft archery and tractor rides. Suitability, age requirements and availability must be confirmed for each child or group."
+    },
+    {
+     "heading": "HANDS-ON LEARNING",
+     "body": "Explore pottery, clay modelling, planters, seed balls, kitchen gardening, composting and nature-based learning. Ask which creative and farm activities can be included in your visit."
+    },
+    {
+     "heading": "PLAN WITH THE TEAM",
+     "body": "Tell us the age range, group size and any access or dietary requirements. Confirm the programme and participation guidance before travelling."
+    }
+   ]
+  },
+  "schools-and-colleges": {
+   "title": "LEARNING. OUT IN THE OPEN.",
+   "intro": "Programme conversations for schools, colleges, teachers and coordinators.",
+   "sections": [
+    {
+     "heading": "SCHOOLS",
+     "body": "Explore School Day Outing and Outbound Student Activities. Discuss outdoor learning, creative and farm experiences, team challenges and the needs of your students."
+    },
+    {
+     "heading": "COLLEGES",
+     "body": "Explore the College Adventure Program: a conversation about leadership, communication, collaboration and military-inspired civilian challenges."
+    },
+    {
+     "heading": "YOUR INSTITUTION. YOUR PLAN.",
+     "body": "Share the student age range, organisation, preferred date, group size and meal preferences. Activities, menus, eligibility and the final schedule are confirmed with the team."
+    }
+   ]
+  },
+  "corporate": {
+   "title": "BUILD STRONGER TEAMS. BEYOND THE OFFICE.",
+   "intro": "Outdoor experiences for employees, HR teams, leadership groups and organisations.",
+   "sections": [
+    {
+     "heading": "A SHARED CHALLENGE",
+     "body": "Discuss team bonding, communication, collaboration, trust, problem-solving and employee engagement through outdoor experiences."
+    },
+    {
+     "heading": "TAILORED TO YOUR GROUP",
+     "body": "The supplied programme information includes obstacle and rope activities, group challenges, tug of war, mind games and outdoor recreation. The team will discuss the right mix and current availability."
+    },
+    {
+     "heading": "START WITH A CONVERSATION",
+     "body": "Tell us your organisation, group size, objectives, preferred date and meal preferences. Request a programme discussion without an online payment or an implied confirmed reservation."
+    }
+   ]
+  },
+  "accommodation": {
+   "title": "STAY FOR THE OUTDOORS.",
+   "intro": "Discuss camping and overnight arrangements with the Eagles Unbound team.",
+   "sections": [
+    {
+     "heading": "CAMPING EXPERIENCES",
+     "body": "The supplied programme information includes tent pitching, night camping, campfire activities, sunrise hiking and time in nature. Confirm availability and the programme format before making arrangements."
+    },
+    {
+     "heading": "TENTS AND GUEST ROOMS",
+     "body": "Ask the team about currently available accommodation, room and tent types, washrooms, accessibility and group arrangements. Detailed facilities and original accommodation photography are awaiting verification."
+    },
+    {
+     "heading": "PLAN YOUR STAY",
+     "body": "Explore the Overnight Stay Program and discuss your group, meals and any special requirements. The final itinerary and accommodation arrangements require team confirmation."
+    }
+   ]
+  },
+  "food-and-dining": {
+   "title": "GOOD FOOD. GREAT COMPANY.",
+   "intro": "Meal planning for your selected experience. Menus and inclusions are confirmed with the team.",
+   "sections": [
+    {
+     "heading": "A MENU FOR YOUR PROGRAMME",
+     "body": "Breakfast, lunch, hi-tea and dinner arrangements vary by programme. Not every meal or dish is included in every experience."
+    },
+    {
+     "heading": "TELL US WHAT YOUR GROUP NEEDS",
+     "body": "Share vegetarian and non-vegetarian meal counts and any dietary requirements in your enquiry. Discuss allergies and specific needs directly with the team before booking."
+    }
+   ]
+  }
+ },
+ "galleryAlbums": [
+  "Adventure Activities",
+  "Military Bootcamp",
+  "School Outings",
+  "College Adventure",
+  "Corporate Experiences",
+  "Kids Experiences",
+  "Shooting and Archery",
+  "Obstacle Courses",
+  "Team Building",
+  "Nature and Wildlife",
+  "Camping and Accommodation",
+  "Events"
+ ],
+ "masterReview": {
+  "source": "Eagles_Unbound_Master_Website_Development_Prompt.pdf, 37 pages",
+  "contact_conflict": {
+   "existing_site": "+917259307111",
+   "master_brief": "+918248333506",
+   "status": "Confirm before changing public contact"
+  },
+  "founder_claims_pending": [
+   "Recipient of Vishisht Seva Medal",
+   "35+ years of Army service",
+   "Decorated soldier",
+   "Military service highlights",
+   "Leadership philosophy",
+   "Founder message",
+   "Official portrait"
+  ],
+  "accommodation_claims_pending": [
+   "Luxury tents",
+   "Comfortable beds",
+   "Attached washrooms",
+   "Private sit-out areas",
+   "Air-conditioned guest rooms",
+   "Hot water"
+  ],
+  "booking_terms_pending": [
+   "Advance of 25 percent required for confirmation",
+   "Final headcount 3 days before event",
+   "Billing based on previously confirmed headcount",
+   "Weather-dependent activity changes",
+   "Charges for negligent equipment/property damage",
+   "Advance vegetarian and non-vegetarian meal requirements"
+  ],
+  "missing_primary_documents": [
+   "Official 27-page activity brochure",
+   "Official 5-page 2026 programme brochure"
+  ],
+  "unusual_activity_terms": [
+   "Pelvic Rest Shooting",
+   "Recove Bow Shooting"
+  ],
+  "commercial_rule": "No public prices, rates, GST amounts, discounts, monetary figures or payment amounts"
+ },
+ "bootcampSuggestedFlow": [
+  "Welcome and briefing",
+  "Team formation",
+  "Challenge introduction",
+  "Obstacle activities",
+  "Group challenges",
+  "Leadership experiences",
+  "Reflection and achievement"
+ ],
+ "pending3dAssets": [
+  "Approved eagle GLB model or layered brand animation",
+  "Verified park layout and zone locations",
+  "Official founder portrait",
+  "Original park photographs and action footage"
+ ]
+}
