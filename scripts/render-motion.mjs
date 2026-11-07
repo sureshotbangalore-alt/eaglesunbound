@@ -23,7 +23,7 @@ const scenes = {
   'activity-lines': {seconds: 8, poster: 6.0, bg: '#111619'},
   'academy-intro': {seconds: 8, poster: 6.6, bg: '#0c1411'},
   'eagle-flight': {seconds: 6, poster: 4.4, bg: '#0c1411'},
-  'activity-reel': {seconds: 12, poster: 6.9, bg: '#0c1411'},
+  'activity-animation': {seconds: 12, poster: 6.9, bg: '#0c1411'},
 };
 
 const html = (scene, bg) => `<!doctype html><meta charset="utf-8"><style>
@@ -167,7 +167,7 @@ const scenes={
     const tp=easeOut(prog(t,3.6,4.6));title.setAttribute('opacity',tp);sub.setAttribute('opacity',easeOut(prog(t,4.1,5)));title.setAttribute('transform','translate(0 '+(14*(1-tp))+')');
     svg.setAttribute('opacity',prog(t,0,.4)*(1-prog(t,5.6,6)));}
 },
-'activity-reel'(){
+'activity-animation'(){
   // 12 s reel in four chapters: zip line, wall climb, archery, rope course, then an end card. Stylised figures, no footage.
   const T=12,GOLD='#c2a46e',NAVY='#1d3f8c',SKY1='#0c1411',SKY2='#25351f',DUSK='#b98450';
   const defs=el('defs');

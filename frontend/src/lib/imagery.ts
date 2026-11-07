@@ -88,7 +88,8 @@ const legacy = ['/assets/forest.jpg', '/assets/landscape.jpg', '/assets/camp.jpg
 export function programmeImage(slug: string, image?: string): Picture {
   if (image && !legacy.includes(image)) return { src: image, alt: '' };
   if (/corporate/.test(slug)) return slug.includes('building') ? photos.teamGames : photos.groupCorporate;
-  if (/student|outbound/.test(slug)) return photos.briefing;
+  if (/outbound/.test(slug)) return photos.briefingAssembly;
+  if (/student/.test(slug)) return photos.briefing;
   if (/school/.test(slug)) return photos.groupKids;
   if (/college/.test(slug)) return photos.obstacleNet;
   if (/overnight|stay/.test(slug)) return photos.tentStay;

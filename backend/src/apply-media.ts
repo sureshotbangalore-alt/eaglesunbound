@@ -22,7 +22,7 @@ export const ACTIVITY_RULES:[RegExp,string][]=[
 ];
 /** Programme slug -> photograph that matches its audience. */
 export const PROGRAMME_RULES:[RegExp,string][]=[
- [/corporate.*building/,'team-games'],[/corporate/,'group-corporate'],[/student|outbound/,'briefing'],[/school/,'group-kids'],
+ [/corporate.*building/,'team-games'],[/corporate/,'group-corporate'],[/outbound/,'briefing-assembly'],[/student/,'briefing'],[/school/,'group-kids'],
  [/college/,'obstacle-net'],[/overnight|stay/,'tent-stay'],[/adventure-unbound/,'zip-rider'],[/outdoor-adventure/,'trek-vista'],
 ];
 

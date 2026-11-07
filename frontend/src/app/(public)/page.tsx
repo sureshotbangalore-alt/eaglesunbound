@@ -46,7 +46,7 @@ export default async function Home() {
   activities: (<section className="chapter night activities-section">
       <div className="chapter-head" data-reveal="rule"><span className="label">04 — Out of your comfort zone</span><span className="label">Into the experience</span></div>
       <div className="chapter-title"><SplitLines text={'A little nerve.\nA lot of alive.'} className="display-xl"/><p data-reveal>From the first obstacle to the last shared laugh, find the activities that bring your group together.</p></div>
-      <div className="reel-frame" data-reveal><MotionFilm name="activity-reel" seconds={12} label="Motion graphic: a zip line ride, a wall climb, an archery bullseye and a rope course crossing"/></div>
+      <div className="reel-frame" data-reveal><MotionFilm name="activity-reel" seconds={18} label="Eagles Unbound activities film: zip line, wall climb, archery, high ropes, obstacle net, air rifle, rappelling and campfire"/></div>
       <ActivityShowcase activities={activities}/>
       <Link href="/activities" className="text-link" data-reveal>Discover the activity library <ArrowUpRight size={18}/></Link>
     </section>),
