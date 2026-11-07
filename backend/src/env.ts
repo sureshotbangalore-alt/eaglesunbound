@@ -56,13 +56,6 @@ export function loadEnvFiles(files:string[],env:NodeJS.ProcessEnv=process.env){
  return used;
 }
 
-/** Turns API_INTERNAL_URL into an absolute URL the server can fetch. A relative value such as /api points at this same process. */
-export function resolveInternalApiURL(value:string|undefined,port:number){
- const v=(value||'/api').trim();
- if(/^https?:\/\//i.test(v))return v.replace(/\/$/,'');
- return `http://127.0.0.1:${port}${v.startsWith('/')?v:'/'+v}`.replace(/\/$/,'');
-}
-
 /** True under `node --test`, NODE_ENV=test, or when EU_AUTOMATED_TEST=true is set by a test runner. */
 export function isAutomatedTest(env:NodeJS.ProcessEnv=process.env,execArgv:string[]=process.execArgv){
  return env.NODE_ENV==='test'||env.EU_AUTOMATED_TEST==='true'||!!env.NODE_TEST_CONTEXT||execArgv.includes('--test');

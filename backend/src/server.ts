@@ -3,7 +3,7 @@ import {createServer} from 'node:http';
 import express from 'express';
 import next from 'next';
 import {configFrom,ConfigError} from './config';
-import {loadEnvFiles,defaultEnvFiles,resolveInternalApiURL} from './env';
+import {loadEnvFiles,defaultEnvFiles} from './env';
 import {MySQLDatabase} from './database';
 import {createAPI} from './api';
 
@@ -29,8 +29,7 @@ async function main(){
  let nextApp:ReturnType<typeof next>|undefined;
  if(apiOnly)app.use(api.app);
  else {
-  // Server-side rendering calls the API on this same process. A relative API_INTERNAL_URL (such as /api) is resolved against our own port.
-  process.env.API_INTERNAL_URL=resolveInternalApiURL(process.env.API_INTERNAL_URL,config.port);
+  // Server-side rendering calls the API on this same process at 127.0.0.1 and PORT (frontend/src/lib/internal-api-url.ts).
   nextApp=next({dev,dir:resolve(root,'frontend'),hostname:'0.0.0.0',port:config.port,webpack:dev});
   await nextApp.prepare();const handler=nextApp.getRequestHandler();app.use((req,res)=>handler(req,res));
  }

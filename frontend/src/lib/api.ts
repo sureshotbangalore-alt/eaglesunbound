@@ -1,14 +1,15 @@
+import { internalAPIURL } from './internal-api-url';
+
 export type HomeContent = { eyebrow: string; hero_title: string; hero_secondary?: string; hero_subtitle: string; experience_title: string; experience_description: string; hero_video: string; brand_tagline?:string; sections?: { id: string; visible?: boolean }[] };
 export type ContentRecord = { id: string; slug: string; name: string; description: string; image: string; published: boolean; display_order: number; details: Record<string, unknown> };
 export type ContactSettings = { phone: string; whatsapp: string; email: string; address: string; whatsapp_message: string; maps_url?: string; business_profile_url?: string; instagram?: string; facebook?: string; youtube?: string };
 
 export async function serverAPI<T>(path: string): Promise<T> {
-  const base = process.env.API_INTERNAL_URL;
-  // backend/dist/server.js turns values such as /api into an absolute URL for its own port before the site renders.
-  if (!base || !/^https?:\/\//i.test(base)) throw new Error('API_INTERNAL_URL must be an absolute URL; start the site with npm start so a relative value such as /api is resolved for you.');
+  // http://127.0.0.1:<PORT>/api on this same process, or an absolute API_INTERNAL_URL (see internal-api-url.ts).
+  const base = internalAPIURL();
   let response: Response;
   try {
-    response = await fetch(`${base.replace(/\/$/, '')}${path}`, { cache: 'no-store' as const, signal: AbortSignal.timeout(5000) });
+    response = await fetch(`${base}${path}`, { cache: 'no-store' as const, signal: AbortSignal.timeout(5000) });
   } catch (error) {
     // Log what failed (path and error kind only, never headers, bodies or the base address) so an operator can diagnose it.
     console.error(JSON.stringify({ event: 'ssr_api_unreachable', path, kind: (error as { cause?: { code?: string } })?.cause?.code || (error as Error)?.name }));

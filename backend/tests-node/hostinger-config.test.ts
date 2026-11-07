@@ -2,7 +2,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {configFrom,ConfigError} from '../src/config';
-import {resolveInternalApiURL} from '../src/env';
 
 // The documented Hostinger values (placeholders for the database name, user and password).
 const hostinger={NODE_ENV:'production',PORT:'3001',DB_HOST:'127.0.0.1',DB_PORT:'3306',DB_NAME:'db_name',DB_USER:'db_user',DB_PASSWORD:'db_password',NEXT_PUBLIC_API_URL:'/api',API_INTERNAL_URL:'/api',CORS_ORIGINS:'https://eagles.example.com',TRUST_PROXY:'1',ALLOW_DB_WRITES:'false'};
@@ -55,13 +54,6 @@ test('configuration errors name the variable and never include a value',()=>{
   catch(error:any){assert.ok(error instanceof ConfigError,'ConfigError');assert.ok(!error.message.includes(secret));assert.ok(!error.message.includes('db_user'))}
  }
  assert.throws(()=>configFrom({...hostinger,DB_HOST:'',DB_PASSWORD:''}),/Set DB_HOST, DB_PASSWORD/);
-});
-
-test('API_INTERNAL_URL=/api is resolved against this same process',()=>{
- assert.equal(resolveInternalApiURL('/api',3001),'http://127.0.0.1:3001/api');
- assert.equal(resolveInternalApiURL(undefined,3001),'http://127.0.0.1:3001/api');
- assert.equal(resolveInternalApiURL('api/',3001),'http://127.0.0.1:3001/api');
- assert.equal(resolveInternalApiURL('http://127.0.0.1:9000/api/',3001),'http://127.0.0.1:9000/api');
 });
 
 test('PORT: Hostinger value when provided, 3000 only when none is provided, clear error when broken',()=>{
