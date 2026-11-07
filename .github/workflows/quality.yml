@@ -7,38 +7,26 @@ permissions:
   contents: read
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
-      DATABASE_URL: sqlite:///./ci.db
-      PUBLIC_ORIGIN: http://127.0.0.1:3000
-      API_INTERNAL_URL: http://127.0.0.1:8000
-      NEXT_PUBLIC_SITE_URL: http://127.0.0.1:3000
+      # Build-time settings only. No database is used in CI: the API tests run on an in-memory fixture database.
+      CORS_ORIGINS: https://ci.example.test
+      NEXT_PUBLIC_API_URL: /api
+      API_INTERNAL_URL: /api
+      ALLOW_DB_WRITES: 'false'
       SEARCH_INDEXING_ENABLED: 'false'
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
-        with:
-          python-version: '3.12.10'
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '22.20.0'
           cache: npm
-          cache-dependency-path: frontend/package-lock.json
-      - run: python -m pip install pip==26.2.0 && python -m pip install -r backend/requirements.txt
-      - run: python -m pip check
-      - run: python scripts/security_audit.py
-      - run: python -m pytest -q
-        working-directory: backend
       - run: npm install --global npm@11.6.2
-      - run: npm ci && npm audit --audit-level=low && npm run typecheck
-        working-directory: frontend
-      - name: Start isolated fixture API for production compilation
-        working-directory: backend
-        run: |
-          alembic upgrade head
-          python -m app.seed
-          nohup python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 > /tmp/eagles-api.log 2>&1 &
-          python -c "import time,urllib.request; time.sleep(2); urllib.request.urlopen('http://127.0.0.1:8000/health')"
+      - run: node scripts/check-versions.mjs
+      - run: npm ci
+      - run: node scripts/security-audit.mjs
+      - run: npm audit --audit-level=high
+      - run: npm run typecheck
+      - run: npm test
       - run: npm run build
-        working-directory: frontend
