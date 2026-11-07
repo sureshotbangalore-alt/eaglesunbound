@@ -1,37 +1,35 @@
+# Dependencies and build output (recreated by `npm install` and `npm run build`)
 node_modules/
 .next/
-.env
-.env.*
-!.env.example
-*.db
-*.db-*
+dist/
+build/
+coverage/
 *.tsbuildinfo
-playwright-report/
-test-results/
-site-audit-source.html
-.homepage-check.html
-*.log
-tmp/
-.next-field-*/
-.next-*/
 
-# Node build output
-backend/dist/
-
-# Secrets and credentials: never commit these (templates ending in .example are allowed)
+# Secrets: only placeholder templates (.env.example) are tracked
 .env
 .env.*
 !.env.example
 !.env.*.example
-.env.local
-.env.production
 *.pem
 *.key
-*.p12
-*.pfx
-*.crt
 id_rsa*
-id_ed25519*
 credentials*.json
-service-account*.json
 secrets/
+
+# Logs, test output, temporary files and local databases
+*.log
+playwright-report/
+test-results/
+tmp/
+*.db
+*.db-*
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+
+# Operating system files
+.DS_Store
+Thumbs.db
