@@ -23,7 +23,7 @@ test('legacy DATABASE_URL (mysql+pymysql) is still accepted', () => {
 });
 
 test('missing database settings fail without echoing values', () => {
-  assert.throws(() => configFrom({PORT: '3000', DB_HOST: 'x'}), /DB_HOST, DB_NAME, DB_USER and DB_PASSWORD/);
+  assert.throws(() => configFrom({PORT: '3000', DB_HOST: 'x'}), /Set DB_NAME, DB_USER, DB_PASSWORD/);
 });
 
 test('production requires PORT, HTTPS origin and secure cookies', () => {
@@ -35,9 +35,12 @@ test('production requires PORT, HTTPS origin and secure cookies', () => {
   assert.throws(() => configFrom({...production, FRONTEND_URL: 'https://user:pw@eagles.example.com'}));
 });
 
-test('TRUST_PROXY must be an explicit list, never a blanket boolean', () => {
-  assert.throws(() => configFrom({...base, TRUST_PROXY: 'true'}));
-  assert.throws(() => configFrom({...base, TRUST_PROXY: '2'}));
+test('TRUST_PROXY accepts a proxy count or an explicit list, never a blanket boolean', () => {
+  assert.throws(() => configFrom({...base, TRUST_PROXY: 'true'}), /TRUST_PROXY/);
+  assert.throws(() => configFrom({...base, TRUST_PROXY: '9'}), /between 0 and 5/);
+  assert.equal(configFrom({...base, TRUST_PROXY: '1'}).trustProxy, 1);
+  assert.equal(configFrom({...base, TRUST_PROXY: '0'}).trustProxy, false);
+  assert.equal(configFrom(base).trustProxy, false);
   assert.deepEqual(configFrom({...base, TRUST_PROXY: 'loopback, 10.0.0.0/8'}).trustProxy, ['loopback', '10.0.0.0/8']);
 });
 

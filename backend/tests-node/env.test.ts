@@ -69,9 +69,10 @@ test('the real database factory refuses a remote host while this test run is act
  await local.close();
 });
 
-test('writing commands need the exact target database name',()=>{
- const config=configFrom(base);
- assert.throws(()=>assertWriteConfirmed(config,{}),/ALLOW_DB_WRITES/);
- assert.throws(()=>assertWriteConfirmed(config,{ALLOW_DB_WRITES:'other_db'}),/ALLOW_DB_WRITES/);
- assert.doesNotThrow(()=>assertWriteConfirmed(config,{ALLOW_DB_WRITES:'live_db'}));
+test('writing commands need ALLOW_DB_WRITES=true AND the exact database name on the command line',()=>{
+ const readOnly=configFrom(base),writable=configFrom({...base,ALLOW_DB_WRITES:'true'});
+ assert.throws(()=>assertWriteConfirmed(readOnly,['--confirm-database=live_db']),/ALLOW_DB_WRITES=true/);
+ assert.throws(()=>assertWriteConfirmed(writable,[]),/--confirm-database/);
+ assert.throws(()=>assertWriteConfirmed(writable,['--confirm-database=other_db']),/--confirm-database/);
+ assert.doesNotThrow(()=>assertWriteConfirmed(writable,['--admin-only','--confirm-database=live_db']));
 });

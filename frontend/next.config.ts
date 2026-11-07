@@ -1,4 +1,7 @@
 import type { NextConfig } from 'next';
+// Public site URL baked in at build time: NEXT_PUBLIC_SITE_URL, or else the first CORS_ORIGINS entry (the public https origin).
+const firstOrigin = (list?: string) => (list || '').split(',').map(x => x.trim().replace(/\/$/, '')).find(Boolean) || '';
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || firstOrigin(process.env.CORS_ORIGINS)).replace(/\/$/, '');
 const csp = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV !== 'production' ? " 'unsafe-eval'" : ''}`,
@@ -9,11 +12,12 @@ const csp = [
   `connect-src 'self'${process.env.NODE_ENV !== 'production' ? ' ws: wss:' : ''}`,
   "frame-src 'none'", "frame-ancestors 'none'", "object-src 'none'",
   "base-uri 'self'", "form-action 'self'",
-  ...(process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_SITE_URL?.startsWith('https://') ? ['upgrade-insecure-requests'] : []),
+  ...(process.env.NODE_ENV === 'production' && siteUrl.startsWith('https://') ? ['upgrade-insecure-requests'] : []),
 ].join('; ');
 const nextConfig: NextConfig = {
   distDir: process.env.NEXT_BUILD_DIR || '.next',
   poweredByHeader: false,
+  ...(siteUrl ? { env: { NEXT_PUBLIC_SITE_URL: siteUrl } } : {}),
   async redirects() {
     return [
       {source:'/activities/:slug',destination:'/activities#:slug',statusCode:301},
@@ -48,7 +52,7 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: '/:path*', headers: [
       { key: 'Content-Security-Policy', value: csp },
-      ...(process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_SITE_URL?.startsWith('https://') ? [{ key: 'Strict-Transport-Security', value: 'max-age=31536000' }] : []),
+      ...(process.env.NODE_ENV === 'production' && siteUrl.startsWith('https://') ? [{ key: 'Strict-Transport-Security', value: 'max-age=31536000' }] : []),
       { key: 'X-Content-Type-Options', value: 'nosniff' },
       { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
       { key: 'X-Frame-Options', value: 'DENY' },

@@ -35,6 +35,13 @@ export function loadEnvFiles(files:string[],env:NodeJS.ProcessEnv=process.env){
  return used;
 }
 
+/** Turns API_INTERNAL_URL into an absolute URL the server can fetch. A relative value such as /api points at this same process. */
+export function resolveInternalApiURL(value:string|undefined,port:number){
+ const v=(value||'/api').trim();
+ if(/^https?:\/\//i.test(v))return v.replace(/\/$/,'');
+ return `http://127.0.0.1:${port}${v.startsWith('/')?v:'/'+v}`.replace(/\/$/,'');
+}
+
 /** True under `node --test`, NODE_ENV=test, or when EU_AUTOMATED_TEST=true is set by a test runner. */
 export function isAutomatedTest(env:NodeJS.ProcessEnv=process.env,execArgv:string[]=process.execArgv){
  return env.NODE_ENV==='test'||env.EU_AUTOMATED_TEST==='true'||!!env.NODE_TEST_CONTEXT||execArgv.includes('--test');
@@ -48,8 +55,13 @@ export function assertSafeDatabaseTarget(config:Config,env:NodeJS.ProcessEnv=pro
   throw Error('Refusing to connect to a non-local database during automated tests. Use the in-memory fixture database or a local staging database (127.0.0.1).');
 }
 
-/** Scripts that write (seeding) must be told which database they may write to. */
-export function assertWriteConfirmed(config:Config,env:NodeJS.ProcessEnv=process.env){
- if(env.ALLOW_DB_WRITES!==config.db.database)
-  throw Error('This command writes to the database. Set ALLOW_DB_WRITES to the exact target database name to confirm the target.');
+/**
+ * Commands that write to the database (seed, create-user) need two explicit confirmations:
+ * ALLOW_DB_WRITES=true in the environment, and --confirm-database=<exact database name> on the command line.
+ */
+export function assertWriteConfirmed(config:Config,args:string[]=process.argv.slice(2)){
+ if(!config.writesAllowed)
+  throw Error('This command writes to the database. Set ALLOW_DB_WRITES=true for this run only.');
+ if(!args.includes('--confirm-database='+config.db.database))
+  throw Error('This command writes to the database. Add --confirm-database=<exact database name> to confirm the target.');
 }

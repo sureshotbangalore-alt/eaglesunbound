@@ -17,3 +17,21 @@ tmp/
 
 # Node build output
 backend/dist/
+
+# Secrets and credentials: never commit these (templates ending in .example are allowed)
+.env
+.env.*
+!.env.example
+!.env.*.example
+.env.local
+.env.production
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+id_rsa*
+id_ed25519*
+credentials*.json
+service-account*.json
+secrets/

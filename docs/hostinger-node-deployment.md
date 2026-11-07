@@ -1,38 +1,97 @@
-# Node.js runtime and Hostinger deployment
+# Hostinger deployment (Node.js)
 
-The site now runs as **one Node.js app**: `backend/src/server.ts` serves the API under `/api` and the Next.js site on the same port and origin.
-The former Python/FastAPI backend has been removed; it remains recoverable from git history (`refs/backup/pre-cleanup-2026-11-07`).
+The site is **one Node.js application**: `backend/src/server.ts` (compiled to `backend/dist/server.js`) serves the API under `/api` and the Next.js site on the same port and origin. No Python, FastAPI, SQLAlchemy or Alembic is involved.
 
-## Settings for Hostinger Web Apps (Node.js)
+## Hostinger settings
+
 | Setting | Value |
 |---|---|
-| Node version | 22.x (22.20.0 tested) |
-| Package manager | npm (lockfile at repo root) |
+| Branch | `main` |
+| Node.js | 22.x |
 | Root directory | repository root |
-| Install | `npm ci` |
-| Build | `npm run build` |
-| Start | `npm start` (listens on `0.0.0.0:$PORT`) |
-| Health check | `GET /health` or `GET /api/health` |
+| Install | `npm install` (the root `.npmrc` makes sure dev dependencies are installed, which the build needs) |
+| Build command | `npm run build` |
+| Start command | `npm start` (runs `node backend/dist/server.js`; listens on `0.0.0.0` and `$PORT`) |
+| Health check | `GET /health` returns `{"status":"ok"}` (also `GET /api/health`) |
 
-## Environment variable names (set in Hostinger, never commit values)
-See `backend/.env.example` and `.env.example`. Required in production: `PORT` (injected by Hostinger), `FRONTEND_URL` (https origin), `COOKIE_SECURE=true`, `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` (or the existing `DATABASE_URL`), `NEXT_PUBLIC_SITE_URL` (**must be set at build time**, it is used for canonical URLs, sitemap and structured data), `MFA_ENCRYPTION_KEY` (to enrol admin MFA).
-Optional: `TRUST_PROXY` (explicit proxy IPs/CIDRs only), `SESSION_HOURS`, `DB_SSL`, `DB_SSL_CA`, `S3_*` and `MEDIA_PUBLIC_URL` (media uploads).
-Launch switch: `SEARCH_INDEXING_ENABLED=true` (default off: robots.txt disallows everything and pages are `noindex`).
+`npm run build` first runs `scripts/check-env.mjs`, which stops with a plain message (naming the variable, never a value) if the Node version, build tools or public site address are wrong. It never touches the database. Neither install, build nor start runs any database command.
 
-## Database
-Uses the existing MySQL database and table names. `npm run db:check` compares the schema read-only (no DDL, no data changes). `npm run db:migrate` runs the same read-only check; this release needs no schema change. `npm run db:seed` (empty database only) and `npm run db:seed -- --admin-only` replace the old Python seeding; see `docs/database-setup.md`.
+## Environment variables
 
-## Checks
-- `npm run typecheck`, `npm test` (Node API tests on an in-memory fixture database), `npm run build`.
-- Browser tests (isolated fixture only, never production):
-  1. `npm run build`
-  2. `NODE_ENV=production npx tsx backend/tests-node/fixture-server.ts` (site + API on http://127.0.0.1:3000; add `FIXTURE_MEDIA=true` for the external-video consent test and `SEARCH_INDEXING_ENABLED=true` to test indexing)
-  3. In `frontend/`: `E2E_BASE_URL=http://127.0.0.1:3000 E2E_ALLOW_WRITES=true E2E_ADMIN_EMAIL=admin@example.com E2E_ADMIN_PASSWORD=<fixture password from backend/tests-node/fixtures.json> E2E_STAFF_EMAIL=staff@example.com npx playwright test`
-  The fixture server restarts with fresh data; logins are rate limited (8 per 10 minutes), so restart between full runs.
+Set these in the Hostinger panel (Environment variables). **Names and safe values:**
+
+| Variable | Value | Notes |
+|---|---|---|
+| `DB_HOST` | `127.0.0.1` | Database on the same Hostinger account. TLS is off by default for `127.0.0.1`, on for remote hosts. |
+| `DB_PORT` | `3306` | |
+| `DB_NAME` | your database name | from hPanel |
+| `DB_USER` | your database user | from hPanel |
+| `DB_PASSWORD` | your database password | **secret**: set it only in the Hostinger panel |
+| `ALLOW_DB_WRITES` | `false` | **Read-only mode** (the default). Set to exactly `true` only when the site should save data. |
+| `NEXT_PUBLIC_API_URL` | `/api` | where the browser calls the API |
+| `API_INTERNAL_URL` | `/api` | where server rendering calls the API; resolved to this same process |
+| `CORS_ORIGINS` | `https://eagles.ssbsureshot.in` | comma-separated https origins. Add the custom domain later, no code change. Also sets the canonical site address. |
+| `TRUST_PROXY` | `1` | one Hostinger reverse proxy. Never `true`. |
+| `PORT` | provided by Hostinger | do not set it yourself |
+
+Optional: `NEXT_PUBLIC_SITE_URL` (only if it must differ from the first `CORS_ORIGINS` entry; needed at build time), `SEARCH_INDEXING_ENABLED` (`false` until launch), `MFA_ENCRYPTION_KEY`, `S3_*` and `MEDIA_PUBLIC_URL` (uploads), `SESSION_HOURS`, `DB_SSL`, `DB_SSL_CA`. Secure cookies are on by default in production; `COOKIE_SECURE=false` is refused. The full list with placeholders is in `.env.example`.
+
+## Read-only mode (`ALLOW_DB_WRITES=false`)
+
+With writes off, the public pages, `/health` and every read work. Everything that would change data is refused with HTTP 503 and the message "The website is in read-only mode": booking and enquiry forms, administrator **sign-in** (it records a session), CMS saves, uploads and exports. It is enforced twice: the API rejects every non-read request up front, and the database layer refuses any statement that is not a SELECT, even if some route forgot. Nothing is changed, so the site can be inspected safely.
+
+To go live, change `ALLOW_DB_WRITES` to `true` and restart the app. Do this only after the checks below.
+
+## Database commands
+
+| Command | Modifies data? | Needs |
+|---|---|---|
+| `npm run db:check` (also `db:migrate`, which is the same check) | **No**: reads `INFORMATION_SCHEMA` only | database variables |
+| `npm run db:seed -- --confirm-database=<name>` | **Yes**: inserts starter content into an empty database; refuses if homepage content exists | `ALLOW_DB_WRITES=true` and `--confirm-database=<exact database name>` |
+| `npm run db:seed -- --admin-only --confirm-database=<name>` | **Yes**: inserts one administrator | same, plus `ADMIN_EMAIL` and `ADMIN_PASSWORD` |
+| `npm run db:create-user -- --email <address> --role <admin\|staff_viewer> --password-from <ENV_VAR_NAME> --confirm-database=<name>` | **Yes**: inserts one account, never changes an existing one | same |
+
+None of these runs automatically. The schema is unchanged; see `docs/database-setup.md`.
+
+## Behind the proxy and HTTPS
+
+- The app listens on plain HTTP; Hostinger terminates HTTPS. `TRUST_PROXY=1` makes the app use the visitor address and protocol that the proxy forwards, so login and form rate limits apply per visitor. Without it every visitor would share the proxy's address.
+- The session cookie is `HttpOnly; Secure; SameSite=Lax`. Cross-site requests are refused: only origins listed in `CORS_ORIGINS` are accepted, and admin writes also need the `X-Requested-With` header.
+- Production errors return a generic message; details, stack traces and connection information are never sent or logged. Startup problems log which variable is wrong, never its value.
+- Shutdown (`SIGTERM`/`SIGINT`) finishes in-flight requests, then closes the database pool.
+
+## Checks before turning writes on
+
+1. Deploy with `ALLOW_DB_WRITES=false`. Open the home page, a programme page, `/health` and `/sitemap.xml`; confirm the content appears and a booking attempt shows the read-only message.
+2. Run `npm run db:check` (read-only) on the host; expect `"compatible": true`.
+3. Copy the database to a staging database and test one booking, one enquiry, one CMS edit and Staff Viewer access there.
+4. Create the administrator (see the table above), then set `ALLOW_DB_WRITES=true`, restart, and sign in.
+5. Set `SEARCH_INDEXING_ENABLED=true` for the production build only when the content is approved.
+
+## Verifying this repository
+
+```bash
+npm run typecheck
+npm test                              # backend API tests on an in-memory database
+npm run build
+node scripts/check-versions.mjs       # exact pins, lockfile and runtime
+node scripts/security-audit.mjs       # source patterns + known advisories
+```
+
+Browser tests run only against the fixture server (`backend/tests-node/fixture-server.ts`), which uses an in-memory database and refuses non-local targets:
+
+1. `npm run build`
+2. `NODE_ENV=production npx tsx backend/tests-node/fixture-server.ts` (add `FIXTURE_MEDIA=true` for the external-video consent test)
+3. In `frontend/`: `E2E_BASE_URL=http://127.0.0.1:3000 E2E_ALLOW_WRITES=true E2E_ADMIN_EMAIL=admin@example.com E2E_ADMIN_PASSWORD=<fixture password from backend/tests-node/fixtures.json> E2E_STAFF_EMAIL=staff@example.com npx playwright test`
+
+Restart the fixture server between full runs (logins are limited to 8 per 10 minutes).
+
+## Windows tip
+
+In Git Bash on Windows, a value such as `API_INTERNAL_URL=/api` typed on the command line is silently rewritten to `C:/Program Files/Git/api`, which breaks server rendering (the log shows `ssr_api_failed` with status 404). Run `export MSYS_NO_PATHCONV=1` first, or use PowerShell. Hostinger (Linux) is not affected.
 
 ## Tools
-- `node scripts/check-versions.mjs`: exact pins, lockfile and runtime consistency.
-- `node scripts/security-audit.mjs`: source patterns and known advisories for locked packages.
 
-## Motion assets
-`node scripts/render-motion.mjs` re-renders the motion-graphics videos in `frontend/public/assets/video/motion/`.
+- `node scripts/check-env.mjs`: the build-time environment check, also runnable on its own.
+- If a page shows "The experience is temporarily unavailable", the server log has a line `ssr_api_failed` (with the API path and status) or `ssr_api_unreachable` that says why; it never contains secrets.
+- `node scripts/render-motion.mjs`: re-renders the motion-graphics videos in `frontend/public/assets/video/motion/`.

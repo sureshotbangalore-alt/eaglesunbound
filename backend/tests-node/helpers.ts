@@ -14,7 +14,7 @@ export const HEADERS = {'X-Requested-With': 'EaglesAdmin', Origin: ORIGIN};
 let hash: Promise<string> | undefined;
 
 export function testConfig(overrides: Record<string, string> = {}) {
-  return configFrom({PORT: '3000', FRONTEND_URL: ORIGIN, DB_HOST: 'fixture', DB_NAME: 'fixture', DB_USER: 'fixture', DB_PASSWORD: 'fixture', DB_SSL: 'false', MFA_ENCRYPTION_KEY: fixtures.fernet_key, ...overrides});
+  return configFrom({PORT: '3000', FRONTEND_URL: ORIGIN, DB_HOST: 'fixture', DB_NAME: 'fixture', DB_USER: 'fixture', DB_PASSWORD: 'fixture', DB_SSL: 'false', MFA_ENCRYPTION_KEY: fixtures.fernet_key, ALLOW_DB_WRITES: 'true', ...overrides});
 }
 
 /** A tiny HTTP client that keeps the session cookie between requests, like a browser. */

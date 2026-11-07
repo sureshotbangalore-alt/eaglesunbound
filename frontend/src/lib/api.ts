@@ -4,9 +4,20 @@ export type ContactSettings = { phone: string; whatsapp: string; email: string; 
 
 export async function serverAPI<T>(path: string): Promise<T> {
   const base = process.env.API_INTERNAL_URL;
-  if (!base) throw new Error('API_INTERNAL_URL must be configured by the combined server or deployment environment.');
-  const response = await fetch(`${base.replace(/\/$/, '')}${path}`, { cache: 'no-store' as const, signal: AbortSignal.timeout(5000) });
-  if (!response.ok) throw new Error('The experience is temporarily unavailable. Please try again shortly.');
+  // backend/dist/server.js turns values such as /api into an absolute URL for its own port before the site renders.
+  if (!base || !/^https?:\/\//i.test(base)) throw new Error('API_INTERNAL_URL must be an absolute URL; start the site with npm start so a relative value such as /api is resolved for you.');
+  let response: Response;
+  try {
+    response = await fetch(`${base.replace(/\/$/, '')}${path}`, { cache: 'no-store' as const, signal: AbortSignal.timeout(5000) });
+  } catch (error) {
+    // Log what failed (path and error kind only, never headers, bodies or the base address) so an operator can diagnose it.
+    console.error(JSON.stringify({ event: 'ssr_api_unreachable', path, kind: (error as { cause?: { code?: string } })?.cause?.code || (error as Error)?.name }));
+    throw new Error('The experience is temporarily unavailable. Please try again shortly.');
+  }
+  if (!response.ok) {
+    console.error(JSON.stringify({ event: 'ssr_api_failed', path, status: response.status, basePath: new URL(base).pathname }));
+    throw new Error('The experience is temporarily unavailable. Please try again shortly.');
+  }
   return response.json();
 }
 

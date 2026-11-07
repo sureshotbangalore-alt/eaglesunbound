@@ -37,18 +37,18 @@ runtime-lock.json       Locked Node and npm versions
 
 ## Local development
 
-Requirements: Node.js **22.20.0** and npm **11.6.2**, plus a MySQL/MariaDB database you are free to use. Do not experiment against the live database.
+Requirements: Node.js **22.x** (22.20.0 is what the tests ran on) and npm 10 or 11 (11.6.2 is locked), plus a MySQL/MariaDB database you are free to use. Do not experiment against the live database.
 
 ```bash
 npm ci
-cp backend/.env.example backend/.env   # then fill in the DB_* values and FRONTEND_URL
+cp backend/.env.example backend/.env   # then fill in the DB_* values and CORS_ORIGINS
 npm run db:check                       # read-only schema compatibility check
-npm run dev                            # API + site on http://localhost:3000
+npm run dev                            # API + site on http://localhost:3000 (database writes stay OFF unless ALLOW_DB_WRITES=true)
 ```
 
 - Website: `http://localhost:3000`. Administration: `http://localhost:3000/admin/login`.
-- Create the first administrator on a database that has none: set `ADMIN_EMAIL` and `ADMIN_PASSWORD` (14+ characters) in `backend/.env`, then `npm run db:seed -- --admin-only`.
-- Seed starter content into an EMPTY database only: `npm run db:seed` (it refuses to run when homepage content already exists).
+- Create the first administrator on a database that has none: set `ADMIN_EMAIL` and `ADMIN_PASSWORD` (14+ characters) in `backend/.env`, then `ALLOW_DB_WRITES=true npm run db:seed -- --admin-only --confirm-database=<exact database name>`.
+- Seed starter content into an EMPTY database only: `npm run db:seed -- --confirm-database=<name>` with `ALLOW_DB_WRITES=true` (it refuses to run when homepage content already exists).
 
 To try the site with no database at all, use the in-memory fixture server described in [docs/hostinger-node-deployment.md](docs/hostinger-node-deployment.md).
 

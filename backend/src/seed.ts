@@ -1,11 +1,12 @@
 // Opt-in starter content and first administrator (Node replacement for the old app/seed.py + app/seed_master.py).
 // Insert-only for a fresh database: it never deletes anything and refuses to run on an already-seeded database unless --force is given.
-//   npm run db:seed                 seed starter content (+ admin when ADMIN_EMAIL / ADMIN_PASSWORD are set)
-//   npm run db:seed -- --admin-only create just the administrator account (safe on an existing database)
+// Both modes WRITE to the database and need ALLOW_DB_WRITES=true plus --confirm-database=<exact database name>.
+//   npm run db:seed -- --confirm-database=<name>                  seed starter content (+ admin when ADMIN_EMAIL / ADMIN_PASSWORD are set)
+//   npm run db:seed -- --admin-only --confirm-database=<name>     create just the administrator account (safe on an existing database)
 import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {loadEnvFiles,defaultEnvFiles,assertWriteConfirmed} from './env';
-import {configFrom} from './config';
+import {configFrom,ConfigError} from './config';
 import {MySQLDatabase,insert,one,update,type Database,type Row} from './database';
 import {passwordHash} from './crypto';
 
@@ -81,5 +82,5 @@ if(require.main===module){
   if(args.includes('--admin-only')&&!admin)throw Error('Set ADMIN_EMAIL and ADMIN_PASSWORD (14+ characters) to create an administrator.');
   const result=await seedDatabase(db,{admin,adminOnly:args.includes('--admin-only'),force:args.includes('--force')});
   console.log(JSON.stringify(result));
- })().catch((error:any)=>{console.error(JSON.stringify({event:'seed_failed',message:/^ADMIN_|^Set ADMIN_|^This command writes/.test(error?.message||'')?error.message:'See configuration and connection settings; secret values are never printed.',code:/^[A-Z0-9_]+$/.test(error?.code||'')?error.code:undefined}));process.exitCode=1}).finally(()=>db?.close());
+ })().catch((error:any)=>{console.error(JSON.stringify({event:'seed_failed',message:error instanceof ConfigError||/^ADMIN_|^Set ADMIN_|^This command writes/.test(error?.message||'')?error.message:'See configuration and connection settings; secret values are never printed.',code:/^[A-Z0-9_]+$/.test(error?.code||'')?error.code:undefined}));process.exitCode=1}).finally(()=>db?.close());
 }

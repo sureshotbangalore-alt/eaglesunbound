@@ -3,6 +3,7 @@ import {type Config} from './config';
 import {type Database,type Row,one} from './database';
 import {HttpError,fail,validate} from './validation';
 import {sha256} from './crypto';
+import {READ_ONLY_MESSAGE} from './write-guard';
 export type Reply={body:any;status?:number;headers?:Record<string,string>;plain?:boolean};
 export type Context={req:Request;db:Database;user?:Row;config:Config;body:(name:string)=>Row};
 export const response=(body:any,status=200,headers?:Record<string,string>):Reply=>({body,status,headers});
@@ -35,16 +36,18 @@ export function createRouter(db:Database,config:Config){
   res.set({'X-Content-Type-Options':'nosniff','X-Frame-Options':'DENY','Referrer-Policy':'strict-origin-when-cross-origin','X-Robots-Tag':'noindex, nofollow'});
   if(req.path.startsWith('/admin')||['/bookings','/enquiries'].includes(req.path))res.set('Cache-Control','no-store');
   if(config.production)res.set('Content-Security-Policy',"default-src 'none'; frame-ancestors 'none'; base-uri 'none'");
-  const origin=req.get('origin');if(origin===config.origin){res.set({'Access-Control-Allow-Origin':origin,'Access-Control-Allow-Credentials':'true'});res.vary('Origin')}
+  const origin=req.get('origin');const originAllowed=!!origin&&config.origins.includes(origin);if(originAllowed){res.set({'Access-Control-Allow-Origin':origin,'Access-Control-Allow-Credentials':'true'});res.vary('Origin')}
   if(req.method==='OPTIONS'){
-   if(origin&&origin!==config.origin)return next(new HttpError(403,'Origin not allowed',true));
+   if(origin&&!originAllowed)return next(new HttpError(403,'Origin not allowed',true));
    res.set({'Access-Control-Allow-Methods':'GET, POST, PUT, PATCH, DELETE, OPTIONS','Access-Control-Allow-Headers':'Content-Type, X-Requested-With'});return res.sendStatus(204);
   }
   if(['POST','PUT','PATCH','DELETE'].includes(req.method)){
    const length=req.get('content-length');const maximum=req.path==='/admin/media/upload'?26*1024*1024:128*1024;
    if(length&&(!/^\d+$/.test(length)||Number(length)>maximum))return next(new HttpError(413,'Request too large',true));
-   if(origin&&origin!==config.origin)return next(new HttpError(403,'Origin not allowed',true));
+   if(origin&&!originAllowed)return next(new HttpError(403,'Origin not allowed',true));
    if(req.path.startsWith('/admin')&&req.get('x-requested-with')!=='EaglesAdmin')return next(new HttpError(403,'Missing request protection',true));
+   // Read-only mode (ALLOW_DB_WRITES is not true): refuse every change up front, before any body is read.
+   if(!config.writesAllowed)return next(new HttpError(503,READ_ONLY_MESSAGE));
   }
   next();
  });

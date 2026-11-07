@@ -14,12 +14,12 @@ What is already in place, and what a person must still do before going live. Not
 
 ## Before launch (manual)
 
-1. **Environment** (Hostinger variables, never in git): `FRONTEND_URL` (https), `COOKIE_SECURE=true`, `DB_*`, `NEXT_PUBLIC_SITE_URL` set **at build time**, `MFA_ENCRYPTION_KEY`, optional `S3_*` and `MEDIA_PUBLIC_URL`. Names are in `backend/.env.example`.
+1. **Environment** (Hostinger variables, never in git): `DB_*`, `CORS_ORIGINS` (the public https address; also used at build time for canonical links), `TRUST_PROXY=1`, `NEXT_PUBLIC_API_URL=/api`, `API_INTERNAL_URL=/api`, `ALLOW_DB_WRITES` (`false` until you are ready), `MFA_ENCRYPTION_KEY`, optional `S3_*` and `MEDIA_PUBLIC_URL`. Names are in `.env.example`; values are listed in `docs/hostinger-node-deployment.md`.
 2. **Indexing:** set `SEARCH_INDEXING_ENABLED=true` for the production build only, redeploy, then submit `/sitemap.xml`. Add Search Console / Bing verification values if you use them.
 3. **Database:** run `npm run db:check` against production (read-only). Take a backup first. Restrict remote MySQL access to the app, and use least-privilege runtime credentials.
 4. **Credentials:** rotate any credentials that were shared in chat or tickets. Create or confirm the Super Admin account, enable MFA, back up `MFA_ENCRYPTION_KEY` separately from the database, and create Staff Viewer accounts as needed.
 5. **Staging rehearsal:** copy the live database to a staging database, point a staging deployment at it, and make one test booking, one enquiry and one CMS edit. Confirm Staff Viewer access.
-6. **Hosting:** HTTPS, `TRUST_PROXY` set to the proxy addresses only if the host requires it, request limits at the edge, backups and restore rehearsal, log retention, monitoring. The in-process rate limiter is per process.
+6. **Hosting:** HTTPS, `TRUST_PROXY=1` (one proxy), request limits at the edge, backups and restore rehearsal, log retention, monitoring. The in-process rate limiter is per process.
 7. **Content approvals:** see [client-approval.md](client-approval.md): contact details, legal/policy text, prices (if any), founder and team material, testimonials, logos, photographs and videos.
 8. **Media storage:** configure S3-compatible storage before using uploads; until then use external HTTPS media links in the CMS.
 9. **After launch:** measure real Core Web Vitals, and check that the host's plan permits a commercial website.
