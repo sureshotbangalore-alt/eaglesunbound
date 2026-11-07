@@ -60,7 +60,7 @@ export function createRouter(db:Database,config:Config){
   });
   if(result.headers)res.set(result.headers);res.status(result.status||200);if(result.plain)res.send(result.body);else res.json(result.body);
  });}
- return {router,route,limiter};
+ return {router,route,limiter,db};
 }
 export function errors(error:any,_req:Request,res:Response,next:NextFunction){
  if(res.headersSent)return next(error);

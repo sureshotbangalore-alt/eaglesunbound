@@ -1,9 +1,16 @@
 import {type Database,type Row,rows,one,insert,update,remove,audit} from './database';
 import {createRouter,response,admin,modelFor,publicDetails,publicPaths,editablePages,pick} from './core';
 import {fail} from './validation';
+import {checkDatabase} from './db-health';
 type API=ReturnType<typeof createRouter>;
-export function registerContent({route}:API){
- route('get','/health',async({db})=>{await db.query('SELECT 1');return response({status:'ok'})});
+export function registerContent({route,router,db:database}:API){
+ // Health: SELECT 1 only, outside the request transaction, so a database problem gives a clear 503 instead of a generic 500.
+ router.get('/health',async(_req,res)=>{
+  const result=await checkDatabase(database);
+  res.set('Cache-Control','no-store');
+  if(result.ok)return res.json({status:'ok'});
+  res.status(503).json({status:'unavailable',detail:'database unavailable',code:result.code});
+ });
  const home=async(db:Database)=>{const row=await one(db,'page_content','slug=?',['home']);if(!row)fail(503,'Content has not been seeded');return row.content};
  const contact=async(db:Database)=>(await one(db,'site_settings','`key`=?',['contact']))?.value||{};
  route('get','/public/home',async({db})=>response(await home(db)));

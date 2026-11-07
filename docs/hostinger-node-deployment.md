@@ -12,7 +12,7 @@ The site is **one Node.js application**: `backend/src/server.ts` (compiled to `b
 | Install | `npm install` (the root `.npmrc` makes sure dev dependencies are installed, which the build needs) |
 | Build command | `npm run build` |
 | Start command | `npm start` (runs `node backend/dist/server.js`; listens on `0.0.0.0` and `$PORT`) |
-| Health check | `GET /health` returns `{"status":"ok"}` (also `GET /api/health`) |
+| Health check | `GET /health` (also `/api/health`) runs `SELECT 1` only: HTTP 200 `{"status":"ok"}`, or HTTP 503 `{"status":"unavailable","detail":"database unavailable","code":"..."}` |
 
 `npm run build` first runs `scripts/check-env.mjs`, which stops with a plain message (naming the variable, never a value) if the Node version, build tools or public site address are wrong. It never touches the database. Neither install, build nor start runs any database command.
 
@@ -35,6 +35,20 @@ Set these in the Hostinger panel (Environment variables). **Names and safe value
 | `PORT` | provided by Hostinger | do not set it yourself. The server uses it whenever it exists; if none is provided it falls back to 3000. A `PORT` that is set but not a valid port number stops the start with a clear message. |
 
 Optional: `NEXT_PUBLIC_SITE_URL` (only if it must differ from the first `CORS_ORIGINS` entry; needed at build time), `SEARCH_INDEXING_ENABLED` (`false` until launch), `MFA_ENCRYPTION_KEY`, `S3_*` and `MEDIA_PUBLIC_URL` (uploads), `SESSION_HOURS`, `DB_SSL`, `DB_SSL_CA`. Secure cookies are on by default in production; `COOKIE_SECURE=false` is refused. The full list with placeholders is in `.env.example`.
+
+## When /health returns 503
+
+The `code` (and the `db_check_failed` line in the runtime log, which holds only codes, never the host, user or password) tells you what to fix. `npm run db:ping` runs the same read-only `SELECT 1` check from a terminal.
+
+| Code | Meaning | What to check |
+|---|---|---|
+| `DB_CONNECTION_REFUSED` | Nothing accepted the connection at `DB_HOST:DB_PORT` | `DB_HOST`/`DB_PORT`. If the Node.js app does not run on the same server as MySQL, `127.0.0.1` will not work: use the MySQL host name shown in hPanel and allow remote access for it |
+| `DB_ACCESS_DENIED` | MySQL rejected the user name, password or source host | `DB_USER`, `DB_PASSWORD` (quote it if it contains `#`), and the database user's allowed hosts |
+| `DB_NOT_FOUND` | Connected, but the database name does not exist | `DB_NAME` |
+| `DB_HOST_NOT_FOUND` | The host name could not be resolved | spelling of `DB_HOST` |
+| `DB_TIMEOUT` | No answer within 8 seconds | firewall or remote-access setting |
+| `DB_TLS_FAILED` | The TLS handshake failed | set `DB_SSL=false` for a database that does not offer TLS, or provide `DB_SSL_CA` |
+| `DB_QUERY_FAILED` | Any other database error | the `error_code` in the log line |
 
 ## Read-only mode (`ALLOW_DB_WRITES=false`)
 
