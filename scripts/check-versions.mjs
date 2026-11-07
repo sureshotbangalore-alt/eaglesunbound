@@ -15,7 +15,7 @@ check('npm',execFileSync('npm',['--version'],{encoding:'utf8',shell:process.plat
 // npm workspaces hoist dependencies to the root node_modules unless a workspace needs a different version.
 for(const workspace of ['.','backend','frontend']){
  const pkg=read(workspace+'/package.json'),prefix=workspace==='.'?'':workspace+'/';
- for(const group of ['dependencies','devDependencies'])for(const [name,version] of Object.entries(pkg[group]||{})){
+ for(const group of ['dependencies','devDependencies','optionalDependencies'])for(const [name,version] of Object.entries(pkg[group]||{})){
   if(!/^\d+\.\d+\.\d+(-[\w.-]+)?$/.test(version))errors.push(`Floating version in ${workspace}: ${name}=${version}`);
   const entry=lock[prefix+'node_modules/'+name]||lock['node_modules/'+name];
   check(`${workspace}: ${name} lockfile`,entry?.version,version);
