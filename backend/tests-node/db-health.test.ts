@@ -85,7 +85,7 @@ test('GET /health: 503 "database unavailable" with a safe code, and nothing secr
   const response=await fetch(`http://127.0.0.1:${(server.address() as AddressInfo).port}/health`);
   const text=await response.text();
   assert.equal(response.status,503);
-  assert.deepEqual(JSON.parse(text),{status:'unavailable',detail:'database unavailable',code:'DB_ACCESS_DENIED'});
+  assert.deepEqual(JSON.parse(text),{status:'unavailable',detail:'database unavailable',code:'DB_ACCESS_DENIED',error_code:'ER_ACCESS_DENIED_ERROR'});
   assert.ok(noSecrets(text),'the response must not contain secrets');
   assert.ok(logs.lines.length>=1&&logs.lines.every(noSecrets),'the logs must not contain secrets');
  }finally{logs.restore();await new Promise(resolve=>server.close(resolve))}

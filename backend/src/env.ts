@@ -9,8 +9,29 @@
 // database settings come from the first file that defines any of them.
 import {existsSync,readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
-import dotenv from 'dotenv';
 import type {Config} from './config';
+
+/**
+ * Parses .env text. Quoted values ("..." or '...' or `...`) are taken exactly (\n in double quotes becomes a newline).
+ * Unlike dotenv, an UNQUOTED value keeps any '#' that is not preceded by whitespace, so a password such as abc#123 is not
+ * cut short when a hosting panel writes it without quotes. "KEY=value # note" still treats "# note" as a comment.
+ */
+export function parseEnvText(text:string):Record<string,string>{
+ const out:Record<string,string>={};
+ for(const raw of text.replace(/^\uFEFF/,'').split(/\r\n|\n|\r/)){
+  const m=raw.match(/^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_.-]*)\s*=\s*(.*)$/);
+  if(!m)continue;
+  let value=m[2].trim();
+  const quote=value[0];
+  const end=quote==='"'||quote==="'"||quote==='`'?value.lastIndexOf(quote):-1;
+  if(end>0){
+   value=value.slice(1,end);
+   if(quote==='"')value=value.replace(/\\n/g,'\n').replace(/\\r/g,'\r').replace(/\\"/g,'"');
+  }else value=value.replace(/\s+#.*$/,'').trim();
+  out[m[1]]=value;
+ }
+ return out;
+}
 
 export const DB_KEYS=['DATABASE_URL','DB_HOST','DB_PORT','DB_NAME','DB_USER','DB_PASSWORD','DB_SSL','DB_SSL_CA'];
 
@@ -24,7 +45,7 @@ export function loadEnvFiles(files:string[],env:NodeJS.ProcessEnv=process.env){
  let databaseFile:string|undefined;const used:string[]=[];
  for(const file of files){
   if(!existsSync(file))continue;
-  const parsed=dotenv.parse(readFileSync(file));used.push(file);
+  const parsed=parseEnvText(readFileSync(file,'utf8'));used.push(file);
   if(!processChoosesDatabase&&!databaseFile&&DB_KEYS.some(key=>parsed[key]))databaseFile=file;
   for(const [key,value] of Object.entries(parsed)){
    if(key in env)continue;

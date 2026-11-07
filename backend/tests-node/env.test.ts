@@ -5,7 +5,7 @@ import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
 import {configFrom} from '../src/config';
 import {MySQLDatabase} from '../src/database';
-import {loadEnvFiles,defaultEnvFiles,isAutomatedTest,isLoopbackHost,assertSafeDatabaseTarget,assertWriteConfirmed} from '../src/env';
+import {parseEnvText,loadEnvFiles,defaultEnvFiles,isAutomatedTest,isLoopbackHost,assertSafeDatabaseTarget,assertWriteConfirmed} from '../src/env';
 
 const base={PORT:'3000',DB_HOST:'db.example.test',DB_NAME:'live_db',DB_USER:'u',DB_PASSWORD:'p',DB_SSL:'false'};
 function files(contents:Record<string,string>){
@@ -75,4 +75,20 @@ test('writing commands need ALLOW_DB_WRITES=true AND the exact database name on 
  assert.throws(()=>assertWriteConfirmed(writable,[]),/--confirm-database/);
  assert.throws(()=>assertWriteConfirmed(writable,['--confirm-database=other_db']),/--confirm-database/);
  assert.doesNotThrow(()=>assertWriteConfirmed(writable,['--admin-only','--confirm-database=live_db']));
+});
+
+test('.env parsing keeps # inside unquoted values (passwords) and still supports comments and quotes',()=>{
+ const sample='Ab1!cd2#ef3@gh4';
+ const parsed=parseEnvText(['\uFEFF# a comment line','DB_PASSWORD='+sample,'QUOTED="'+sample+'"',"SINGLE='"+sample+"'",'SPACED = value with # trailing note','export EXPORTED=yes','EMPTY=','NEWLINE="a\\nb"','   INDENTED=ok   ','not a setting','WINDOWS=crlf\r'].join('\n'));
+ assert.equal(parsed.DB_PASSWORD,sample,'an unquoted # must not cut the value');
+ assert.equal(parsed.QUOTED,sample);assert.equal(parsed.SINGLE,sample);
+ assert.equal(parsed.SPACED,'value with','" # note" after a space is a comment');
+ assert.equal(parsed.EXPORTED,'yes');assert.equal(parsed.EMPTY,'');assert.equal(parsed.NEWLINE,'a\nb');
+ assert.equal(parsed.INDENTED,'ok');assert.equal(parsed.WINDOWS,'crlf');
+ assert.equal(Object.keys(parsed).length,9);
+});
+
+test('loadEnvFiles reads an unquoted password containing # in full',()=>{
+ const f=files({'.env':'DB_HOST=127.0.0.1\nDB_PASSWORD=Ab1!cd2#ef3@gh4\n'});
+ try{const env:NodeJS.ProcessEnv={};loadEnvFiles([f.paths['.env']],env);assert.equal(env.DB_PASSWORD,'Ab1!cd2#ef3@gh4')}finally{f.done()}
 });

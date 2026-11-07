@@ -9,7 +9,7 @@ export function registerContent({route,router,db:database}:API){
   const result=await checkDatabase(database);
   res.set('Cache-Control','no-store');
   if(result.ok)return res.json({status:'ok'});
-  res.status(503).json({status:'unavailable',detail:'database unavailable',code:result.code});
+  res.status(503).json({status:'unavailable',detail:'database unavailable',code:result.code,...(result.errorCode?{error_code:result.errorCode}:{})});
  });
  const home=async(db:Database)=>{const row=await one(db,'page_content','slug=?',['home']);if(!row)fail(503,'Content has not been seeded');return row.content};
  const contact=async(db:Database)=>(await one(db,'site_settings','`key`=?',['contact']))?.value||{};
