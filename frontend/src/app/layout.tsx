@@ -1,3 +1,4 @@
+import { siteURL } from '@/lib/seo';
 import type { Metadata } from 'next';
 import './globals.css';
 import './design-refinements.css';
@@ -14,7 +15,7 @@ import './polish.css';
 import './consent.css';
 export const metadata: Metadata = {
   icons: { icon: '/assets/eagles-unbound-logo.png' },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(siteURL()),
   title: { default: 'Eagles Unbound — Adventure with Purpose', template: '%s | Eagles Unbound' },
   verification: { google: process.env.GOOGLE_SITE_VERIFICATION || undefined, other: process.env.BING_SITE_VERIFICATION ? { 'msvalidate.01': process.env.BING_SITE_VERIFICATION } : undefined },
   description: 'Explore military-inspired civilian outdoor challenges, corporate team experiences and student adventure programmes near Kanakapura Road, Bengaluru.',

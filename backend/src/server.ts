@@ -18,6 +18,9 @@ async function main(){
  const api=await createAPI(db,config);const app=express();app.disable('x-powered-by');
  // One reverse proxy (Hostinger) sits in front: trust its forwarding headers so req.ip and HTTPS detection are correct.
  app.set('trust proxy',config.trustProxy);
+ // HSTS is set here, when the server starts, so it is present whenever the public address is https, even if the frontend build
+ // could not see that address (Next.js fixes its own headers at build time).
+ if(config.production&&config.origin.startsWith('https://'))app.use((_req,res,nextFn)=>{res.setHeader('Strict-Transport-Security','max-age=31536000');nextFn()});
  const apiOnly=process.argv.includes('--api-only');
  // One origin: the browser keeps /api paths and the session cookie scope.
  app.use('/api',api.app);app.get('/health',(req,res,nextFn)=>api.app(req,res,nextFn));

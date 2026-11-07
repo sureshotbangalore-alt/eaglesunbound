@@ -41,7 +41,7 @@ for(const [pkg,from] of [['typescript','backend'],['next','frontend'],['tailwind
 
 // 3. Public site address, baked into the site at build time (canonical links, sitemap, structured data, HSTS).
 const siteSource=process.env.NEXT_PUBLIC_SITE_URL?'NEXT_PUBLIC_SITE_URL':process.env.CORS_ORIGINS?'CORS_ORIGINS':null;
-if(!siteSource)problems.push('Set NEXT_PUBLIC_SITE_URL (or CORS_ORIGINS) to the public https address of the site, for example https://www.example.com.');
+if(!siteSource)notes.push('WARNING: neither NEXT_PUBLIC_SITE_URL nor CORS_ORIGINS is visible to this build. The build continues, the site address is read when the server starts, and the server will refuse to start without CORS_ORIGINS (for example https://www.example.com).');
 else{
  const first=(process.env.NEXT_PUBLIC_SITE_URL||process.env.CORS_ORIGINS.split(',')[0]).trim();
  try{const url=new URL(first);if(!['http:','https:'].includes(url.protocol)||url.pathname!=='/'||url.username||url.password)throw Error();if(url.protocol!=='https:')notes.push(`${siteSource} is not https: fine for local or staging builds, but production must use https.`)}
@@ -51,9 +51,13 @@ else{
 // 4. NEXT_PUBLIC_* values are readable by every visitor: refuse names that look like secrets.
 for(const name of Object.keys(process.env))if(/^NEXT_PUBLIC_/.test(name)&&/(PASSWORD|SECRET|TOKEN|PRIVATE|API_?KEY|CREDENTIAL)/i.test(name))problems.push(`${name} would be published to every visitor. Rename it without the NEXT_PUBLIC_ prefix.`);
 
-// 5. Database settings are not needed to build; they are checked when the server starts. Mention what is missing.
-const dbMissing=['DB_HOST','DB_NAME','DB_USER','DB_PASSWORD'].filter(name=>!process.env[name]&&!process.env.DATABASE_URL);
-if(dbMissing.length)notes.push(`Not set in this build environment (needed when the server starts): ${dbMissing.join(', ')}.`);
+// 5. Database and runtime settings are not needed to build; they are checked when the server starts. List the NAMES found and missing
+//    (never values) so a deployment problem can be diagnosed from the build log alone.
+const required=['DB_HOST','DB_PORT','DB_NAME','DB_USER','DB_PASSWORD','ALLOW_DB_WRITES','CORS_ORIGINS','TRUST_PROXY','NEXT_PUBLIC_API_URL','API_INTERNAL_URL'];
+const present=required.filter(name=>process.env[name]||(process.env.DATABASE_URL&&/^DB_/.test(name)));
+const absent=required.filter(name=>!present.includes(name));
+notes.push(`required settings visible to this build: ${present.join(', ')||'none'}`);
+if(absent.length)notes.push(`required settings NOT visible to this build: ${absent.join(', ')} (they must be present when the server starts)`);
 if(process.env.ALLOW_DB_WRITES!=='true')notes.push('ALLOW_DB_WRITES is not "true": the site will start in read-only mode (no bookings, enquiries, sign-in or CMS saving).');
 
 for(const note of notes)console.log('note: '+note);

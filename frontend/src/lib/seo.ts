@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import { serverAPI } from './api';
 export type SEORecord = { page: string; title: string; description: string; canonical: string; og_title: string; og_description: string; image: string; image_alt: string; noindex: boolean };
 export type FAQRecord = { id: string; question: string; answer: string; page: string; published: boolean; display_order: number };
-export const siteURL = () => (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, '');
+// Public address of the site: NEXT_PUBLIC_SITE_URL, else the first CORS_ORIGINS entry, read when the page renders.
+const firstOrigin = (list?: string) => (list || '').split(',').map(x => x.trim()).find(Boolean) || '';
+export const siteURL = () => (process.env.NEXT_PUBLIC_SITE_URL || firstOrigin(process.env.CORS_ORIGINS) || 'http://localhost:3000').replace(/\/$/, '');
 export async function pageMetadata(page: string, title: string, description: string): Promise<Metadata> {
   const all = await serverAPI<SEORecord[]>('/public/seo');
   const seo = all.find(s => s.page === page);
