@@ -17,19 +17,15 @@
       "status": 200
     },
     {
-      "path": "/packages",
-      "status": 200
-    },
-    {
-      "path": "/clients",
-      "status": 200
-    },
-    {
       "path": "/about",
       "status": 200
     },
     {
-      "path": "/gallery",
+      "path": "/founder",
+      "status": 200
+    },
+    {
+      "path": "/food-and-dining",
       "status": 200
     },
     {
@@ -41,11 +37,11 @@
       "status": 200
     },
     {
-      "path": "/faqs",
+      "path": "/privacy-policy",
       "status": 200
     },
     {
-      "path": "/privacy-policy",
+      "path": "/cookie-policy",
       "status": 200
     },
     {
@@ -142,42 +138,6 @@
       "status": 200
     },
     {
-      "path": "/kids-experiences",
-      "status": 200
-    },
-    {
-      "path": "/schools-and-colleges",
-      "status": 200
-    },
-    {
-      "path": "/founder",
-      "status": 200
-    },
-    {
-      "path": "/corporate",
-      "status": 200
-    },
-    {
-      "path": "/accommodation",
-      "status": 200
-    },
-    {
-      "path": "/food-and-dining",
-      "status": 200
-    },
-    {
-      "path": "/mission-selector",
-      "status": 200
-    },
-    {
-      "path": "/explore",
-      "status": 200
-    },
-    {
-      "path": "/testimonials",
-      "status": 200
-    },
-    {
       "path": "/programmes/corporate-unbound",
       "status": 200
     },
@@ -242,259 +202,23 @@
       "status": 200
     },
     {
-      "path": "/activities/air-rifle-shooting",
+      "path": "/faqs",
       "status": 200
     },
     {
-      "path": "/activities/team-building-activities",
+      "path": "/mission-selector",
       "status": 200
     },
     {
-      "path": "/activities/mind-games",
+      "path": "/_next/image?url=%2Fassets%2Fcampfire.jpg&w=3840&q=75",
       "status": 200
     },
     {
-      "path": "/activities/trekking",
+      "path": "/_next/image?url=%2Fassets%2Fcheer.jpg&w=3840&q=75",
       "status": 200
     },
     {
-      "path": "/activities/camping",
-      "status": 200
-    },
-    {
-      "path": "/activities/bonfire",
-      "status": 200
-    },
-    {
-      "path": "/activities/rain-dance",
-      "status": 200
-    },
-    {
-      "path": "/activities/atv-ride-on-track",
-      "status": 200
-    },
-    {
-      "path": "/activities/kids-zip-line",
-      "status": 200
-    },
-    {
-      "path": "/activities/mud-obstacles-for-kids",
-      "status": 200
-    },
-    {
-      "path": "/activities/rappelling",
-      "status": 200
-    },
-    {
-      "path": "/activities/caving",
-      "status": 200
-    },
-    {
-      "path": "/activities/progressive-group-task-pgt",
-      "status": 200
-    },
-    {
-      "path": "/activities/target-archery",
-      "status": 200
-    },
-    {
-      "path": "/activities/fun-archery-games",
-      "status": 200
-    },
-    {
-      "path": "/activities/archery-for-all-skill-levels",
-      "status": 200
-    },
-    {
-      "path": "/activities/tug-of-war",
-      "status": 200
-    },
-    {
-      "path": "/activities/group-games",
-      "status": 200
-    },
-    {
-      "path": "/activities/icebreaker-activities",
-      "status": 200
-    },
-    {
-      "path": "/activities/energizer-activities",
-      "status": 200
-    },
-    {
-      "path": "/activities/leadership-activities",
-      "status": 200
-    },
-    {
-      "path": "/activities/team-sports",
-      "status": 200
-    },
-    {
-      "path": "/activities/organised-tournaments",
-      "status": 200
-    },
-    {
-      "path": "/activities/cricket",
-      "status": 200
-    },
-    {
-      "path": "/activities/cricket-nets",
-      "status": 200
-    },
-    {
-      "path": "/activities/football",
-      "status": 200
-    },
-    {
-      "path": "/activities/volleyball",
-      "status": 200
-    },
-    {
-      "path": "/activities/mud-volleyball",
-      "status": 200
-    },
-    {
-      "path": "/activities/mud-football",
-      "status": 200
-    },
-    {
-      "path": "/activities/chess",
-      "status": 200
-    },
-    {
-      "path": "/activities/carom",
-      "status": 200
-    },
-    {
-      "path": "/activities/swimming-pool",
-      "status": 200
-    },
-    {
-      "path": "/activities/morning-trek",
-      "status": 200
-    },
-    {
-      "path": "/activities/bird-watching",
-      "status": 200
-    },
-    {
-      "path": "/activities/nature-exploration",
-      "status": 200
-    },
-    {
-      "path": "/activities/pottery",
-      "status": 200
-    },
-    {
-      "path": "/activities/clay-modelling",
-      "status": 200
-    },
-    {
-      "path": "/activities/pottery-wheel",
-      "status": 200
-    },
-    {
-      "path": "/activities/animal-figurines",
-      "status": 200
-    },
-    {
-      "path": "/activities/diy-planters",
-      "status": 200
-    },
-    {
-      "path": "/activities/lanterns-and-tealight-holders",
-      "status": 200
-    },
-    {
-      "path": "/activities/name-plates",
-      "status": 200
-    },
-    {
-      "path": "/activities/traditional-designs",
-      "status": 200
-    },
-    {
-      "path": "/activities/dairy-farming-experience",
-      "status": 200
-    },
-    {
-      "path": "/activities/cow-feeding",
-      "status": 200
-    },
-    {
-      "path": "/activities/animal-care",
-      "status": 200
-    },
-    {
-      "path": "/activities/milking-experience",
-      "status": 200
-    },
-    {
-      "path": "/activities/kitchen-gardening",
-      "status": 200
-    },
-    {
-      "path": "/activities/seed-ball-making",
-      "status": 200
-    },
-    {
-      "path": "/activities/herb-garden-making",
-      "status": 200
-    },
-    {
-      "path": "/activities/composting",
-      "status": 200
-    },
-    {
-      "path": "/activities/soil-exploration",
-      "status": 200
-    },
-    {
-      "path": "/activities/vermicomposting",
-      "status": 200
-    },
-    {
-      "path": "/activities/tractor-ride",
-      "status": 200
-    },
-    {
-      "path": "/activities/tent-pitching",
-      "status": 200
-    },
-    {
-      "path": "/activities/night-camping",
-      "status": 200
-    },
-    {
-      "path": "/activities/campfire-with-music",
-      "status": 200
-    },
-    {
-      "path": "/activities/campfire-games",
-      "status": 200
-    },
-    {
-      "path": "/activities/hiking-for-sunrise-point",
-      "status": 200
-    },
-    {
-      "path": "/activities/outdoor-camping",
-      "status": 200
-    },
-    {
-      "path": "/activities/soft-archery",
-      "status": 200
-    },
-    {
-      "path": "/activities/farm-interaction-activities",
-      "status": 200
-    },
-    {
-      "path": "/activities/interactive-team-games",
-      "status": 200
-    },
-    {
-      "path": "/_next/image?url=%2Fassets%2Fcamp.jpg&w=3840&q=75",
+      "path": "/_next/image?url=%2Fassets%2Fclimbing-wall.jpg&w=3840&q=75",
       "status": 200
     },
     {
@@ -502,15 +226,259 @@
       "status": 200
     },
     {
-      "path": "/_next/image?url=%2Fassets%2Fforest.jpg&w=3840&q=75",
+      "path": "/_next/image?url=%2Fassets%2Fforest-road.jpg&w=3840&q=75",
       "status": 200
     },
     {
-      "path": "/_next/image?url=%2Fassets%2Flandscape.jpg&w=3840&q=75",
+      "path": "/_next/image?url=%2Fassets%2Fforest-walk.jpg&w=3840&q=75",
       "status": 200
     },
     {
-      "path": "/_next/static/css/f523b72c6203cb9e.css",
+      "path": "/_next/image?url=%2Fassets%2Fghats.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "path": "/_next/image?url=%2Fassets%2Fgranite-hills.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "path": "/_next/image?url=%2Fassets%2Fhero-team.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "path": "/_next/image?url=%2Fassets%2Fkarnataka-dawn.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "path": "/_next/image?url=%2Fassets%2Fkids.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "path": "/_next/image?url=%2Fassets%2Frope-course.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "path": "/_next/image?url=%2Fassets%2Fschools.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "path": "/_next/image?url=%2Fassets%2Fstudents.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "path": "/_next/image?url=%2Fassets%2Fteam-challenge.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "path": "/_next/image?url=%2Fassets%2Ftents-dusk.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "path": "/_next/image?url=%2Fassets%2Ftrek-team.jpg&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034274534",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034275388",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034277010",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034277650",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034278387",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034279049",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034279704",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034280605",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034281005",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034281606",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034285779",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034289185",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034290943",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034296222",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034296571",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034296802",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034297040",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034297281",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034297562",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034297821",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034298029",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034298302",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034298563",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034298740",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034298939",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034299121",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034299302",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034306809",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034307601",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034308352",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034308719",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034309065",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034309468",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034310000",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034310764",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034311550",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034312422",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034313050",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034313841",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034314508",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034315090",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034316782",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034317970",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034318765",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034319413",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034320332",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034321149",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034321610",
+      "status": 200
+    },
+    {
+      "path": "/_next/static/css/app/layout.css?v=1794034322045",
+      "status": 200
+    },
+    {
+      "path": "/assets/forest-road.jpg",
+      "status": 200
+    },
+    {
+      "path": "/assets/founder-bhakuni.jpg",
       "status": 200
     }
   ],
@@ -531,19 +499,87 @@
     {
       "from": "/contact-us",
       "to": "/contact"
+    },
+    {
+      "from": "/programmes/corporate-unbound",
+      "to": "/what-we-offer"
+    },
+    {
+      "from": "/programmes/students-unbound",
+      "to": "/what-we-offer"
+    },
+    {
+      "from": "/programmes/adventure-unbound",
+      "to": "/what-we-offer"
+    },
+    {
+      "from": "/programmes/school-day-outing",
+      "to": "/what-we-offer"
+    },
+    {
+      "from": "/programmes/outbound-student-activities",
+      "to": "/what-we-offer"
+    },
+    {
+      "from": "/programmes/college-adventure-program",
+      "to": "/what-we-offer"
+    },
+    {
+      "from": "/programmes/overnight-stay-program",
+      "to": "/what-we-offer"
+    },
+    {
+      "from": "/programmes/corporate-team-building",
+      "to": "/what-we-offer"
+    },
+    {
+      "from": "/programmes/outdoor-adventure-program",
+      "to": "/what-we-offer"
+    },
+    {
+      "from": "/activities/individual-army-inspired-obstacles",
+      "to": "/activities"
+    },
+    {
+      "from": "/activities/group-obstacle-race-snake-race",
+      "to": "/activities"
+    },
+    {
+      "from": "/activities/wall-climbing",
+      "to": "/activities"
+    },
+    {
+      "from": "/activities/high-rope-course",
+      "to": "/activities"
+    },
+    {
+      "from": "/activities/low-rope-course",
+      "to": "/activities"
+    },
+    {
+      "from": "/activities/zip-line",
+      "to": "/activities"
+    },
+    {
+      "from": "/activities/archery",
+      "to": "/activities"
+    },
+    {
+      "from": "/faqs",
+      "to": "/contact"
+    },
+    {
+      "from": "/mission-selector",
+      "to": "/what-we-offer"
     }
   ],
   "warnings": [],
   "external_urls_not_probed": [
-    "https://www.google.com/maps/search/?api=1&query=KMS%20Farms%2C%20Sy%20No%2023%2C%20Naukalpalya%2C%20Kaggalipura%2C%20off%20Kanakapura%20Road%2C%20South%20Bengaluru%2C%20Karnataka%20560082"
+    "https://dsba.edu.in/newseventsdetail.php?year=2020&id=471&desc=Nation+Building+by+Creating+Awareness+and+Learning+from+Ethos+and+Traditions+of+Armed+Forces",
+    "https://wa.me/917259307111?text=Hello%2C%20I%20would%20like%20to%20plan%20an%20Eagles%20Unbound%20experience.%0A%0AGroup%20type%20(school%20%2F%20college%20%2F%20corporate%20%2F%20family%20%2F%20friends)%3A%0ANumber%20of%20people%3A%0APreferred%20date%3A",
+    "https://www.google.com/maps/search/?api=1&query=KMS%20Farms%2C%20Sy%20No%2023%2C%20Naukalpalya%2C%20Kaggalipura%2C%20off%20Kanakapura%20Road%2C%20South%20Bengaluru%2C%20Karnataka%20560082",
+    "https://x.com/majgenbhakuni",
+    "https://x.com/spokespersonmod/status/1013061070146027521"
   ],
-  "unconfigured_external_urls": [
-    "WhatsApp business number",
-    "Public email",
-    "Facebook",
-    "Instagram",
-    "YouTube",
-    "Verified Google Business Profile"
-  ],
-  "browser_checks": "Not run: browser preview permission was denied. Playwright suite provided separately."
+  "browser_checks": "Separate Playwright suite; see docs/launch-audit.md for the latest verified results."
 }

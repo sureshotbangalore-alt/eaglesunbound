@@ -11,7 +11,7 @@ export async function pageMetadata(page: string, title: string, description: str
     title: seo?.title || title,
     description: seo?.description || description,
     alternates: { canonical: seo?.canonical || page },
-    robots: seo?.noindex || process.env.SEARCH_INDEXING_ENABLED !== 'true' ? { index: false, follow: true } : { index: true, follow: true },
+    robots: page === '/book-now' || seo?.noindex || process.env.SEARCH_INDEXING_ENABLED !== 'true' ? { index: false, follow: true } : { index: true, follow: true },
     openGraph: { title: seo?.og_title || seo?.title || title, description: seo?.og_description || seo?.description || description, url: seo?.canonical || page, images: [{ url: image, alt: seo?.image_alt || 'Eagles Unbound official logo' }] },
     twitter: { card: 'summary_large_image', title: seo?.og_title || seo?.title || title, description: seo?.og_description || seo?.description || description, images: [image] },
   };

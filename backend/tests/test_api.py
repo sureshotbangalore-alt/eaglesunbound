@@ -84,7 +84,7 @@ def test_cms_persists_and_updates_public_content(setup):
     assert c.get('/public/home').json()['hero_title'] == content['hero_title']
     with sessions() as db:
         assert db.scalar(select(m.PageContent)).content['hero_title'] == content['hero_title']
-        assert db.scalar(select(m.AuditLog)).action == 'Updated homepage'
+        assert db.scalar(select(m.AuditLog).where(m.AuditLog.action == 'Updated homepage')) is not None
 
 
 def test_editor_cannot_access_customer_data_or_settings(setup):

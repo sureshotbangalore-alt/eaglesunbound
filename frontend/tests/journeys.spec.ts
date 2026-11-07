@@ -17,7 +17,7 @@ test('navigation, mobile menu, no horizontal overflow and accessibility',async({
 test('programme booking preselection and saved-request success',async({page})=>{
   test.skip(process.env.E2E_ALLOW_WRITES!=='true','Use only against an isolated test database with E2E_ALLOW_WRITES=true.');
   await page.goto('/programmes/corporate-unbound');
-  await page.locator('#corporate-unbound').getByRole('link',{name:'Enquire about this experience',exact:true}).click();
+  await page.locator('#corporate-unbound').getByRole('link',{name:/^Enquire about this experience/}).click();
   await expect(page.locator('select[name="programme_id"] option:checked')).toHaveText('Corporate Unbound');
   await page.getByLabel('Your name').fill('E2E Test Visitor');
   await page.getByLabel('Email address').fill('e2e@example.com');
@@ -42,4 +42,3 @@ test('admin login protects customer records and opens the content editor',async(
   await page.getByRole('link',{name:'Website content'}).click();
   await expect(page.getByLabel('hero title',{exact:true})).toBeVisible();
 });
-

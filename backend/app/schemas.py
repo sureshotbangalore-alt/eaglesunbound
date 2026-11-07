@@ -7,6 +7,7 @@ from urllib.parse import urlparse
 class Login(BaseModel):
     email: EmailStr
     password: str = Field(min_length=1, max_length=200)
+    code: str = Field(default='', max_length=80)
 
 
 class Homepage(BaseModel):
@@ -146,7 +147,7 @@ class SEOInput(BaseModel):
     @field_validator('canonical')
     @classmethod
     def canonical_format(cls, v):
-        if v and (not v.startswith('https://') or not urlparse(v).netloc or urlparse(v).query or urlparse(v).fragment):
+        if v and (not v.startswith('https://') or not urlparse(v).hostname or urlparse(v).username or urlparse(v).password or urlparse(v).query or urlparse(v).fragment):
             raise ValueError('Use a complete HTTPS canonical URL without a query or fragment')
         return v
     @field_validator('image')

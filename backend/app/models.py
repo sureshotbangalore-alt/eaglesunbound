@@ -1,6 +1,6 @@
 from datetime import datetime, timezone, date
 from uuid import uuid4
-from sqlalchemy import String, Text, JSON, ForeignKey, UniqueConstraint, DateTime
+from sqlalchemy import String, Text, JSON, ForeignKey, UniqueConstraint, DateTime, text
 from sqlalchemy.orm import Mapped, mapped_column
 from .db import Base
 
@@ -95,7 +95,7 @@ class Booking(Entity, Base):
     consent: Mapped[bool]
     status: Mapped[str] = mapped_column(String(20), default='Pending')
     internal_notes: Mapped[str] = mapped_column(Text, default='')
-    details: Mapped[dict] = mapped_column(JSON, default=dict, server_default='{}')
+    details: Mapped[dict] = mapped_column(JSON, default=dict, server_default=text("('{}')"))
 
 
 class BookingStatusHistory(Entity, Base):
@@ -115,7 +115,7 @@ class Enquiry(Entity, Base):
     consent: Mapped[bool]
     status: Mapped[str] = mapped_column(String(20), default='New')
     internal_notes: Mapped[str] = mapped_column(Text, default='')
-    details: Mapped[dict] = mapped_column(JSON, default=dict, server_default='{}')
+    details: Mapped[dict] = mapped_column(JSON, default=dict, server_default=text("('{}')"))
 
 
 class Availability(Entity, Base):

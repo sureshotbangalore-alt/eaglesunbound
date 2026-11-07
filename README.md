@@ -6,7 +6,7 @@ Website and administration portal for Eagles Unbound, an outdoor adventure and e
 
 - **Frontend:** Next.js 16, React 19, TypeScript, Tailwind CSS and Motion.
 - **Backend:** FastAPI, SQLAlchemy and Alembic.
-- **Database:** PostgreSQL for production; SQLite for local development.
+- **Database:** PostgreSQL or MySQL/MariaDB for production; SQLite for local development.
 - **Media:** S3-compatible storage for uploads, with labelled illustrative assets included for development.
 
 Exact runtime versions are recorded in `runtime-lock.json`; frontend dependencies are pinned in `frontend/package-lock.json`.
@@ -33,7 +33,7 @@ runtime-lock.json       Runtime and container version references
 
 ## Public website
 
-The site has 12 main pages: Home, Bootcamp, Programmes, Activities, About, Founder, Stay & Dining, Contact, Book Now, Privacy, Terms and Booking Policy.
+The site has 13 main pages: Home, Bootcamp, Programmes, Activities, About, Founder, Stay & Dining, Contact, Book Now, Privacy, Cookies, Terms and Booking Policy.
 
 Programme and activity details expand inside their catalogues. Audience guides are included under Programmes, and FAQs appear on Contact. Retired URLs redirect to their corresponding pages or sections. Gallery is not part of the public website.
 
@@ -110,8 +110,14 @@ Read-only route audit, from the project root:
 
 For Vercel, set the project root to `frontend`. Configure `API_INTERNAL_URL` with the hosted backend address and `NEXT_PUBLIC_SITE_URL` with the final website origin. A deployed site cannot use the local backend address `127.0.0.1:8000`.
 
-Deploy FastAPI with persistent PostgreSQL and S3-compatible media storage. In production, configure `DATABASE_URL`, `PUBLIC_ORIGIN`, `ENVIRONMENT=production` and `COOKIE_SECURE=true`. Configure administrative access, backups, storage and optional SMTP notifications separately. Keep secrets server-side.
+Deploy FastAPI with persistent PostgreSQL or MySQL/MariaDB and S3-compatible media storage. In production, configure `DATABASE_URL`, `PUBLIC_ORIGIN`, `ENVIRONMENT=production` and `COOKIE_SECURE=true`. Configure administrative access, backups, storage and optional SMTP notifications separately. Keep secrets server-side.
 
 Docker configuration is provided in `compose.yaml`. Copy the root `.env.example` to `.env`, set credentials and run `docker compose up --build`. Docker execution must be verified in the target environment.
 
 See [hosting requirements](docs/lightweight-hosting.md), [page consolidation](docs/page-consolidation.md), [content approval](docs/client-approval.md) and [media provenance](docs/media-provenance.md) for further details.
+
+For database fields, MySQL environment configuration and schema setup, see [database setup](docs/database-setup.md).
+
+## Latest verification and launch requirements
+
+See [launch audit](docs/launch-audit.md) for security changes, consent behaviour, SEO verification, test results and remaining hosting/content actions. Administrator MFA is available under Users & roles once `MFA_ENCRYPTION_KEY` is configured on the backend.

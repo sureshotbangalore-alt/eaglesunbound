@@ -83,13 +83,14 @@ export function ScrollFX() {
       });
 
       once('[data-parallax]', (el) => {
-        const amount = Number(el.dataset.parallax) || 10;
+        if (window.matchMedia('(max-width: 900px)').matches) return;
+        const amount = Math.min(Number(el.dataset.parallax) || 5, 6);
         cleanups.push(scroll(animate(el, { y: [`-${amount}%`, `${amount}%`] }, linear), { target: el.parentElement ?? el, offset: ['start end', 'end start'] }));
       });
 
       once('[data-hero]', (hero) => {
         const copy = hero.querySelector<HTMLElement>('[data-hero-copy]');
-        if (copy) cleanups.push(scroll(animate(copy, { y: [0, -160], opacity: [1, 0] }, linear), { target: hero, offset: ['start start', 'end start'] }));
+        if (copy) cleanups.push(scroll(animate(copy, { y: [0, -30], opacity: [1, 1] }, linear), { target: hero, offset: ['start start', 'end start'] }));
       });
 
       once('[data-fill]', (el) => {

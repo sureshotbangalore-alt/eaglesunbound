@@ -36,7 +36,7 @@ class Page(HTMLParser):
 
 def audit(base):
     client=httpx.Client(follow_redirects=True,timeout=15,headers={'User-Agent':'EaglesRouteAudit/1.0'})
-    required=['/','/the-bootcamp','/what-we-offer','/activities','/packages','/clients','/about','/gallery','/book-now','/contact','/faqs','/privacy-policy','/terms-and-conditions','/booking-policy']
+    required=['/','/the-bootcamp','/what-we-offer','/activities','/about','/founder','/food-and-dining','/book-now','/contact','/privacy-policy','/cookie-policy','/terms-and-conditions','/booking-policy']
     admin=['/admin','/admin/login','/admin/dashboard','/admin/pages','/admin/programmes','/admin/activities','/admin/packages','/admin/bookings','/admin/enquiries','/admin/gallery','/admin/clients','/admin/media','/admin/settings','/admin/seo']
     pending=deque(required+admin+['/sitemap.xml','/robots.txt','/missing-route-check','/bootcamp','/programmes','/book','/contact-us'])
     seen=set(); checked=[]; broken=[]; redirects=[]; warnings=[]; externals=set(); incoming=set(); titles={}; assets=set()
@@ -90,7 +90,7 @@ def audit(base):
         except Exception as e:broken.append({'path':asset,'error':str(e)})
     for path in required:
         if path not in incoming and path!='/':warnings.append({'path':path,'issue':'No discoverable incoming link'})
-    result={'checked_urls':checked,'broken_urls':broken,'redirected_urls':redirects,'warnings':warnings,'external_urls_not_probed':sorted(externals),'unconfigured_external_urls':['WhatsApp business number','Public email','Facebook','Instagram','YouTube','Verified Google Business Profile'], 'browser_checks':'Not run: browser preview permission was denied. Playwright suite provided separately.'}
+    result={'checked_urls':checked,'broken_urls':broken,'redirected_urls':redirects,'warnings':warnings,'external_urls_not_probed':sorted(externals),'browser_checks':'Separate Playwright suite; see docs/launch-audit.md for the latest verified results.'}
     client.close()
     Path('docs/route-audit.json').write_text(json.dumps(result,indent=2),encoding='utf-8')
     print(json.dumps({'checked':len(checked),'broken':len(broken),'redirects':len(redirects),'warnings':len(warnings)}))

@@ -4,8 +4,8 @@ import { ArrowDown, ArrowUpRight, MapPin } from 'lucide-react';
 import { serverAPI, type HomeContent, type ContentRecord } from '@/lib/api';
 import { ProgrammeSwitcher } from '@/components/programme-switcher';
 import { ActivityShowcase } from '@/components/activity-showcase';
-import { HudFrame, PortraitFrame, Radar, RangeTarget } from '@/components/tactical';
-import { RangeDrill } from '@/components/range-drill';
+import { PortraitFrame } from '@/components/tactical';
+import { ConsentVideo } from '@/components/consent-video';
 import { FieldAtmosphere, FieldBriefing, MotionSwitch } from '@/components/field-experience';
 import { HeroMedia } from '@/components/hero-media';
 import { SplitLines, FillText } from '@/components/split-text';
@@ -23,12 +23,12 @@ export default async function Home() {
   return <main id="main" className="home">
     <section className="home-hero" data-hero>
       <div className="hh-media" data-parallax="9"><HeroMedia video={content.hero_video}/></div>
-      <FieldAtmosphere/><div className="hh-shade"/><HudFrame right="Status: Field ready"/><MotionSwitch/>
+      <FieldAtmosphere/><div className="hh-shade"/><MotionSwitch/>
       <div className="hh-frame" aria-hidden="true"><i/><i/><i/><i/></div>
       <div className="hh-top"><p className="label"><span className="live-dot"/>{content.eyebrow}</p><p className="label hh-est">FIELD EDITION / KARNATAKA, INDIA</p></div>
       <div className="hh-copy" data-hero-copy>
         <p className="label hh-kicker">MILITARY SPIRIT. SOUTH INDIAN SOUL.</p>
-        <SplitLines as="h1" text={'LEAVE ORDINARY.\nENTER THE FIELD.'} className="hh-title"/>
+        <SplitLines as="h1" text={content.hero_title || 'LEAVE ORDINARY.\nENTER THE FIELD.'} className="hh-title"/>
         <div className="hh-sub">
           <p className="hh-secondary">Courage is better together.</p>
           <div><p className="hh-description">{content.hero_subtitle}</p>
@@ -52,10 +52,7 @@ export default async function Home() {
         <figcaption><span className="display-l" data-reveal>Less routine.<br/><em>More real.</em></span><span data-reveal>Step outside.<br/>See what you’re made of.</span></figcaption>
         <span className="stock-label">AI-generated concept imagery</span>
       </figure>
-      <div className="mission-band" data-reveal>
-        <div><p className="label">Mission selector</p><h3>Not sure where<br/>to start?</h3><p>Tell us who is coming and what you want from the day. We’ll point you to the programmes worth a conversation.</p><Link className="text-link" href="/mission-selector">Find an experience for your group <ArrowUpRight size={17}/></Link></div>
-        <Radar label="Scanning programmes"/>
-      </div>
+      <div className="planner" data-reveal><p>Find the right day for your group.</p><Link className="text-link dark-link" href="/what-we-offer">Explore programmes <ArrowUpRight size={17}/></Link></div>
     </section>
 
     <FieldBriefing/>
@@ -69,15 +66,11 @@ export default async function Home() {
     <section className="chapter night activities-section">
       <div className="chapter-head" data-reveal="rule"><span className="label">04 — Out of your comfort zone</span><span className="label">Into the experience</span></div>
       <div className="chapter-title"><SplitLines text={'A little nerve.\nA lot of alive.'} className="display-xl"/><p data-reveal>From the first obstacle to the last shared laugh, find the activities that bring your group together.</p></div>
-      <div className="range-module">
-        <div data-stagger><p className="label">Aim &amp; focus</p><h3>Steady hands.<br/>Clear mind.</h3><p>Archery and air rifle shooting sit in the activity library alongside obstacles and rope courses. Ask the team about supervision, age requirements and availability for your group.</p><Link className="text-link" href="/activities">See aim &amp; focus activities <ArrowUpRight size={17}/></Link></div>
-        <RangeTarget/>
-      </div>
       <ActivityShowcase activities={activities}/>
       <Link href="/activities" className="text-link" data-reveal>Discover the activity library <ArrowUpRight size={18}/></Link>
     </section>
 
-    <RangeDrill/>
+
 
     <section className="chapter bone founder">
       <div className="founder-grid">
@@ -99,7 +92,7 @@ export default async function Home() {
       <div className="chapter-head" data-reveal="rule"><span className="label">05 — From the field</span><span className="label">The outdoor spirit</span></div>
       <SplitLines text={'Don’t just watch.\nExperience it.'} className="display-xl"/>
       <div className="film-frame" data-scale-in>
-        {content.hero_video ? <video controls playsInline preload="none" src={content.hero_video} aria-label="Eagles Unbound experience film"/> : <>
+        {content.hero_video ? <ConsentVideo src={content.hero_video} label="Eagles Unbound experience film"/> : <>
           <div className="media-fill" data-parallax="10"><Image src="/assets/karnataka-dawn.jpg" alt="AI-generated concept of Karnataka granite hills at dawn" fill sizes="(max-width:700px) 100vw, 88vw"/></div>
           <div className="film-note"><p>The terrain. The challenge. The people beside you. Discover the world of Eagles Unbound.</p><Link href="/activities" className="button button-light">Explore the activities <ArrowUpRight size={17}/></Link></div>
           <span className="stock-label">AI-generated concept imagery</span></>}
@@ -121,7 +114,7 @@ export default async function Home() {
     </section>
 
     {clients.length > 0 && <section className="chapter bone clients-strip">
-      <div className="chapter-head" data-reveal="rule"><span className="label">Shared experiences / Our clients</span><Link className="label" href="/clients">View the client showcase ↗</Link></div>
+      <div className="chapter-head" data-reveal="rule"><span className="label">Shared experiences / Our clients</span><Link className="label" href="/about">About our experiences ↗</Link></div>
       <div className="client-list">{clients.slice(0, 6).map(c => <div key={c.id}>{c.image && <img src={c.image} alt={`${c.name} logo`} loading="lazy"/>}<h2>{c.name}</h2></div>)}</div>
     </section>}
   </main>;

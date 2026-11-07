@@ -18,7 +18,10 @@ from .db import get_db
 from . import models as m, schemas as s
 from .notifications import notify
 
-app = FastAPI(title='Eagles Unbound API', version='0.1.0')
+app = FastAPI(title='Eagles Unbound API', version='0.1.0',
+              docs_url=None if settings.environment == 'production' else '/docs',
+              redoc_url=None if settings.environment == 'production' else '/redoc',
+              openapi_url=None if settings.environment == 'production' else '/openapi.json')
 DB = Annotated[Session, Depends(get_db)]
 password_hash = PasswordHash.recommended()
 dummy_hash = password_hash.hash(secrets.token_urlsafe(32))
@@ -29,6 +32,11 @@ MODULES = {'programmes': m.Programme, 'activities': m.Activity, 'clients': m.Cli
 @app.middleware('http')
 async def security(request: Request, call_next):
     if request.method in {'POST', 'PUT', 'PATCH', 'DELETE'}:
+        # Reject oversized JSON before framework parsing. Uploads have a separate bounded reader.
+        maximum = 26 * 1024 * 1024 if request.url.path == '/admin/media/upload' else 128 * 1024
+        length = request.headers.get('content-length', '')
+        if length and (not length.isdecimal() or int(length) > maximum):
+            return Response('Request too large', status_code=413)
         origin = request.headers.get('origin')
         if origin and origin != settings.public_origin:
             return Response('Origin not allowed', status_code=403)
@@ -38,14 +46,17 @@ async def security(request: Request, call_next):
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-Frame-Options'] = 'DENY'
     response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
-    if request.url.path.startswith('/admin'):
+    response.headers['X-Robots-Tag'] = 'noindex, nofollow'
+    if request.url.path.startswith('/admin') or request.url.path in {'/bookings', '/enquiries'}:
         response.headers['Cache-Control'] = 'no-store'
+    if settings.environment == 'production':
+        response.headers['Content-Security-Policy'] = "default-src 'none'; frame-ancestors 'none'; base-uri 'none'"
     return response
 
 
-def rate_limit(request: Request, category: str, maximum: int):
+def rate_limit(request: Request, category: str, maximum: int, identity: str | None = None):
     # Deliberately trust the socket peer only. Use an edge limiter for multi-worker production.
-    key = category + ':' + (request.client.host if request.client else 'unknown')
+    key = category + ':' + (identity if identity is not None else (request.client.host if request.client else 'unknown'))
     cutoff = time.monotonic() - 600
     bucket = limits[key]
     while bucket and bucket[0] < cutoff:
@@ -98,7 +109,7 @@ def model_for(module):
 
 def public_details(details):
     approved=details.get('testimonial_approved') is True
-    return {key:value for key,value in details.items() if not key.startswith('reported_') and key not in ('confirmation_required','source_status') and (approved or not key.startswith('testimonial_'))}
+    return {key:value for key,value in details.items() if not key.startswith('reported_') and key not in ('confirmation_required','source_status','internal_notes','password','password_hash','token','secret','email','phone','mobile') and not key.startswith(('private_', 'internal_', 'secret_')) and (approved or not key.startswith('testimonial_'))}
 
 
 def commit(db):
@@ -129,6 +140,48 @@ def contact_settings(db: DB):
     return record.value if record else {}
 
 
+PUBLIC_PATHS = ('/', '/the-bootcamp', '/what-we-offer', '/activities', '/about', '/founder', '/food-and-dining', '/contact', '/book-now', '/privacy-policy', '/cookie-policy', '/terms-and-conditions', '/booking-policy')
+
+
+@app.get('/public/page-updates')
+def page_updates(db: DB):
+    # Record modification times, not the current request/build time.
+    updates = {}
+    for row in db.scalars(select(m.PageContent)).all():
+        if row.slug == 'home' or row.content.get('published'):
+            path = '/' if row.slug == 'home' else '/' + row.slug
+            if path in PUBLIC_PATHS:
+                updates[path] = row.updated_at.replace(tzinfo=timezone.utc).isoformat()
+    for path, model in (('/what-we-offer', m.Programme), ('/activities', m.Activity)):
+        updated = db.scalar(select(func.max(model.updated_at)).where(model.published.is_(True)))
+        if updated:
+            updates[path] = updated.replace(tzinfo=timezone.utc).isoformat()
+    faq_updated = db.scalar(select(func.max(m.FAQ.updated_at)).where(m.FAQ.published.is_(True)))
+    if faq_updated:
+        updates['/contact'] = max(updates.get('/contact', ''), faq_updated.replace(tzinfo=timezone.utc).isoformat())
+    for row in db.scalars(select(m.SiteSetting).where(m.SiteSetting.key.like('seo:%'))).all():
+        path = row.value.get('page')
+        if path in PUBLIC_PATHS:
+            updates[path] = max(updates.get(path, ''), row.updated_at.replace(tzinfo=timezone.utc).isoformat())
+    return updates
+
+
+@app.get('/admin/seo/audit')
+def seo_audit(user: USER, db: DB):
+    rows = [r.value for r in db.scalars(select(m.SiteSetting).where(m.SiteSetting.key.like('seo:%'))).all()]
+    warnings = []
+    for row in rows:
+        path = row.get('page', '')
+        if path not in PUBLIC_PATHS:
+            warnings.append({'page': path, 'message': 'This route is retired or does not exist. Set metadata on the consolidated public page.'})
+        if any(other.get('page') != path and other.get('title', '').casefold() == row.get('title', '').casefold() for other in rows):
+            warnings.append({'page': path, 'message': 'Duplicate override title.'})
+        if row.get('image') and not row.get('image_alt'):
+            warnings.append({'page': path, 'message': 'Social image needs descriptive alt text.'})
+    return {'pages': PUBLIC_PATHS, 'overrides': len(rows), 'warnings': warnings,
+            'note': 'Pages without overrides use their unique server-rendered defaults. Run browser route tests for links and rendered metadata.'}
+
+
 @app.get('/public/{module}')
 def public_list(module: str, db: DB):
     if module == 'faqs':
@@ -142,7 +195,7 @@ def public_list(module: str, db: DB):
     return [{key:getattr(row,key) for key in ('id','slug','name','description','image','published','display_order','created_at','updated_at')} | {'details':public_details(row.details)} for row in rows]
 
 
-EDITABLE_PAGES={'about','the-bootcamp','privacy-policy','terms-and-conditions','booking-policy','founder','kids-experiences','schools-and-colleges','corporate','accommodation','food-and-dining'}
+EDITABLE_PAGES={'cookie-policy','about','the-bootcamp','privacy-policy','terms-and-conditions','booking-policy','founder','kids-experiences','schools-and-colleges','corporate','accommodation','food-and-dining'}
 
 
 @app.get('/admin/master-review')
@@ -322,10 +375,16 @@ def create_booking(data: s.BookingInput, request: Request, db: DB, background_ta
     days = db.scalars(select(m.Availability).where(m.Availability.programme_id == programme.id)).all()
     if days and not any(d.weekday == data.preferred_date.weekday() and d.enabled for d in days):
         raise HTTPException(409, 'This programme is not available on that day.')
-    reference = 'EU-' + secrets.token_hex(5).upper()
     extras={'vegetarian_meals','non_vegetarian_meals','special_requirements'}
     if data.vegetarian_meals+data.non_vegetarian_meals>data.participants:
         raise HTTPException(422,'Meal counts must not exceed the participant count')
+    # Retried identical pending requests reuse the reference instead of creating duplicate work.
+    recent = db.scalars(select(m.Booking).where(m.Booking.email == data.email, m.Booking.status == 'Pending', m.Booking.created_at >= datetime.now(timezone.utc) - timedelta(minutes=10)).order_by(m.Booking.created_at.desc()).limit(10)).all()
+    fields = data.model_dump(exclude={'website'} | extras)
+    existing = next((row for row in recent if all(getattr(row, key) == value for key, value in fields.items()) and row.details == data.model_dump(include=extras)), None)
+    if existing:
+        return {'reference': existing.reference, 'status': existing.status, 'message': 'Request received. Our team will contact you. Your visit is not confirmed yet.'}
+    reference = 'EU-' + secrets.token_hex(5).upper()
     booking = m.Booking(reference=reference, details=data.model_dump(include=extras), **data.model_dump(exclude={'website'}|extras))
     db.add(booking)
     db.flush()
@@ -343,6 +402,10 @@ def create_enquiry(data: s.EnquiryInput, request: Request, db: DB, background_ta
     extras={'organisation','visitor_category','programme','participants','preferred_date','vegetarian_meals','non_vegetarian_meals','special_requirements'}
     if data.participants and data.vegetarian_meals+data.non_vegetarian_meals>data.participants:
         raise HTTPException(422,'Meal counts must not exceed the participant count')
+    recent = db.scalars(select(m.Enquiry).where(m.Enquiry.email == data.email, m.Enquiry.created_at >= datetime.now(timezone.utc) - timedelta(minutes=10)).order_by(m.Enquiry.created_at.desc()).limit(10)).all()
+    fields = data.model_dump(exclude={'website'} | extras)
+    if any(all(getattr(row, key) == value for key, value in fields.items()) and row.details == data.model_dump(mode='json', include=extras) for row in recent):
+        return {'message': 'Thank you. Our team will be in touch.'}
     db.add(m.Enquiry(details=data.model_dump(mode='json',include=extras), **data.model_dump(exclude={'website'}|extras)))
     commit(db)
     background_tasks.add_task(notify, 'enquiry')
@@ -352,12 +415,20 @@ def create_enquiry(data: s.EnquiryInput, request: Request, db: DB, background_ta
 @app.post('/admin/login')
 def login(data: s.Login, request: Request, response: Response, db: DB):
     rate_limit(request, 'login', 8)
+    rate_limit(request, 'login-account', 12, hashlib.sha256(data.email.lower().encode()).hexdigest())
     user = db.scalar(select(m.AdminUser).where(m.AdminUser.email == data.email.lower()))
     valid = password_hash.verify(data.password, user.password_hash if user else dummy_hash)
     if not user or not valid or not user.active:
         raise HTTPException(401, 'Invalid email or password')
+    from .mfa import check_login_factor
+    check_login_factor(db, user, data.code)
+    previous = db.scalar(select(m.AdminSession).where(m.AdminSession.token_hash == hashlib.sha256(request.cookies.get('eu_session', '').encode()).hexdigest()))
+    if previous:
+        db.delete(previous)
     token = secrets.token_urlsafe(48)
     db.add(m.AdminSession(token_hash=hashlib.sha256(token.encode()).hexdigest(), user_id=user.id, expires_at=datetime.now(timezone.utc) + timedelta(hours=settings.session_hours)))
+    db.commit()
+    audit(db, user, 'Signed in')
     db.commit()
     response.set_cookie('eu_session', token, httponly=True, secure=settings.cookie_secure, samesite='lax', max_age=settings.session_hours * 3600, path='/')
     return {'email': user.email, 'role': user.role}
@@ -373,6 +444,7 @@ def logout(request: Request, response: Response, user: USER, db: DB):
     session = db.scalar(select(m.AdminSession).where(m.AdminSession.token_hash == hashlib.sha256(request.cookies.get('eu_session', '').encode()).hexdigest()))
     if session:
         db.delete(session)
+    audit(db, user, 'Signed out')
     db.commit()
     response.delete_cookie('eu_session', path='/')
     return {'ok': True}
@@ -618,8 +690,11 @@ def update_user(user_id: str, data: s.UserUpdate, user: USER, db: DB):
         row.password_hash = password_hash.hash(data.password)
         changed.append('password reset')
     if changed:
-        if row.id != user.id:
-            end_sessions(db, row.id)  # role, status or password changes take effect immediately
+        end_sessions(db, row.id)  # Includes password resets on the administrator's own account.
         audit(db, user, f'Updated user {row.email}: ' + ', '.join(changed))
     commit(db)
     return user_out(row)
+
+
+from .mfa import register_mfa
+register_mfa(app, current_user, get_db, password_hash, rate_limit, audit, end_sessions)

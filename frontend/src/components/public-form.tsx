@@ -33,6 +33,6 @@ export function PublicForm({ mode, programmes = [], selected = '', activity = ''
     <label className="honeypot" aria-hidden="true">Leave this field empty<input name="website" tabIndex={-1} autoComplete="off"/></label>
     <label className="consent span-2"><input type="checkbox" name="consent" required/><span>I agree that Eagles Unbound may use these details to respond to my request. Read the <Link href="/privacy-policy">privacy notice</Link>. {booking && <>I understand this is a request, subject to availability and team confirmation.</>}</span></label>
     {error && <div className="notice error span-2" role="alert">{error}</div>}
-    <div className="span-2"><button disabled={busy} className="button button-red">{busy&&<span className="submission-spinner" aria-hidden="true"/>}{busy ? 'Sending your request…' : booking ? 'Send booking request' : 'Send your enquiry'} <ArrowUpRight size={18}/></button><p className="small" style={{marginTop:15,color:'#69705f'}}>No payment is collected here. {booking && <Link href="/booking-policy">Read booking information ↗</Link>}</p></div>
+    <div className="span-2"><button disabled={busy} className="button button-red">{busy&&<span className="submission-spinner" aria-hidden="true"/>}{busy ? 'Sending your request…' : booking ? 'Send booking request' : 'Send your enquiry'} <ArrowUpRight size={18}/></button><p className="small" style={{marginTop:15,color:'#4e5b44'}}>No payment is collected here. {booking && <Link href="/booking-policy">Read booking information ↗</Link>}</p></div>
   </div></form>;
 }

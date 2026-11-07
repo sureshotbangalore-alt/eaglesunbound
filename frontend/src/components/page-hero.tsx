@@ -4,7 +4,6 @@ import { ArrowUpRight } from 'lucide-react';
 import { StructuredData } from './structured-data';
 import { SplitLines } from './split-text';
 import { FieldAtmosphere, MotionSwitch } from './field-experience';
-import { HudFrame, Radar } from './tactical';
 import { siteURL } from '@/lib/seo';
 import { img, imageLabel, type Picture } from '@/lib/imagery';
 
@@ -14,8 +13,7 @@ type Variant = 'night' | 'photo' | 'paper' | 'minimal';
 const photo: Record<string, Picture> = { '/the-bootcamp': img.wall, '/activities': img.rope, '/explore': img.ghats, '/mission-selector': img.trek, '/about': img.granite, '/what-we-offer': img.heroTeam, '/gallery': img.camp, '/kids-experiences': img.kids, '/schools-and-colleges': img.schools, '/corporate': img.cheer, '/accommodation': img.camp, '/founder': img.granite };
 // Warm paper with a framed photograph beside the title:
 const framed: Record<string, Picture> = { '/contact': img.campfire, '/book-now': img.forestWalk, '/clients': img.students, '/testimonials': img.cheer, '/faqs': img.forest, '/food-and-dining': img.camp, '/packages': img.trek };
-const radar: Record<string, string> = { '/the-bootcamp': 'Bootcamp sector', '/mission-selector': 'Scanning programmes', '/explore': 'Field scan' };
-const minimal = ['/privacy-policy', '/terms-and-conditions', '/booking-policy'];
+const minimal = ['/privacy-policy', '/terms-and-conditions', '/booking-policy', '/cookie-policy'];
 const order = ['/the-bootcamp', '/what-we-offer', '/activities', '/clients', '/about', '/kids-experiences', '/schools-and-colleges', '/gallery', '/contact', '/book-now'];
 
 function variantFor(path: string, picture?: Picture, side?: Picture): Variant {
@@ -37,8 +35,6 @@ export function PageHero({ title, intro, label, path, booking, picture, portrait
   return <section className={`page-hero ph-${variant}${side ? ' ph-framed' : ''}`} data-hero>
     {variant === 'photo' && bg && <><div className="ph-media" data-parallax="10"><Image src={bg.src} alt="" fill priority sizes="100vw" unoptimized={remote}/></div>{!remote && <span className="stock-label">{imageLabel(bg)}</span>}</>}
     {variant === 'night' && <div className="contours" aria-hidden="true"/>}
-    {(variant === 'photo' || variant === 'night') && <HudFrame left={`Sector: ${label}`} right="Status: Field ready"/>}
-    {radar[path] && <div className="ph-radar"><Radar label={radar[path]}/></div>}
     {variant === 'paper' && <span className="ph-numeral" aria-hidden="true">{numeral}</span>}
     {side && <figure className="ph-side" data-reveal="mask"><div className="media-fill" data-parallax="6"><Image src={side.src} alt={side.alt} fill priority sizes="(max-width:900px) 100vw, 38vw"/></div><span className="corner tl" aria-hidden="true"/><span className="corner br" aria-hidden="true"/>{!portrait && <span className="stock-label">{imageLabel(side)}</span>}</figure>}
     {variant !== 'minimal' && <MotionSwitch/>}
