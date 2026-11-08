@@ -6,6 +6,7 @@ export const HOME_SECTIONS: { id: string; label: string }[] = [
   { id: 'activities', label: 'Activities' },
   { id: 'academy', label: 'Shooting Academy teaser' },
   { id: 'founder', label: 'Founder' },
+  { id: 'testimonials', label: 'Visitor testimonials' },
   { id: 'film', label: 'Film / video band' },
   { id: 'why', label: 'Why the outdoors' },
   { id: 'clients', label: 'Clients' },

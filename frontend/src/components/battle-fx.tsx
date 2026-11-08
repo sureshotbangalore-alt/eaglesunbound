@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import { useMotionPaused } from '@/lib/motion-preference';
 import { fireAt, stopAll } from '@/lib/battle-fx';
 
@@ -7,11 +8,14 @@ const INTERACTIVE = 'a, button, [role="button"], summary, label, select, .range-
 const NATIVE_CURSOR = 'input, textarea, [contenteditable="true"], select, iframe, video[controls]';
 
 /**
- * Rifle-scope cursor for mouse users, plus a weapon effect on every click (bullet burst, arrow, rocket or bomb).
+ * Rifle-scope cursor for mouse users, plus a click effect: a small tracer impact site-wide, and the full set
+ * (bullet burst, arrow, rocket or bomb) on the Shooting Academy page.
  * Off when motion is paused (header switch) or the visitor prefers reduced motion; touch screens get the click effects only.
  */
 export function BattleFX() {
   const paused = useMotionPaused();
+  const path = usePathname();
+  const academy = path === '/shooting-academy';
   const scope = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -41,7 +45,8 @@ export function BattleFX() {
     const click = (e: MouseEvent) => {
       const target = e.target as Element | null;
       if (e.button !== 0 || target?.closest?.('[data-no-blast], input, textarea, select, [contenteditable="true"]')) return;
-      fireAt(e.clientX, e.clientY);
+      // full arsenal only on the Shooting Academy page; elsewhere a quiet tracer impact
+      fireAt(e.clientX, e.clientY, academy ? undefined : 'bullet');
       if (el) { el.classList.remove('is-firing'); void el.offsetWidth; el.classList.add('is-firing'); }
     };
 
@@ -60,7 +65,7 @@ export function BattleFX() {
       window.removeEventListener('click', click, { capture: true });
       if (frame) cancelAnimationFrame(frame);
     };
-  }, [paused]);
+  }, [paused, academy]);
 
   if (paused) return null;
   return (

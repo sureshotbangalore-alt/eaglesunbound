@@ -22,7 +22,8 @@
     "db:seed": "npm run db:seed --workspace backend --",
     "db:create-user": "npm run db:create-user --workspace backend --",
     "db:ping": "npm run db:ping --workspace backend",
-    "db:apply-media": "npm run db:apply-media --workspace backend --"
+    "db:apply-media": "npm run db:apply-media --workspace backend --",
+    "db:tidy-activities": "npm run db:tidy-activities --workspace backend --"
   },
   "devDependencies": {
     "tsx": "4.23.15",

@@ -882,5 +882,87 @@
     "primary": [
       "id"
     ]
+  },
+  "visitor_feedback": {
+    "columns": [
+      {
+        "name": "name",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "email",
+        "type": "VARCHAR(254)",
+        "nullable": false
+      },
+      {
+        "name": "visit_type",
+        "type": "VARCHAR(40)",
+        "nullable": false
+      },
+      {
+        "name": "organisation",
+        "type": "VARCHAR(180)",
+        "nullable": false
+      },
+      {
+        "name": "rating",
+        "type": "INTEGER",
+        "nullable": false
+      },
+      {
+        "name": "message",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "consent",
+        "type": "BOOLEAN",
+        "nullable": false
+      },
+      {
+        "name": "publish_consent",
+        "type": "BOOLEAN",
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(20)",
+        "nullable": false
+      },
+      {
+        "name": "display_name",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "admin_notes",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "approved_at",
+        "type": "DATETIME",
+        "nullable": true
+      },
+      {
+        "name": "id",
+        "type": "VARCHAR(36)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "DATETIME",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME",
+        "nullable": false
+      }
+    ],
+    "primary": [
+      "id"
+    ]
   }
 }

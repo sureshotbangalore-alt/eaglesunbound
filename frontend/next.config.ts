@@ -71,7 +71,12 @@ const nextConfig: NextConfig = {
       { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
       { key: 'X-Frame-Options', value: 'DENY' },
       { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
-    ] }];
+    ] },
+    // Photos, clips, films and fonts: browsers keep them for a day and may serve them for 30 days while refreshing in
+    // the background. File names are not versioned, so a replaced file still reaches returning visitors within a day.
+    ...['/media/:path*', '/assets/:path*'].map(source => ({ source, headers: [
+      { key: 'Cache-Control', value: 'public, max-age=86400, s-maxage=2592000, stale-while-revalidate=2592000' },
+    ] }))];
   },
 };
 export default nextConfig;

@@ -16,12 +16,14 @@ import { img, imageLabel, photos } from '@/lib/imagery';
 import { founderPortrait } from '@/lib/founder';
 import { EagleGlide } from '@/components/cinematic';
 import { ValuesTicker } from '@/components/values-ticker';
+import { Testimonials, type Testimonial } from '@/components/feedback';
 import { MotionFilm } from '@/components/motion-film';
 export async function generateMetadata() { return pageMetadata('/', 'Adventure with Purpose in Bengaluru', 'Explore military-inspired civilian challenges, corporate team experiences and student adventure programmes at Eagles Unbound, Bengaluru.'); }
 
 
 export default async function Home() {
   const [content, programmes, activities, clients] = await Promise.all([serverAPI<HomeContent>('/public/home'), serverAPI<ContentRecord[]>('/public/programmes'), serverAPI<ContentRecord[]>('/public/activities'), serverAPI<ContentRecord[]>('/public/clients')]);
+  const testimonials = await serverAPI<Testimonial[]>('/public/testimonials').catch(() => [] as Testimonial[]);
   const portrait = founderPortrait();
   const blocks: Record<string, React.ReactNode> = {
   experience: (<section id="experience" className="chapter paper">
@@ -60,6 +62,12 @@ export default async function Home() {
           <Link href="/shooting-academy" className="button button-red" data-reveal>Enter the range <ArrowUpRight size={17}/></Link>
         </div>
       </div>
+    </section>),
+  testimonials: (<section className="chapter paper voices">
+      <div className="chapter-head" data-reveal="rule"><span className="label">Visitor voices</span><Link className="label" href="/feedback">All feedback ↗</Link></div>
+      {testimonials.length > 0
+        ? <><SplitLines text={'In their\nwords.'} className="display-xl"/><Testimonials items={testimonials} compact/><Link href="/feedback#share" className="text-link dark-link" data-reveal>Share your experience <ArrowUpRight size={17}/></Link></>
+        : <div className="voices-invite" data-reveal><p className="display-l">Visited us recently?</p><p>Tell us about your day. Your feedback helps us improve every programme.</p><Link href="/feedback#share" className="button button-red">Share your experience <ArrowUpRight size={17}/></Link></div>}
     </section>),
   founder: (<section className="chapter bone founder">
       <div className="founder-grid">

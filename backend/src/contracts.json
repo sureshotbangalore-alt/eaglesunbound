@@ -98,7 +98,8 @@
         "founder",
         "film",
         "why",
-        "clients"
+        "clients",
+        "testimonials"
        ]
       },
       "visible": {
@@ -857,5 +858,106 @@
   ],
   "title": "FactorInput",
   "type": "object"
+ },
+ "FeedbackInput": {
+  "title": "FeedbackInput",
+  "type": "object",
+  "required": [
+   "name",
+   "email",
+   "visit_type",
+   "rating",
+   "message",
+   "consent"
+  ],
+  "properties": {
+   "name": {
+    "title": "Name",
+    "type": "string",
+    "minLength": 2,
+    "maxLength": 100
+   },
+   "email": {
+    "title": "Email",
+    "type": "string",
+    "format": "email"
+   },
+   "visit_type": {
+    "title": "Visit Type",
+    "type": "string",
+    "enum": [
+     "Corporate team",
+     "School",
+     "College",
+     "Family or friends",
+     "Individual",
+     "Other"
+    ]
+   },
+   "organisation": {
+    "title": "Organisation",
+    "type": "string",
+    "default": "",
+    "maxLength": 180
+   },
+   "rating": {
+    "title": "Rating",
+    "type": "integer",
+    "minimum": 1,
+    "maximum": 5
+   },
+   "message": {
+    "title": "Message",
+    "type": "string",
+    "minLength": 20,
+    "maxLength": 1500
+   },
+   "consent": {
+    "title": "Consent",
+    "type": "boolean",
+    "const": true
+   },
+   "publish_consent": {
+    "title": "Publish Consent",
+    "type": "boolean",
+    "default": false
+   },
+   "website": {
+    "title": "Website",
+    "type": "string",
+    "default": "",
+    "maxLength": 200
+   }
+  }
+ },
+ "FeedbackUpdate": {
+  "title": "FeedbackUpdate",
+  "type": "object",
+  "required": [
+   "status"
+  ],
+  "properties": {
+   "status": {
+    "title": "Status",
+    "type": "string",
+    "enum": [
+     "Pending",
+     "Approved",
+     "Rejected"
+    ]
+   },
+   "display_name": {
+    "title": "Display Name",
+    "type": "string",
+    "default": "",
+    "maxLength": 100
+   },
+   "admin_notes": {
+    "title": "Admin Notes",
+    "type": "string",
+    "default": "",
+    "maxLength": 2000
+   }
+  }
  }
 }

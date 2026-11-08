@@ -66,3 +66,26 @@ Storage comparison:
 - A high-resolution or vector (SVG) logo: the current logo is 266×102 px and softens when shown large in the intro.
 - Footage for cricket, football, volleyball, ATV and the swimming pool, and a higher-resolution founder portrait (current: 447×447).
 - Optional: a licensed music track if the hero film should have sound (it would start muted, with an unmute button).
+
+## Gallery clips (Activities page, #gallery)
+
+Ten single-shot silent clips (720p, ~5 s, ~0.7 MB each, 6.8 MB total) with WebP posters in `media/clips/`, built by
+`python scripts/build-gallery-clips.py`. Tiles preview on hover/focus only; the full-screen viewer plays them with controls.
+`/gallery` keeps its permanent redirect to `/activities` (the gallery lives there).
+
+## Visitor feedback & testimonials
+
+- Public form: `/feedback` (also linked from the home "Visitor voices" section and the header "More" menu).
+- Stored in the new `visitor_feedback` table, always as Pending. Super Admin reviews it in Admin → Feedback
+  (approve & publish, reject, back to pending, public name, private notes, delete). Staff Viewers have no access.
+- Only feedback that is Approved AND whose author ticked "you may publish" appears publicly, as first name + initial.
+  Email addresses and notes are never public. No sample or invented reviews exist.
+- **Enable on Hostinger:** run `backend/schema/migrations/2026-11-07-visitor-feedback.sql` once (phpMyAdmin → SQL).
+  It only creates the new table. Until then the site works normally, shows no testimonials, and the form says feedback is
+  not available yet; `npm run db:check` lists it as a notice, not a failure.
+
+## Activity clean-up (proposal, not applied)
+
+`npm run db:tidy-activities` previews unpublishing the 35 duplicates and non-activities listed in
+`docs/activities-review.md` (it never deletes). Apply only after review:
+`ALLOW_DB_WRITES=true npm run db:tidy-activities -- --apply --confirm-database=<exact database name>`.

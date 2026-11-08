@@ -1,4 +1,4 @@
-import { LayoutDashboard, FileText, Mountain, Compass, CalendarDays, Mail, Users, Images, Settings, Search, Image as ImageIcon, Package, HelpCircle, ShieldCheck } from 'lucide-react';
+import { LayoutDashboard, FileText, Mountain, Compass, CalendarDays, Mail, Users, Images, Settings, Search, Image as ImageIcon, Package, HelpCircle, ShieldCheck, MessageSquareQuote } from 'lucide-react';
 import type { ContentRecord } from '@/lib/api';
 
 export type User = { email: string; role: string };
@@ -6,8 +6,8 @@ export type Row = Record<string, unknown> & { id: string; name: string; status: 
 /** Saves through the admin API and reloads; resolves true on success. Error and success messages are shown by the page. */
 export type Mutate = (path: string, method: string, payload: unknown, success?: string) => Promise<boolean>;
 
-export const nav = [['dashboard', 'Dashboard', LayoutDashboard], ['pages', 'Website content', FileText], ['programmes', 'Programmes', Compass], ['activities', 'Activities', Mountain], ['packages', 'Packages', Package], ['bookings', 'Bookings', CalendarDays], ['enquiries', 'Enquiries', Mail], ['clients', 'Clients', Users], ['gallery', 'Gallery', Images], ['media', 'Media library', ImageIcon], ['faqs', 'FAQs', HelpCircle], ['settings', 'Settings', Settings], ['seo', 'SEO & discovery', Search], ['users', 'Users & roles', ShieldCheck]] as const;
-export const adminOnly = ['dashboard', 'bookings', 'enquiries', 'settings', 'users'];
+export const nav = [['dashboard', 'Dashboard', LayoutDashboard], ['pages', 'Website content', FileText], ['programmes', 'Programmes', Compass], ['activities', 'Activities', Mountain], ['packages', 'Packages', Package], ['bookings', 'Bookings', CalendarDays], ['enquiries', 'Enquiries', Mail], ['clients', 'Clients', Users], ['gallery', 'Gallery', Images], ['media', 'Media library', ImageIcon], ['faqs', 'FAQs', HelpCircle], ['feedback', 'Feedback', MessageSquareQuote], ['settings', 'Settings', Settings], ['seo', 'SEO & discovery', Search], ['users', 'Users & roles', ShieldCheck]] as const;
+export const adminOnly = ['dashboard', 'bookings', 'enquiries', 'settings', 'users', 'feedback'];
 export const recordModules = ['programmes', 'activities', 'clients', 'gallery', 'packages'];
 export const requestModules = ['bookings', 'enquiries'];
 // Where each role lands after signing in. Staff viewers only ever see the read-only requests view.

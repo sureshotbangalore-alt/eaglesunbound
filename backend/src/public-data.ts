@@ -3,6 +3,7 @@
 import {type Database,rows,one} from './database';
 import {modelFor,publicDetails,publicPaths,pick} from './core';
 import {fail} from './validation';
+import {approvedTestimonials} from './feedback';
 
 export const homeContent=async(db:Database)=>{const row=await one(db,'page_content','slug=?',['home']);if(!row)fail(503,'Content has not been seeded');return row.content};
 export const contactSettings=async(db:Database)=>(await one(db,'site_settings','`key`=?',['contact']))?.value||{};
@@ -16,6 +17,7 @@ export async function pageUpdates(db:Database){
 
 export async function publicModule(db:Database,module:string){
  if(module==='faqs')return rows(db,'faqs','published=?',[1],'ORDER BY display_order');
+ if(module==='testimonials')return approvedTestimonials(db);
  if(module==='seo')return (await rows(db,'site_settings','`key` LIKE ?',['seo:%'])).map(x=>x.value);
  if(module==='pages')return (await rows(db,'page_content','slug<>?',['home'])).filter(x=>x.content.published).map(x=>({slug:x.slug,...x.content}));
  return (await rows(db,modelFor(module),'published=?',[1],'ORDER BY display_order')).map(row=>({...pick(row,['id','slug','name','description','image','published','display_order','created_at','updated_at']),details:publicDetails(row.details)}));

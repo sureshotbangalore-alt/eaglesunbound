@@ -13,6 +13,7 @@ import { AdminSidebar } from '@/components/admin/sidebar';
 import { DashboardPanel, HomepagePanel, RecordsPanel, RequestsPanel } from '@/components/admin/content-panels';
 import { FaqPanel, MasterReviewPanel, MediaPanel, SeoPanel, SettingsPanel, type BlockedDate } from '@/components/admin/site-panels';
 import { FaqModal, RecordEditorModal, RequestDetailModal } from '@/components/admin/editor-modals';
+import { FeedbackPanel } from '@/components/admin/feedback-panel';
 import { blank, home, nav, recordModules, requestModules, type Row, type User } from '@/components/admin/shared';
 
 // Container for the administration workspace: owns the data, saving and selection state; the panels in
@@ -31,7 +32,7 @@ export default function AdminPage({params}:{params:Promise<{segments?:string[]}>
     setLoading(true);setError('');
     try{
       if(module==='login'||module==='users')return;
-      const path=module==='dashboard'?'/admin/overview':module==='pages'?'/admin/content':['settings','media','seo','faqs'].includes(module)?'/admin/'+module:'/admin/records/'+module;
+      const path=module==='dashboard'?'/admin/overview':module==='pages'?'/admin/content':['settings','media','seo','faqs','feedback'].includes(module)?'/admin/'+module:'/admin/records/'+module;
       setData(await api(path));
       if(module==='settings'){setBlocked(await api('/admin/blocked-dates'));setMasterReview(await api('/admin/master-review'));}
     }catch(e){setError((e as Error).message);}finally{setLoading(false);}
@@ -72,6 +73,7 @@ export default function AdminPage({params}:{params:Promise<{segments?:string[]}>
     {module==='settings'&&!loading&&data!==null&&<SettingsPanel data={recordData} setData={setData} busy={busy} mutate={mutate} blocked={blocked}/>}
     {module==='settings'&&Object.keys(masterReview).length>0&&<MasterReviewPanel review={masterReview}/>}
     {module==='faqs'&&!loading&&<FaqPanel rows={rows as unknown as FAQRecord[]} mutate={mutate} onAdd={()=>setFaq({question:'',answer:'',page:'/faqs',published:false,display_order:0})} onEdit={setFaq}/>}
+    {module==='feedback'&&!loading&&user.role==='admin'&&<FeedbackPanel rows={rows as unknown as Parameters<typeof FeedbackPanel>[0]['rows']} mutate={mutate} busy={busy}/>}
     {module==='seo'&&!loading&&<SeoPanel rows={rows as unknown as SEORecord[]} seo={seo} setSeo={setSeo} busy={busy} mutate={mutate}/>}
     {module==='media'&&!loading&&<MediaPanel rows={rows} busy={busy} mutate={mutate} onUpload={upload}/>}
     {!nav.some(n=>n[0]===module)&&module!=='login'&&<div className="admin-panel"><h2>That workspace page doesn’t exist.</h2><Link href="/admin/dashboard">Return to dashboard →</Link></div>}

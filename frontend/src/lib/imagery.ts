@@ -131,12 +131,28 @@ export const categoryImage: Record<string, Picture> = {
   'The outdoors': photos.trekVista,
 };
 
-/** Field gallery on the Activities page, grouped the way visitors think about the day. */
-export const galleryGroups: { name: string; pictures: Picture[] }[] = [
-  { name: 'Bootcamp & obstacles', pictures: [photos.obstacleWall, photos.obstacleNet, photos.armyInstructors, photos.obstacleRace, photos.pgt, photos.obstacleHurdles, photos.pgtTeam, photos.individualObstacles] },
-  { name: 'Ropes & heights', pictures: [photos.zipRider, photos.highRope, photos.rappel, photos.wallClimb, photos.ropeBridge, photos.wallTower, photos.lowRope, photos.caving] },
-  { name: 'The range', pictures: [photos.archery, photos.shooting, photos.archeryCoach, photos.shootingAim, photos.archeryLine, photos.shootingRange] },
-  { name: 'Teams & schools', pictures: [photos.teamGames, photos.groupCorporate, photos.briefing, photos.mudKids, photos.teamCircle, photos.groupKids, photos.mudNet, photos.groupCheer] },
-  { name: 'Outdoors & nights', pictures: [photos.trekVista, photos.campfire, photos.tentsNight, photos.rainDance, photos.trekTrail, photos.tentPitching, photos.campfireCircle] },
-  { name: 'Farm & crafts', pictures: [photos.pottery, photos.dairy, photos.garden, photos.tractor] },
+/** A gallery item: a photograph, or a short silent clip (video) with its poster as src. */
+export type MediaItem = Picture & { video?: string };
+const clip = (key: string, alt: string): MediaItem => ({ src: `/media/clips/${key}.webp`, video: `/media/clips/${key}.mp4`, alt, real: true });
+export const clips = {
+  rainDance: clip('rain-dance', 'Video: a group dancing under the rain dance sprinklers'),
+  campfire: clip('campfire', 'Video: dancing around the campfire at night'),
+  zipLine: clip('zip-line', 'Video: a rider launching down the zip line'),
+  rappelling: clip('rappelling', 'Video: rappelling down a granite rock face'),
+  pottery: clip('pottery', 'Video: shaping clay on the potter’s wheel'),
+  tractorRide: clip('tractor-ride', 'Video: a tractor ride along the farm track'),
+  kidsNet: clip('kids-net', 'Video: children climbing the rope net'),
+  pgt: clip('pgt', 'Video: a team working through the Progressive Group Task'),
+  archery: clip('archery', 'Video: an archer drawing and releasing'),
+  teamGames: clip('team-games', 'Video: teams playing a field game'),
+} satisfies Record<string, MediaItem>;
+
+/** Gallery on the Activities page (#gallery), grouped the way visitors think about the day. */
+export const galleryGroups: { name: string; items: MediaItem[] }[] = [
+  { name: 'Bootcamp & obstacles', items: [photos.obstacleWall, clips.pgt, photos.obstacleNet, photos.armyInstructors, photos.obstacleRace, photos.pgt, photos.obstacleHurdles, photos.pgtTeam, photos.individualObstacles] },
+  { name: 'Ropes & heights', items: [photos.zipRider, clips.zipLine, photos.highRope, clips.rappelling, photos.rappel, photos.wallClimb, photos.ropeBridge, photos.wallTower, photos.lowRope, photos.caving] },
+  { name: 'The range', items: [photos.archery, clips.archery, photos.shooting, photos.archeryCoach, photos.shootingAim, photos.archeryLine, photos.shootingRange] },
+  { name: 'Teams & schools', items: [photos.teamGames, clips.teamGames, photos.groupCorporate, photos.briefing, clips.kidsNet, photos.mudKids, photos.teamCircle, photos.groupKids, photos.mudNet, photos.groupCheer] },
+  { name: 'Outdoors & nights', items: [photos.trekVista, clips.campfire, photos.campfire, clips.rainDance, photos.tentsNight, photos.rainDance, photos.trekTrail, photos.tentPitching, photos.campfireCircle] },
+  { name: 'Farm & crafts', items: [photos.pottery, clips.pottery, photos.dairy, clips.tractorRide, photos.garden, photos.tractor] },
 ];
