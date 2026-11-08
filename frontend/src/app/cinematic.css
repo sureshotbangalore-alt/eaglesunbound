@@ -77,10 +77,6 @@ html.fx-scope input, html.fx-scope textarea, html.fx-scope select, html.fx-scope
 @keyframes wipe { 0% { transform: translateX(-101%); } 45%, 55% { transform: translateX(0); } 100% { transform: translateX(101%); } }
 @keyframes wipe-label { 35% { opacity: 0; } 50% { opacity: 1; } 62% { opacity: 0; } }
 
-/* ---------- eagle glide (hero skies) ---------- */
-.eagle-glide { position: absolute; z-index: 2; top: 18%; left: 0; width: clamp(70px, 8vw, 120px); color: rgba(243,239,230,.88); pointer-events: none; animation: eagle-glide 16s linear infinite; filter: drop-shadow(0 6px 10px rgba(0,0,0,.35)); }
-@keyframes eagle-glide { 0% { transform: translate(-20vw, 8vh) rotate(-4deg) scale(.8); } 40% { transform: translate(45vw, -4vh) rotate(-8deg) scale(1); } 70% { transform: translate(85vw, 2vh) rotate(2deg) scale(.9); } 100% { transform: translate(120vw, -10vh) rotate(-6deg) scale(.7); } }
-
 /* ---------- activity reel frame ---------- */
 .reel-frame { position: relative; margin: clamp(24px, 4vw, 48px) 0; }
 .reel-frame .motion-film { margin: 0; border: 1px solid rgba(243,239,230,.16); box-shadow: 0 40px 90px -45px rgba(0,0,0,.8); }
@@ -174,10 +170,10 @@ html.fx-scope input, html.fx-scope textarea, html.fx-scope select, html.fx-scope
 
 /* ---------- motion off ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .scope-cursor, .battle-fx-canvas, .intro-reveal, .route-wipe, .eagle-glide { display: none !important; }
+  .scope-cursor, .battle-fx-canvas, .intro-reveal, .route-wipe { display: none !important; }
   .eagle-mark .eagle-wing, .academy-reticle, .academy-reticle i { animation: none !important; }
 }
-html[data-adventure-motion=paused] .eagle-glide, html[data-adventure-motion=paused] .route-wipe, html[data-adventure-motion=paused] .intro-reveal { display: none !important; }
+html[data-adventure-motion=paused] .route-wipe, html[data-adventure-motion=paused] .intro-reveal { display: none !important; }
 html[data-adventure-motion=paused] .eagle-mark .eagle-wing, html[data-adventure-motion=paused] .academy-reticle, html[data-adventure-motion=paused] .academy-reticle i { animation-play-state: paused !important; }
 
 /* ---------- field briefing: live mission map ---------- */
@@ -268,7 +264,7 @@ html[data-adventure-motion=paused] .call-float svg { animation: none; }
 .home-hero .hh-est { color: #f3efe6; }
 .home-hero:after { content: ''; position: absolute; inset: 0 0 auto 0; height: 160px; background: linear-gradient(180deg, rgba(8,13,10,.55), transparent); pointer-events: none; z-index: 1; }
 .home-hero .hh-top { position: relative; z-index: 2; }
-@media (prefers-reduced-motion: reduce) { .ph-letterbox, .ph-scanline, .ph-reticle, .ph-hud .eagle-glide { display: none !important; } .ph-photo .ph-media img { animation: none !important; } .ph-bracket, .ph-coords { animation: none !important; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .ph-letterbox, .ph-scanline, .ph-reticle { display: none !important; } .ph-photo .ph-media img { animation: none !important; } .ph-bracket, .ph-coords { animation: none !important; opacity: 1; } }
 html[data-adventure-motion=paused] .ph-letterbox, html[data-adventure-motion=paused] .ph-scanline, html[data-adventure-motion=paused] .ph-reticle { display: none !important; }
 html[data-adventure-motion=paused] .ph-photo .ph-media img { animation-play-state: paused !important; }
 /* orientation strip under inner headers: readable size, gentle compass motion, a sweep of light on arrival */

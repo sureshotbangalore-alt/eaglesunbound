@@ -55,9 +55,9 @@ def chapter(i, folder, name, start, slow, crop, title, sub, tmp):
     frames = int(round(SHOT * FPS))
     vf = []
     if crop: x, y, w, h = crop; vf.append(f"crop=iw*{w}:ih*{h}:iw*{x}:ih*{y}")
+    vf += ["deshake=rx=32:ry=32:edge=mirror", "crop=iw*0.94:ih*0.94"]   # stabilise handheld footage (slight crop hides the edges)
     vf += [f"scale={W}:{H}:force_original_aspect_ratio=increase", f"crop={W}:{H}", f"setpts={slow}*PTS", f"fps={FPS}",
-           f"zoompan=z='1+0.05*on/{frames}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s={W}x{H}:fps={FPS}",
-           GRADE, "setpts=PTS-STARTPTS", text_layer(i, title, sub), "format=yuv420p"]
+           GRADE, "setpts=PTS-STARTPTS", text_layer(i, title, sub), "scale=out_range=tv,format=yuv420p"]
     out = os.path.join(tmp, f'c{i:02d}.mp4')
     run(['ffmpeg', '-v', 'error', '-y', '-ss', str(start), '-t', f'{SHOT / slow + 0.2:.2f}', '-i', src, '-an', '-vf', ','.join(vf),
          '-frames:v', str(frames), '-c:v', 'libx264', '-crf', '12', '-preset', 'fast', out], cwd=ASSETS)
@@ -70,7 +70,7 @@ def end_card(tmp, seconds=2.6):
             f"[bg][lg]overlay=x=(W-w)/2:y=170[a];"
             f"[a]drawtext=fontfile={BOLD}:text='PICK YOUR CHALLENGE':fontsize=66:fontcolor=0x111619:x=(w-tw)/2:y=430:alpha='{ease.format(d=0.6)}',"
             f"drawbox=x={W // 2 - 110}:y=518:w=220:h=5:color={RED}:t=fill:enable='gte(t,0.9)',"
-            f"drawtext=fontfile={SEMI}:text='BOOK YOUR ADVENTURE AT EAGLES UNBOUND':fontsize=24:fontcolor=0x6F5A35:x=(w-tw)/2:y=548:alpha='{ease.format(d=1.0)}',format=yuv420p[v]")
+            f"drawtext=fontfile={SEMI}:text='BOOK YOUR ADVENTURE AT EAGLES UNBOUND':fontsize=24:fontcolor=0x6F5A35:x=(w-tw)/2:y=548:alpha='{ease.format(d=1.0)}',scale=out_range=tv,format=yuv420p[v]")
     run(['ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', '-i', 'anullsrc', '-loop', '1', '-i', 'eagles-unbound-logo.png', '-filter_complex', filt,
          '-map', '[v]', '-t', str(seconds), '-c:v', 'libx264', '-crf', '12', '-preset', 'fast', out], cwd=ASSETS)
     return out, seconds
@@ -83,16 +83,16 @@ def main():
         for p, _ in clips: inputs += ['-i', p]
         offset = clips[0][1] - XF
         for i in range(1, len(clips)):
-            kind = 'fade' if i == len(clips) - 1 else ('slideleft' if i % 2 else 'smoothleft')
+            kind = 'fade'   # clean crossfades; titles never overlap mid-wipe
             filt.append(f"[{last}][{i}:v]xfade=transition={kind}:duration={XF}:offset={offset:.3f}[x{i}]"); last = f'x{i}'; offset += clips[i][1] - XF
         total = offset + XF
-        filt.append(f"[{last}]fade=t=in:st=0:d=0.4,fade=t=out:st={total - 0.5:.3f}:d=0.5,format=yuv420p[v]")
+        filt.append(f"[{last}]fade=t=in:st=0:d=0.4,fade=t=out:st={total - 0.5:.3f}:d=0.5,scale=out_range=tv,format=yuv420p[v]")
         master = os.path.join(tmp, 'master.mp4')
         run(['ffmpeg', '-v', 'error', '-y', *inputs, '-filter_complex', ';'.join(filt), '-map', '[v]', '-c:v', 'libx264', '-crf', '10', '-preset', 'medium', master])
         secs = round(total)
         base = os.path.join(OUT, f'activity-reel-{secs}s')
-        run(['ffmpeg', '-v', 'error', '-y', '-i', master, '-c:v', 'libx264', '-preset', 'slow', '-crf', '25', '-tune', 'film', '-maxrate', '1.6M', '-bufsize', '3.2M', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-an', base + '.mp4'])
-        run(['ffmpeg', '-v', 'error', '-y', '-i', master, '-c:v', 'libvpx-vp9', '-b:v', '1.3M', '-crf', '38', '-row-mt', '1', '-deadline', 'good', '-cpu-used', '2', '-an', base + '.webm'])
+        run(['ffmpeg', '-v', 'error', '-y', '-i', master, '-c:v', 'libx264', '-preset', 'slow', '-crf', '25', '-tune', 'film', '-maxrate', '1.6M', '-bufsize', '3.2M', '-pix_fmt', 'yuv420p', '-color_range', 'tv', '-movflags', '+faststart', '-an', base + '.mp4'])
+        run(['ffmpeg', '-v', 'error', '-y', '-i', master, '-pix_fmt', 'yuv420p', '-color_range', 'tv', '-c:v', 'libvpx-vp9', '-b:v', '1.3M', '-crf', '38', '-row-mt', '1', '-deadline', 'good', '-cpu-used', '2', '-an', base + '.webm'])
         run(['ffmpeg', '-v', 'error', '-y', '-ss', '1.6', '-i', master, '-frames:v', '1', '-q:v', '3', os.path.join(OUT, 'activity-reel-poster.jpg')])
         print(f'activity film: {total:.1f}s -> {os.path.basename(base)}.mp4 {os.path.getsize(base + ".mp4") / 1024:.0f} KB, .webm {os.path.getsize(base + ".webm") / 1024:.0f} KB')
     finally:

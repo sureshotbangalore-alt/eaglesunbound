@@ -14,7 +14,6 @@ import { SplitLines, FillText } from '@/components/split-text';
 import { pageMetadata } from '@/lib/seo';
 import { img, imageLabel, photos } from '@/lib/imagery';
 import { founderPortrait } from '@/lib/founder';
-import { EagleGlide } from '@/components/cinematic';
 import { ValuesTicker } from '@/components/values-ticker';
 import { Testimonials, type Testimonial } from '@/components/feedback';
 import { MotionFilm } from '@/components/motion-film';
@@ -116,7 +115,7 @@ export default async function Home() {
   return <main id="main" className="home">
     <section className="home-hero" data-hero>
       <div className="hh-media" data-parallax="9"><HeroMedia video={content.hero_video}/></div>
-      <FieldAtmosphere/><div className="hh-shade"/><EagleGlide/><MotionSwitch/>
+      <FieldAtmosphere/><div className="hh-shade"/><MotionSwitch/>
       <div className="hh-frame" aria-hidden="true"><i/><i/><i/><i/></div>
       <div className="hh-top"><p className="label"><span className="live-dot"/>{content.eyebrow}</p><p className="label hh-est">FIELD EDITION / KARNATAKA, INDIA</p></div>
       <div className="hh-copy" data-hero-copy>

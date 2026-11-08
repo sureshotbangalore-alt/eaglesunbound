@@ -69,3 +69,7 @@
 
 /* home hero: "Pause motion" already pauses the background film, so the second round video button is redundant */
 .home-hero .video-toggle { display: none; }
+
+/* inner page headers: one overlay, dark only behind the title, so the footage or photo stays clearly visible */
+.page-hero.ph-photo:before { background: linear-gradient(90deg, rgba(8,13,10,.74) 0%, rgba(8,13,10,.42) 40%, rgba(8,13,10,.08) 72%), linear-gradient(0deg, rgba(8,13,10,.55), transparent 38%) !important; }
+.page-hero.ph-photo:after { background: none !important; }

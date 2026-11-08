@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useMotionPaused } from '@/lib/motion-preference';
 
-/* Cinematic motion pieces: the eagle mark, a one-time brand intro, a route-change wipe, a gliding eagle for hero skies. All are decorative (aria-hidden) and stop when motion is paused or reduced. */
+/* Cinematic motion pieces: the eagle mark, a one-time brand intro, a route-change wipe. All are decorative (aria-hidden) and stop when motion is paused or reduced. */
 
 /** Stylised eagle with flapping wings (pure SVG + CSS). */
 export function EagleMark({ className = '' }: { className?: string }) {
@@ -61,9 +61,4 @@ export function RouteWipe() {
   useEffect(() => { if (first.current) { first.current = false; return; } setKey(k => k + 1); }, [path]);
   if (paused || key === 0) return null;
   return <div key={key} className="route-wipe" aria-hidden="true"><span /><span /><i>{path === '/' ? 'HOME' : path.slice(1).replace(/-/g, ' ').toUpperCase()}</i></div>;
-}
-
-/** An eagle that glides across a hero sky every few seconds. */
-export function EagleGlide() {
-  return <div className="eagle-glide" aria-hidden="true"><EagleMark /></div>;
 }

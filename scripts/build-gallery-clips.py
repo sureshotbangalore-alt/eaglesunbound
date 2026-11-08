@@ -28,10 +28,10 @@ for key, (folder, name, start, secs, crop) in CLIPS.items():
     src = os.path.join(SRC, folder, name)
     vf = ([f"crop=iw*{crop[2]}:ih*{crop[3]}:iw*{crop[0]}:ih*{crop[1]}"] if crop else []) + \
          ["scale=1280:720:force_original_aspect_ratio=increase", "crop=1280:720", "fps=30", GRADE,
-          f"fade=t=in:st=0:d=0.3,fade=t=out:st={secs - 0.35}:d=0.35", "format=yuv420p"]
+          f"fade=t=in:st=0:d=0.3,fade=t=out:st={secs - 0.35}:d=0.35", "scale=out_range=tv,format=yuv420p"]
     mp4 = os.path.join(OUT, key + '.mp4')
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', str(start), '-t', str(secs), '-i', src, '-an', '-vf', ','.join(vf),
-                    '-c:v', 'libx264', '-preset', 'slow', '-crf', '27', '-tune', 'film', '-maxrate', '1M', '-bufsize', '2M', '-movflags', '+faststart', mp4], check=True)
+                    '-c:v', 'libx264', '-preset', 'slow', '-crf', '27', '-tune', 'film', '-maxrate', '1M', '-bufsize', '2M', '-pix_fmt', 'yuv420p', '-color_range', 'tv', '-movflags', '+faststart', mp4], check=True)
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', str(secs / 2), '-i', mp4, '-frames:v', '1', '-c:v', 'libwebp', '-quality', '78', os.path.join(OUT, key + '.webp')], check=True)
     size = os.path.getsize(mp4) + os.path.getsize(os.path.join(OUT, key + '.webp')); total += size
     print(f'{key}: {size / 1024:.0f} KB')
