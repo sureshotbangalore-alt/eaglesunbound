@@ -6,15 +6,18 @@ import { useConsent } from './cookie-consent';
 import { needsMediaConsent } from '@/lib/consent';
 import { Pause, Play } from 'lucide-react';
 import { useMotionPaused } from '@/lib/motion-preference';
+import { usePageLoaded } from '@/lib/page-loaded';
 export function HeroMedia({ video: custom }: { video: string }) {
   const { ready, preferences, openPreferences } = useConsent();
   const [origin,setOrigin] = useState('');
-  const [small,setSmall] = useState(false);
+  const [size,setSize] = useState<'540'|'720'|'1080'>('720');
+  const pageLoaded = usePageLoaded();
   const motionPaused = useMotionPaused();
-  useEffect(()=>{setOrigin(location.origin);setSmall(window.innerWidth<=768);},[]);
-  // Default: the bundled Eagles Unbound hero film (real footage, ~15 s loop; lighter 540p file on phones).
+  useEffect(()=>{setOrigin(location.origin);const w=window.innerWidth*Math.min(window.devicePixelRatio||1,2);setSize(window.innerWidth<=768?'540':w>=2200?'1080':'720');},[]);
+  // Default: the bundled Eagles Unbound hero film (real footage, ~15 s loop). Phones get 540p, normal screens 720p and
+  // only large/high-density screens the 1080p file. It starts downloading after the page has loaded.
   // A video URL set in the CMS (Homepage → hero video) still takes priority.
-  const video = custom || `/assets/video/hero-film-${small?'540':'1080'}.mp4`;
+  const video = custom || `/assets/video/hero-film-${size}.mp4`;
   const allowed = ready && origin && (!needsMediaConsent(video,origin) || preferences.functional);
   const ref = useRef<HTMLVideoElement>(null);
   const anchor = useRef<HTMLSpanElement>(null);
@@ -29,7 +32,7 @@ export function HeroMedia({ video: custom }: { video: string }) {
     const onVisibility=()=>{if(document.hidden){el.pause();setPlaying(false);}else start();};
     document.addEventListener('visibilitychange',onVisibility);
     return ()=>{observer.disconnect();document.removeEventListener('visibilitychange',onVisibility);};
-  },[video,allowed,motionPaused]);
+  },[video,allowed,motionPaused,pageLoaded]);
   const controls = video && host ? createPortal(allowed ? <button type="button" className="video-toggle" aria-label={playing ? 'Pause background video' : 'Play background video'} onClick={async () => { if(playing){ref.current?.pause();setPlaying(false);}else{try{await ref.current?.play();setPlaying(!ref.current?.paused);}catch{setPlaying(false);}} }}>{playing ? <Pause size={16}/> : <Play size={16}/>}</button> : <button className="video-toggle" type="button" onClick={openPreferences} aria-label="Manage video privacy settings"><Play size={16}/></button>,host) : null;
-  return <><span ref={anchor} hidden/><Image src="/assets/video/hero-film-poster.webp" alt="A participant rappelling down a granite rock face at Eagles Unbound" fill priority sizes="100vw" className="hero-image"/>{video && allowed && <video className="hero-video" ref={ref} src={video} poster="/assets/video/hero-film-poster.jpg" muted loop playsInline preload="metadata" aria-label="Eagles Unbound film: rappelling, zip line, obstacle nets, rope bridge, archery, climbing, the range, a summit trek and a campfire"/>}{controls}</>;
+  return <><span ref={anchor} hidden/><Image src="/assets/video/hero-film-poster.webp" alt="A participant rappelling down a granite rock face at Eagles Unbound" fill priority sizes="100vw" className="hero-image"/>{video && allowed && pageLoaded && <video className="hero-video" ref={ref} src={video} muted loop playsInline preload="auto" aria-label="Eagles Unbound film: rappelling, zip line, obstacle nets, rope bridge, archery, climbing, the range, a summit trek and a campfire"/>}{controls}</>;
 }

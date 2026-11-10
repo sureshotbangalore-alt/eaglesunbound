@@ -37,7 +37,7 @@ export function PageHero({ title, intro, label, path, booking, picture, portrait
   const side = portrait || framed[path];
   const remote = bg?.src.startsWith('https://');
   return <section className={`page-hero ph-${variant}${side ? ' ph-framed' : ''}`} data-hero>
-    {variant === 'photo' && bg && <><div className="ph-media" data-parallax="10"><Image src={bg.src} alt="" fill priority sizes="100vw" unoptimized={remote}/>{!picture && loops[path] && <PageHeroVideo src={`/assets/video/${loops[path]}.mp4`} poster={bg.src}/>}</div>{!remote && <span className="stock-label">{imageLabel(bg)}</span>}</>}
+    {variant === 'photo' && bg && <><div className="ph-media" data-parallax="10"><Image src={bg.src} alt="" fill priority sizes="100vw" unoptimized={remote}/>{!picture && loops[path] && <PageHeroVideo src={`/assets/video/${loops[path]}.mp4`}/>}</div>{!remote && <span className="stock-label">{imageLabel(bg)}</span>}</>}
     {variant === 'night' && <div className="contours" aria-hidden="true"/>}
     {variant !== 'minimal' && <PageHeroHUD photo={variant === 'photo'} />}
     {variant === 'paper' && <span className="ph-numeral" aria-hidden="true">{numeral}</span>}

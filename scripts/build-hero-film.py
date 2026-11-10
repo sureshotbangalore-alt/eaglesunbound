@@ -2,8 +2,8 @@
 
 Usage: python scripts/build-hero-film.py ["<source media folder>"] [--loops]   (--loops: inner-page header loops only)
 Each shot: trim -> 30 fps -> gentle slow motion -> colour grade (steady frame, no digital zoom) -> vignette, joined with
-crossfades. Outputs to frontend/public/assets/video/: hero-film-1080.mp4/.webm (desktop), hero-film-540.mp4 (mobile),
-hero-film-poster.jpg/.webp. Needs ffmpeg on PATH. Source footage is never modified.
+crossfades. Outputs to frontend/public/assets/video/: hero-film-1080.mp4 (large screens), hero-film-720.mp4 (normal screens), hero-film-540.mp4 (phones),
+hero-film-poster.webp. Needs ffmpeg on PATH. Source footage is never modified.
 """
 import os, subprocess, sys, tempfile, shutil
 
@@ -91,14 +91,13 @@ def main():
         run(['ffmpeg', '-v', 'error', '-y', *inputs, '-filter_complex', ';'.join(filt), '-map', '[v]', '-c:v', 'libx264', '-crf', '10', '-preset', 'medium', master])
         base = os.path.join(OUT, 'hero-film')
         run(['ffmpeg', '-v', 'error', '-y', '-i', master, '-c:v', 'libx264', '-preset', 'slow', '-crf', '25', '-tune', 'film', '-maxrate', '2.4M', '-bufsize', '4.8M', '-profile:v', 'high', '-pix_fmt', 'yuv420p', '-color_range', 'tv', '-movflags', '+faststart', '-an', base + '-1080.mp4'])
-        run(['ffmpeg', '-v', 'error', '-y', '-i', master, '-pix_fmt', 'yuv420p', '-color_range', 'tv', '-c:v', 'libvpx-vp9', '-b:v', '1.9M', '-crf', '38', '-row-mt', '1', '-deadline', 'good', '-cpu-used', '2', '-an', base + '-1080.webm'])
+        run(['ffmpeg', '-v', 'error', '-y', '-i', master, '-vf', 'scale=1280:720', '-c:v', 'libx264', '-preset', 'slow', '-crf', '26', '-tune', 'film', '-maxrate', '1.35M', '-bufsize', '2.7M', '-profile:v', 'high', '-pix_fmt', 'yuv420p', '-color_range', 'tv', '-movflags', '+faststart', '-an', base + '-720.mp4'])
         run(['ffmpeg', '-v', 'error', '-y', '-i', master, '-vf', 'scale=960:540', '-c:v', 'libx264', '-preset', 'slow', '-crf', '27', '-tune', 'film', '-maxrate', '0.75M', '-bufsize', '1.5M', '-pix_fmt', 'yuv420p', '-color_range', 'tv', '-movflags', '+faststart', '-an', base + '-540.mp4'])
         # poster: a strong frame from the zip-line shot
         t = SHOTS[0][3] - XF + 0.9
-        run(['ffmpeg', '-v', 'error', '-y', '-ss', f'{t:.2f}', '-i', master, '-frames:v', '1', '-q:v', '3', base + '-poster.jpg'])
         run(['ffmpeg', '-v', 'error', '-y', '-ss', f'{t:.2f}', '-i', master, '-frames:v', '1', '-c:v', 'libwebp', '-quality', '80', base + '-poster.webp'])
         print(f'hero film: {total:.1f}s')
-        for ext in ('-1080.mp4', '-1080.webm', '-540.mp4', '-poster.jpg', '-poster.webp'):
+        for ext in ('-1080.mp4', '-720.mp4', '-540.mp4', '-poster.webp'):
             print(f'  {os.path.basename(base + ext)}: {os.path.getsize(base + ext) / 1024:.0f} KB')
     finally:
         shutil.rmtree(tmp, ignore_errors=True)

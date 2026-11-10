@@ -73,3 +73,7 @@ html[data-adventure-motion=paused] .programme-canvas-image { transition: none; }
 .fa-edit { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } @media (max-width: 760px) { .fa-edit { grid-template-columns: 1fr; } }
 .fa-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; }
 .fa-actions .danger { color: #b32624; margin-left: auto; }
+
+/* header loop fades in once it is actually playing (the photo underneath shows first) */
+.ph-media .ph-video { opacity: 0; transition: opacity .8s ease; }
+.ph-media .ph-video.is-playing { opacity: 1; }

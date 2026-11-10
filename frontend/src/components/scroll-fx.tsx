@@ -200,6 +200,6 @@ export function ScrollFX() {
 
   return <>
     <div className="scroll-progress" aria-hidden="true" />
-    <div className="cursor-preview" aria-hidden="true"><img alt="" src="/media/photos/trek-trail.webp" /><span>Eagles Unbound</span></div>
+    <div className="cursor-preview" aria-hidden="true"><img alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><span>Eagles Unbound</span></div>
   </>;
 }
