@@ -38,7 +38,7 @@ async function main(){
  const server=createServer(app);server.requestTimeout=120000;server.headersTimeout=65000;
  server.listen(config.port,HOST,()=>{
   console.info(`Server listening on ${HOST}:${config.port}`);
-  console.info(JSON.stringify({event:'server_ready',host:HOST,port:config.port,mode:apiOnly?'api':'combined',database_writes:config.writesAllowed?'enabled':'disabled (read-only)'}));
+  console.info(JSON.stringify({event:'server_ready',pid:process.pid,node:process.version,environment:process.env.NODE_ENV,started_at:new Date().toISOString(),host:HOST,port:config.port,mode:apiOnly?'api':'combined',database_writes:config.writesAllowed?'enabled':'disabled (read-only)'}));
  });
  let closing=false;
  const shutdown=()=>{if(closing)return;closing=true;console.info(JSON.stringify({event:'shutdown_started'}));const timer=setTimeout(()=>{server.closeAllConnections();process.exit(1)},15000).unref();server.close(async()=>{try{await nextApp?.close();await db.close();clearTimeout(timer);process.exit(0)}catch{process.exit(1)}});server.closeIdleConnections()};
