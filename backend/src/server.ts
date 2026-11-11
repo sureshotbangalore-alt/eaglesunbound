@@ -8,6 +8,7 @@ import {MySQLDatabase} from './database';
 import {createAPI} from './api';
 import {SERVER_DATA_KEY} from './public-data';
 
+let openConnections=0;
 const root=resolve(__dirname,'../..');
 // Listen on every interface so Hostinger's reverse proxy can reach the app.
 const HOST='0.0.0.0';
@@ -27,6 +28,8 @@ async function main(){
  const apiOnly=process.argv.includes('--api-only');
  // One origin: the browser keeps /api paths and the session cookie scope.
  app.use('/api',api.app);app.get('/health',(req,res,nextFn)=>api.app(req,res,nextFn));
+ // Process facts only (no database, no secrets): lets you confirm a single healthy process without touching data.
+ app.get('/health/process',(_req,res)=>{res.set('Cache-Control','no-store');res.json({status:'ok',pid:process.pid,uptime_seconds:Math.round(process.uptime()),node:process.version,environment:process.env.NODE_ENV,open_connections:openConnections})});
  let nextApp:ReturnType<typeof next>|undefined;
  if(apiOnly)app.use(api.app);
  else {
@@ -35,13 +38,13 @@ async function main(){
   nextApp=next({dev,dir:resolve(root,'frontend'),hostname:'0.0.0.0',port:config.port,webpack:dev});
   await nextApp.prepare();const handler=nextApp.getRequestHandler();app.use((req,res)=>handler(req,res));
  }
- const server=createServer(app);server.requestTimeout=120000;server.headersTimeout=65000;
+ const server=createServer(app);server.on('connection',socket=>{openConnections++;socket.on('close',()=>{openConnections--})});server.requestTimeout=120000;server.headersTimeout=65000;
  server.listen(config.port,HOST,()=>{
   console.info(`Server listening on ${HOST}:${config.port}`);
-  console.info(JSON.stringify({event:'server_ready',pid:process.pid,node:process.version,environment:process.env.NODE_ENV,started_at:new Date().toISOString(),host:HOST,port:config.port,mode:apiOnly?'api':'combined',database_writes:config.writesAllowed?'enabled':'disabled (read-only)'}));
+  console.info(JSON.stringify({event:'server_ready',pid:process.pid,ppid:process.ppid,node:process.version,environment:process.env.NODE_ENV,started_at:new Date().toISOString(),host:HOST,port:config.port,mode:apiOnly?'api':'combined',database_writes:config.writesAllowed?'enabled':'disabled (read-only)'}));
  });
  let closing=false;
- const shutdown=()=>{if(closing)return;closing=true;console.info(JSON.stringify({event:'shutdown_started'}));const timer=setTimeout(()=>{server.closeAllConnections();process.exit(1)},15000).unref();server.close(async()=>{try{await nextApp?.close();await db.close();clearTimeout(timer);process.exit(0)}catch{process.exit(1)}});server.closeIdleConnections()};
+ const shutdown=()=>{if(closing)return;closing=true;console.info(JSON.stringify({event:'shutdown_started',at:new Date().toISOString(),open_connections:openConnections}));const timer=setTimeout(()=>{server.closeAllConnections();process.exit(1)},15000).unref();server.close(async()=>{try{await nextApp?.close();await db.close();clearTimeout(timer);process.exit(0)}catch{process.exit(1)}});server.closeIdleConnections()};
  process.on('SIGTERM',shutdown);process.on('SIGINT',shutdown);
  // Log the kind of failure only; never the message, which could contain request or connection details.
  process.on('unhandledRejection',reason=>console.error(JSON.stringify({event:'unhandled_rejection',code:safeCode(reason)})));
