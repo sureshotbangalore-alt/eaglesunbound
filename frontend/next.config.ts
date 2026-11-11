@@ -31,6 +31,8 @@ const csp = [
 const nextConfig: NextConfig = {
   distDir: process.env.NEXT_BUILD_DIR || '.next',
   poweredByHeader: false,
+  // Hostinger caps an account at 120 processes: build with threads, not many child processes.
+  experimental: { cpus: 2, workerThreads: true },
   ...(siteUrl ? { env: { NEXT_PUBLIC_SITE_URL: siteUrl } } : {}),
   async redirects() {
     return [
