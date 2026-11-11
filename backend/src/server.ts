@@ -51,5 +51,10 @@ async function main(){
 main().catch(error=>{
  // Configuration errors name the variable to fix and never contain values; anything else stays generic.
  const detail=error instanceof ConfigError?{message:error.message}:{hint:'Startup failed. Check the environment-variable names listed in docs/hostinger-node-deployment.md; secret values are never logged.',code:safeCode(error)};
- console.error(JSON.stringify({event:'startup_failed',...detail}));process.exit(1);
+ console.error(JSON.stringify({event:'startup_failed',...detail}));
+ // Stay up on the platform's port and answer 503 with the same safe reason, instead of exiting: an exit makes the host restart the
+ // app again and again (a restart loop uses up the account's process limit and hides the cause). Fix the setting and restart once.
+ const port=Number(process.env.PORT)||3000;
+ createServer((_req,res)=>{res.writeHead(503,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify({status:'startup_failed',pid:process.pid,...detail}))})
+  .on('error',()=>process.exit(1)).listen(port,HOST);
 });
