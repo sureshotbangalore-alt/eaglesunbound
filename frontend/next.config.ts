@@ -63,6 +63,8 @@ const nextConfig: NextConfig = {
       {source:'/day-package',destination:'/what-we-offer',statusCode:301},
     ];
   },
+  // No on-the-fly image resizing: it times out on the shared host (503). Photos have pre-built widths instead.
+  images: { loader: 'custom', loaderFile: './src/lib/image-loader.ts' },
   async headers() {
     return [{ source: '/:path*', headers: [
       { key: 'Content-Security-Policy', value: csp },

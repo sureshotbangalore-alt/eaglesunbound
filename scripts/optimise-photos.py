@@ -13,6 +13,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'frontend', 'public', 'media', 'photos')
 DOC = os.path.join(ROOT, 'docs', 'media')
 MAX, QUALITY = 1800, 76
+SIZES = (640, 1080)
 WA = 'WhatsApp Image 2026-11-03 at '
 
 # key: (category, folder, file, video time or None, alt text)
@@ -85,6 +86,10 @@ for key, (cat, folder, name, t, alt) in PHOTOS.items():
     im.thumbnail((MAX, MAX), Image.LANCZOS)
     dst = os.path.join(OUT, key + '.webp'); im.save(dst, 'WEBP', quality=QUALITY, method=6)
     out_bytes = os.path.getsize(dst)
+    # smaller pre-built widths: the site links straight to these (frontend/src/lib/image-loader.ts), no server resizing
+    for w in SIZES:
+        small = im.copy(); small.thumbnail((w, w * 2), Image.LANCZOS)
+        small.save(os.path.join(OUT, f'{key}-{w}.webp'), 'WEBP', quality=QUALITY, method=6)
     if t is None: before += src_bytes
     after += out_bytes
     manifest.append({'key': key, 'src': f'/media/photos/{key}.webp', 'alt': alt, 'category': cat, 'source': f'{folder}/{name}' + (f' @ {t}s' if t is not None else ''),
